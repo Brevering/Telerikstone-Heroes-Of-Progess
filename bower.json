@@ -1,0 +1,27 @@
+{
+  "name": "Skeleton",
+  "homepage": "https://github.com/belchevgb/test",
+  "authors": [
+    "belchev.gb@gmail.com <belchev.gb@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "amcharts3": "^3.20.9",
+    "bootstrap": "^3.3.7",
+    "handlebars": "^4.0.5",
+    "jquery": "^3.1.0",
+    "noty": "^2.3.8",
+    "requirejs": "^2.2.0",
+    "sammy": "^0.7.6",
+    "gsap": "greensock#^1.19.0"
+  }
+}
