@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'Pinkdunk';
+    src: url('../fonts/Pindunk.ttf');
+}
+
+#home-container {
+    height: 768px;
+    width: 100%;
+    background: url('../images/home.jpg');
+    background-size: 100% 100%;
+}
+
+#home-container #play-now {
+    width: 200px;
+    height: 50px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#694f3e+0,a5857d+50,694f3e+100 */
+    background: #694f3e; /* Old browsers */
+    background: -moz-linear-gradient(top,  #694f3e 0%, #a5857d 50%, #694f3e 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #694f3e 0%,#a5857d 50%,#694f3e 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #694f3e 0%,#a5857d 50%,#694f3e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#694f3e', endColorstr='#694f3e',GradientType=0 ); /* IE6-9 */
+    position: absolute;
+    left: 40%;
+    top: 140px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #9B8D8B;
+}
+
+#home-container #play-now #play-now-inner {
+    width: 98.5%;
+    height: 92%;
+    margin: 0 auto;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9500b7+1,ae5bbf+36,ae5bbf+36,ae5bbf+63,9500b7+100 */
+    background: #9500b7; /* Old browsers */
+    background: -moz-linear-gradient(left,  #9500b7 1%, #ae5bbf 36%, #ae5bbf 36%, #ae5bbf 63%, #9500b7 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  #9500b7 1%,#ae5bbf 36%,#ae5bbf 36%,#ae5bbf 63%,#9500b7 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  #9500b7 1%,#ae5bbf 36%,#ae5bbf 36%,#ae5bbf 63%,#9500b7 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9500b7', endColorstr='#9500b7',GradientType=1 ); /* IE6-9 */
+    border-radius: 3px;
+    border: 2px solid #B61EED;
+}
+
+#home-container #play-now #play-now-inner:hover {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9b1db7+1,e578ed+33,e249ed+67,9b1db7+100 */
+    background: #9b1db7; /* Old browsers */
+    background: -moz-linear-gradient(left,  #9b1db7 1%, #e578ed 33%, #e249ed 67%, #9b1db7 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  #9b1db7 1%,#e578ed 33%,#e249ed 67%,#9b1db7 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  #9b1db7 1%,#e578ed 33%,#e249ed 67%,#9b1db7 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9b1db7', endColorstr='#9b1db7',GradientType=1 ); /* IE6-9 */
+}
+
+#home-container #play-now #play-now-inner span {
+    font-family: Pinkdunk;
+    color: white;
+    font-size: 52px;
+    display: inline-block;
+    margin-left: 50px;
+}
