@@ -8,8 +8,16 @@
             });
         }
         
+        function loadHomePage(selector) {
+            $.get('html-parts/home-page.html', function (html) {
+                $(selector).empty();
+                $(selector).append(html);
+            });
+        }
+        
         return {
-            loadGuestPage: loadGuestPage  
+            loadGuestPage: loadGuestPage,
+            loadHomePage: loadHomePage
         };
     });
 }());

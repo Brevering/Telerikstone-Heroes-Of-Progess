@@ -3,7 +3,7 @@
 
     require.config({
         paths: {
-            // Librariesbower_components
+            // Libraries
             'jquery': '../bower_components/jquery/dist/jquery.min',
             'sammy': '../bower_components/sammy/lib/min/sammy-latest.min',
 
@@ -18,6 +18,10 @@
         let router = Sammy(function () {
             this.get('#/', function () {
                 pageLoader.loadGuestPage(containerSelector);
+            });
+
+            this.get('#/home', function () {
+                pageLoader.loadHomePage(containerSelector);
             });
         });
 
