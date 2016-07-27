@@ -1,10 +1,11 @@
+/// <reference path="../../typings/globals/jquery/index.d.ts" />
+
 (function () {
     'use strict';
 
     define(['jquery', 'sammy', 'fileReader', 'handlebars'], function ($, Sammy, fileReader, Handlebars) {
         function UserView() {
         }
-
         UserView.prototype = {
             // makes a get request to the file where the html is saved, and the result is saved to the template parameter
             // on button click, the data will be retrieved from the form and will be passed to the Sammy function, that

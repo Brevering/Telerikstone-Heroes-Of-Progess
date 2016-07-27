@@ -4,11 +4,21 @@
     define(['userView', 'userModel', 'noty', 'sammy', 'headers', 'requester', 'url'],
         function (UserView, UserModel, noty, Sammy, Headers, Requester, url) {
             // Function constructor, so we can create instances of this controller => new UserController()
-
             let userView = new UserView(),
                 userModel = new UserModel(),
                 headers = new Headers(),
                 requester = new Requester();
+
+
+            function showNotification(message, type) {
+                noty({
+                    text: message,
+                    layout: 'top',
+                    type: type,
+                    timeout: 1500
+                });
+            }
+
 
             function UserController() {
             }
@@ -45,24 +55,14 @@
                 registerUser(data, appId, appSecret) {
                     userModel.register(data, appId, appSecret)
                         .then(function (success) {
-                            noty({
-                                text: 'Registration successful!',
-                                layout: 'top',
-                                type: 'success',
-                                timeout: 1500
-                            });
+                            showNotification('Registration successful!', 'success');
 
                             Sammy(function () {
                                 this.trigger('redirectToUrl', { url: '#/' });
                             });
                         },
                         function (error) {
-                            noty({
-                                text: 'Registration failed!',
-                                layout: 'top',
-                                type: 'error',
-                                timeout: 1500
-                            });
+                            showNotification('Registration failed!', 'error');
                         });
                 },
                 // This will do the same as the function above, but it will log in an user. The user's authentication token
@@ -77,20 +77,10 @@
                                 this.trigger('redirectToUrl', { url: '#/home/' });
                             });
 
-                            noty({
-                                text: 'Login successful!',
-                                layout: 'top',
-                                type: 'success',
-                                timeout: 1500
-                            });
+                            showNotification('Login successful!', 'success');
                         },
                         function (error) {
-                            noty({
-                                text: 'Login failed!',
-                                layout: 'top',
-                                type: 'error',
-                                timeout: 1500
-                            });
+                            showNotification('Login failed!', 'error');
                         });
                 },
                 // This function will perform a logout action. The user will be redirected to the login page, and
@@ -105,20 +95,10 @@
                                 this.trigger('redirectToUrl', { url: '#/' });
                             });
 
-                            noty({
-                                text: 'Logout successful!',
-                                layout: 'top',
-                                type: 'success',
-                                timeout: 1500
-                            });
+                            showNotification('Logout successful!', 'success');
                         },
                         function (error) {
-                            noty({
-                                text: 'Logout failed!',
-                                layout: 'top',
-                                type: 'error',
-                                timeout: 1500
-                            });
+                            showNotification('Logout failed!', 'error');
                         });
                 }
             };
