@@ -16,6 +16,5 @@
 
     require(['pageLoader'], function (pageLoader) {
         pageLoader.loadHomePage();
-        pageLoader.loadTrainersPage();
     });
 }());
