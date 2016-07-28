@@ -3,18 +3,26 @@
     src: url('../fonts/Pindunk.ttf');
 }
 
-#home-container {
-    height: 768px;
-    width: 100%;
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+}
+
+body {
     background: url('../images/home.jpg');
-    background-size: 100% 100%;
-    padding-top: 70px;
+    background-repeat: no-repeat;
+}
+
+#home-container {
+    height: 100%;
+    width: 100%;
+    padding-top: 3%;
 }
 
 #home-container #play-now {
-    width: 200px;
-    height: 50px;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#694f3e+0,a5857d+50,694f3e+100 */
+    width: 10%;
+    height: 5%;
     background: #694f3e; /* Old browsers */
     background: -moz-linear-gradient(top,  #694f3e 0%, #a5857d 50%, #694f3e 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(top,  #694f3e 0%,#a5857d 50%,#694f3e 100%); /* Chrome10-25,Safari5.1-6 */
@@ -22,8 +30,8 @@
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#694f3e', endColorstr='#694f3e',GradientType=0 ); /* IE6-9 */
     position: absolute;
     left: 42%;
-    top: 140px;
-    padding: 5px;
+    top: 15%;
+    padding: 0.3%;
     border-radius: 4px;
     border: 1px solid #9B8D8B;
 }
@@ -32,7 +40,6 @@
     width: 98.5%;
     height: 92%;
     margin: 0 auto;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9500b7+1,ae5bbf+36,ae5bbf+36,ae5bbf+63,9500b7+100 */
     background: #9500b7; /* Old browsers */
     background: -moz-linear-gradient(left,  #9500b7 1%, #ae5bbf 36%, #ae5bbf 36%, #ae5bbf 63%, #9500b7 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(left,  #9500b7 1%,#ae5bbf 36%,#ae5bbf 36%,#ae5bbf 63%,#9500b7 100%); /* Chrome10-25,Safari5.1-6 */
@@ -43,7 +50,6 @@
 }
 
 #home-container #play-now #play-now-inner:hover {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9b1db7+1,e578ed+33,e249ed+67,9b1db7+100 */
     background: #9b1db7; /* Old browsers */
     background: -moz-linear-gradient(left,  #9b1db7 1%, #e578ed 33%, #e249ed 67%, #9b1db7 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(left,  #9b1db7 1%,#e578ed 33%,#e249ed 67%,#9b1db7 100%); /* Chrome10-25,Safari5.1-6 */
@@ -54,15 +60,15 @@
 #home-container #play-now #play-now-inner span {
     font-family: Pinkdunk;
     color: white;
-    font-size: 52px;
+    font-size: 250%;
     display: inline-block;
-    margin-left: 50px;
+    margin-left: 30%;
 }
 
 #home-container #tb-username {
     width: 20%;
-    height: 50px;
-    font-size: 35px;
+    height: 10%;
+    font-size: 250%;
     display: block;
     margin: 0 auto;
     border-radius: 5px;
