@@ -1,3 +1,5 @@
+/// <reference path="../typings/globals/jquery/index.d.ts" />
+
 (function () {
     'use strict';
 
@@ -5,26 +7,16 @@
         paths: {
             // Libraries
             'jquery': '../bower_components/jquery/dist/jquery.min',
-            'sammy': '../bower_components/sammy/lib/min/sammy-latest.min',
+            'noty': '../bower_components/noty/js/noty/packaged/jquery.noty.packaged.min',
 
             // Modules
-            'pageLoader': './page-loader'
+            'pageLoader': './page-loader',           
         }
     });
 
-    require(['sammy', 'pageLoader'], function (Sammy, pageLoader) {
+    require(['pageLoader'], function (pageLoader) {
         const containerSelector = '#container';
-
-        let router = Sammy(function () {
-            this.get('#/', function () {
-                pageLoader.loadGuestPage(containerSelector);
-            });
-
-            this.get('#/home', function () {
-                pageLoader.loadHomePage(containerSelector);
-            });
-        });
-
-        router.run('#/');
+       
+        pageLoader.loadHomePage(containerSelector);
     });
 }());
