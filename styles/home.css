@@ -10,36 +10,38 @@
 }
 
 body {
-    background: url('../images/home.jpg');
-    background-repeat: no-repeat;
+    background: url('../images/home.jpg') no-repeat;
+    background-size: cover;
 }
 
-#home-container {
-    height: 100%;
-    width: 100%;
-    padding-top: 3%;
+#begin-controls {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+    margin: 5%;
 }
 
 #home-container #play-now {
-    width: 10%;
-    height: 5%;
+    margin-top: 5%;
+    width: 200px;
+    height: auto;
     background: #694f3e; /* Old browsers */
     background: -moz-linear-gradient(top,  #694f3e 0%, #a5857d 50%, #694f3e 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(top,  #694f3e 0%,#a5857d 50%,#694f3e 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom,  #694f3e 0%,#a5857d 50%,#694f3e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#694f3e', endColorstr='#694f3e',GradientType=0 ); /* IE6-9 */
-    position: absolute;
-    left: 42%;
-    top: 15%;
     padding: 0.3%;
     border-radius: 4px;
     border: 1px solid #9B8D8B;
 }
 
 #home-container #play-now #play-now-inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
     width: 98.5%;
     height: 92%;
-    margin: 0 auto;
     background: #9500b7; /* Old browsers */
     background: -moz-linear-gradient(left,  #9500b7 1%, #ae5bbf 36%, #ae5bbf 36%, #ae5bbf 63%, #9500b7 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(left,  #9500b7 1%,#ae5bbf 36%,#ae5bbf 36%,#ae5bbf 63%,#9500b7 100%); /* Chrome10-25,Safari5.1-6 */
@@ -62,17 +64,19 @@ body {
     color: white;
     font-size: 250%;
     display: inline-block;
-    margin-left: 30%;
 }
 
 #home-container #tb-username {
-    width: 20%;
+    width: 300pt;
     height: 10%;
     font-size: 250%;
     display: block;
-    margin: 0 auto;
     border-radius: 5px;
     border: 1px solid #7c5845;
     background-color: rgba(36,25,18, 0.9);
     color: white;
+}
+
+a {
+    text-decoration: none;
 }
