@@ -4,6 +4,8 @@
     'use strict';
 
     define(['jquery', 'noty'], function ($, noty) {
+        const $container = $('#container');
+
         function showNotification(text, type) {
             noty({
                 text: text,
@@ -25,15 +27,32 @@
                 } else {
                     localStorage.setItem('username', username);
                     showNotification('Login successful!', 'success');
+                    loadTrainersPage();
                 }
             });
         }
 
-        function loadHomePage(selector) {
+        function chooseTrainerEvent() {
+            $('#trainers-holder').on('click', 'img', function () {
+                let trainerName = $(this).attr('trainer-name');
+
+                localStorage.setItem('trainerName', trainerName);
+            });
+        }
+
+        function loadHomePage() {
             $.get('html-parts/home-page.html', function (html) {
-                $(selector).empty();
-                $(selector).append(html);
+                $container.empty();
+                $container.append(html);
                 startGameEvent();
+            });
+        }
+
+        function loadTrainersPage() {
+            $.get('html-parts/trainers-page.html', function (html) {
+                $container.empty();
+                $container.append(html);
+                chooseTrainerEvent();
             });
         }
 

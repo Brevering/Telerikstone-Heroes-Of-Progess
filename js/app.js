@@ -15,8 +15,7 @@
     });
 
     require(['pageLoader'], function (pageLoader) {
-        const containerSelector = '#container';
-       
-        pageLoader.loadHomePage(containerSelector);
+        pageLoader.loadHomePage();
+        pageLoader.loadTrainersPage();
     });
 }());
