@@ -70,3 +70,69 @@
     background-color: rgba(36,25,18, 0.9);
     color: white;
 }
+
+/*welcome screen start css*/
+#welcome-screen{
+    border: 5px solid black;
+    border-radius: 15px;
+position: absolute;
+top:  25%;
+left: 25%; 
+bottom: 25%;
+right: 25%;   
+width: 50%;
+height: 50%;
+ background-image: url("images/jsNinjas.png");
+}
+#tb-button {
+    position: absolute; 
+    margin:30% 33%; 
+    text-decoration: none;
+    width: 30%;
+    height: 15%; 
+    border: 3px solid purple;
+    color: white;
+    font-size: 30px;
+    background-color: red; 
+    background-size:cover;
+    background-position:center center;
+    outline: none;
+    border-radius: 10px; 
+    opacity: 1;
+    text-align: center;
+
+}
+#tb-button:hover {
+    opacity: 0.9;
+    border: 2px solid blue;
+    color: black;
+    background-color: greenyellow;
+}
+#tb-username{
+    position: absolute;
+    width: 38%;
+    height: 15%;
+    margin:23% 28%;
+    border: 1px solid #819DB3;
+    border-radius: 10px;
+    outline: none;
+    padding-left:8px;
+    font-size: 28px; 
+}
+.error{
+    position: absolute;
+    margin:10% 30%; 
+    padding: 5px;
+    background: yellow;
+    width: 35%;
+    height: 20%;
+    border: 3px solid black;
+    border-radius: 10px;
+    color: black; 
+    font-size: 15px;
+   font-family: sans-serif;
+}
+#fieldSet{
+    border: none;
+}
+/*welcome screen end css*/
