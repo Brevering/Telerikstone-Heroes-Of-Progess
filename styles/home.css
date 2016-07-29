@@ -131,17 +131,23 @@ a {
 
 /* Game page styles */
 #pass-turn {
+    border: none;
     position: absolute;
-    border: 1px solid black;
-    width: 10%;
-    height: 60px;
-    left: 75%;
-    top: 48.5%;
-    background: transparent;
+    width: 7.1%;
+    height: 6.5%;
+    left: 77%;
+    top: 47.25%;
+    background: url('../images/buttons/end_turn_bg.png') no-repeat;
+    background-size: cover;
 }
 
 #pass-turn:hover {
+    border: none;
     cursor: pointer;
+}
+
+#pass-turn:active {
+    background-image: url('../images/buttons/end_turn_pressed_bg.png');
 }
 
 #playField #exit-now {

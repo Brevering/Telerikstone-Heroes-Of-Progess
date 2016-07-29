@@ -70,7 +70,7 @@
                 $container.append(html);
                 exitEvent();
 
-                $('body').css('background', 'url("../images/table.jpg") no-repeat')
+                $('body').css('background', 'url("../images/table.png") no-repeat')
                     .css('background-size', 'cover');
 
                 // testing
