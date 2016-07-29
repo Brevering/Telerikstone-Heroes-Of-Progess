@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'noty', 'cardCreator'], function ($, noty, cardCreator) {
+    define(['jquery', 'noty', 'cardCreator', 'sammy'], function ($, noty, cardCreator, Sammy) {
         const $container = $('#container');
 
         function showNotification(text, type) {
@@ -25,7 +25,6 @@
                 } else {
                     localStorage.setItem('username', username);
                     showNotification('Login successful!', 'success');
-                    loadTrainersPage();
                 }
             });
         }
@@ -35,8 +34,6 @@
                 let trainerName = $(this).attr('trainer-name');
 
                 localStorage.setItem('trainerName', trainerName);
-
-                loadGamePage();
             });
         }
 
@@ -44,7 +41,18 @@
             $.get('html-parts/home-page.html', function (html) {
                 $container.empty();
                 $container.append(html);
+
+                $('body').css('background', 'url("../images/home.jpg") no-repeat')
+                    .css('background-size', 'cover');
+
                 startGameEvent();
+            });
+        }
+
+        function exitEvent() {
+            $('#btn-exit-game', function () {
+                localStorage.removeItem('username');
+                localStorage.removeItem('trainerName');
             });
         }
 
@@ -60,10 +68,11 @@
             $.get('html-parts/game-page.html', function (html) {
                 $container.empty();
                 $container.append(html);
-                
+                exitEvent();
+
                 $('body').css('background', 'url("../images/table.jpg") no-repeat')
                     .css('background-size', 'cover');
-                
+
                 // testing
                 cardCreator.initializeCard(4, 4, 4, '../images/cards/cuki_card.png', true);
                 cardCreator.initializeCard(4, 4, 4, '../images/cards/cuki_card.png', false);
@@ -71,7 +80,9 @@
         }
 
         return {
-            loadHomePage: loadHomePage
+            loadHomePage: loadHomePage,
+            loadTrainersPage: loadTrainersPage,
+            loadGamePage: loadGamePage
         };
     });
 } ());

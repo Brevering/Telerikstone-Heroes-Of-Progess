@@ -6,6 +6,7 @@
             // Libraries
             'jquery': '../bower_components/jquery/dist/jquery.min',
             'noty': '../bower_components/noty/js/noty/packaged/jquery.noty.packaged.min',
+            'sammy': '../bower_components/sammy/lib/min/sammy-latest.min',
             'TimelineMax': '../bower_components/gsap/src/minified/TimelineMax.min',
             'TimelineLite': '../bower_components/gsap/src/minified/TimelineLite.min',
             'TweenMax': '../bower_components/gsap/src/minified/TweenMax.min',
@@ -25,7 +26,26 @@
         }
     });
 
-    require(['pageLoader'], function (pageLoader) {
-        pageLoader.loadHomePage();
+    require(['sammy', 'pageLoader'], function (Sammy, pageLoader) {
+        let router = Sammy(function () {
+            this.get('#/', function () {
+                pageLoader.loadHomePage();
+            });
+
+            this.get('#/home', function () {
+                pageLoader.loadTrainersPage();
+            });
+
+            this.get('#/game', function () {
+                pageLoader.loadGamePage();
+            });
+
+            // Bindings
+            this.bind('redirectToUrl', function (event, data) {
+                this.redirect(data.url);
+            });
+        });
+
+        router.run('#/');
     });
-}());
+} ());
