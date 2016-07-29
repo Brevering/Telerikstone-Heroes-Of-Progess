@@ -68,6 +68,7 @@
                 
                 // testing
                 cardCreator.initializeCard(4, 4, 4, '../images/cards/cuki_card.png', true);
+                cardCreator.initializeCard(4, 4, 4, '../images/cards/cuki_card.png', false);
             });
         }
 
