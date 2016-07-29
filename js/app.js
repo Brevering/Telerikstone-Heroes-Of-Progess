@@ -28,16 +28,6 @@
 
     require(['sammy', 'pageLoader'], function (Sammy, pageLoader) {
         let router = Sammy(function () {
-            this.before(function () {
-                if (localStorage.username) {
-                    this.redirect('#/home');
-                    return true;
-                } else {
-                    this.redirect('#/');
-                    return true;
-                }
-            });
-
             this.get('#/', function () {
                 pageLoader.loadHomePage();
             });
