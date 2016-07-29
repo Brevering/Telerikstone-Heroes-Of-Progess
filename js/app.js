@@ -28,6 +28,16 @@
 
     require(['sammy', 'pageLoader'], function (Sammy, pageLoader) {
         let router = Sammy(function () {
+            this.before(function () {
+                if (localStorage.username) {
+                    this.redirect('#/home');
+                    return true;
+                } else {
+                    this.redirect('#/');
+                    return true;
+                }
+            });
+
             this.get('#/', function () {
                 pageLoader.loadHomePage();
             });
@@ -38,11 +48,6 @@
 
             this.get('#/game', function () {
                 pageLoader.loadGamePage();
-            });
-
-            // Bindings
-            this.bind('redirectToUrl', function (event, data) {
-                this.redirect(data.url);
             });
         });
 
