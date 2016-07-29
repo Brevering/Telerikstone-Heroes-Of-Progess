@@ -74,8 +74,37 @@
                     .css('background-size', 'cover');
 
                 // testing
-                cardCreator.initializeCard(4, 4, 4, '../images/cards/cuki_card.png', true);
-                cardCreator.initializeCard(4, 4, 4, '../images/cards/cuki_card.png', false);
+                // draw 10 cards
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
+
+                // draw 10 enemy cards
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
             });
         }
 

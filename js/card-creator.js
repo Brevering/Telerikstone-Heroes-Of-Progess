@@ -2,61 +2,121 @@
     'use strict';
 
     define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin'], function ($, TimelineMax, TweenMax, Easing, CSSPlugin) {
-
-        function initializeCard(cardHealth, attackDamage, manaCost, cardImageSrc, isPlayerCard) {
+        function initializeCard(cardImageSrc, isPlayerCard) {
             let $card = $('<img>');
-            let animation = new TimelineMax();
+            
+            // add basic properties to the card dom element
+            basicCardInit($card);
 
-            $card.attr('alt', 'aCard')
-                    .attr('src', `${cardImageSrc}`);
-            $card.css({
+            // add properties to the card dom element in accordance to the card type (pleayer or enemy card)
+            if (isPlayerCard === true) {
+                playerCardInit($card, cardImageSrc);
+            }
+            else {
+                enemyCardInit($card);
+            } 
+        }
+
+        // this adds basic properties to the card element
+        function basicCardInit($cardDomElement) {
+            $cardDomElement.attr('alt', 'aCard');
+
+            $cardDomElement.css({
                 position: 'absolute',
                 display: 'inline-block',
                 width: '10%',
                 height: 'auto'
             });
+        }
 
-            if (isPlayerCard === true) {
-                $card.css({
-                    top: '5%',
-                    left: '0px'
-                });
+        // this initializes a player card
+        function playerCardInit($cardDomElement, cardImageSrc) {
+            $cardDomElement.css({
+                top: '25%',
+                right: '20%',
+                width: '15%'
+            });
 
-                $card.attr('class', 'playerCard');
-            }
-            else {
-                $card.css({
-                    top: '5%',
-                    left: '90%'
-                });
-
-                $card.attr('class', 'enemyCard');
-            }
+            // add card attributes
+            $cardDomElement.attr('class', 'playerCard').attr('src', `${cardImageSrc}`);
 
             // add card events
-            $card.on('click', placeCard);
+            $cardDomElement.on('click', placeCard);
+
+            // calculate card in hand offset
+            let numberOfPlayerCardsInHand = $('.playerCard').length;
+            let cardInHandLeftOffset = 35 + numberOfPlayerCardsInHand * 2 + '%';
+            let cardInHandTopOffset;
+            let rotationOfCard = -20 + numberOfPlayerCardsInHand * 5;
+
+            if (numberOfPlayerCardsInHand < 6) {
+                cardInHandTopOffset = 85 - numberOfPlayerCardsInHand + 11 + '%';
+            }
+            else {
+                cardInHandTopOffset = 85 + numberOfPlayerCardsInHand + '%';
+            }
+
+            // add card to the hand
+            $($cardDomElement).appendTo('#playField');
+
+            // play player card intro animation
+            // this animation will probably be attached to a button
+            TweenMax.to($cardDomElement, 2, {delay: 2, top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, width: '10%', ease: Expo.easeOut});
+        }
+
+        // this initializes an enemy card
+        function enemyCardInit($cardDomElement) {
+            $cardDomElement.css({
+                top: '-40%',
+                left: '35%'
+            });
+
+            // add card attributes
+            $cardDomElement.attr('class', 'enemyCard').attr('src', '../images/cards/card_back.png');
+
+            // calculate card in hand offset
+            let numberOfEnemyCardsInHand = $('.enemyCard').length;
+            let cardInHandLeftOffset = 35 + numberOfEnemyCardsInHand * 2 + '%';
+            let cardInHandTopOffset;
+            let rotationOfCard = 20 - numberOfEnemyCardsInHand * 5;
+
+            if (numberOfEnemyCardsInHand < 6) {
+                cardInHandTopOffset = -22 + numberOfEnemyCardsInHand + '%';
+            }
+            else {
+                cardInHandTopOffset = -22 - numberOfEnemyCardsInHand + 11 + '%';
+            }
 
             // add card to the field
-            $($card).appendTo('#playField');
+            $($cardDomElement).appendTo('#playField');
 
-            // play first animation
-            // this animation will probably be attached to a button
-            if (isPlayerCard === true) {
-                animation.to($card, 1, {top: '5%', left: '0%', ease: Easing.Expo.easeOut})
-                    .to($card, 2, {top: '80%', left: '35%', rotation: -20, width: '10%', ease: Expo.easeOut});
-            }
-            else {
-                 animation.to($card, 1, {top: '5%', left: '70%', ease: Expo.easeOut})
-                    .to($card, 2, {top: '-5%', left: '35%', rotation: 200, width: '10%', ease: Expo.easeOut});
-            }
+            // enemy card intro animation
+            TweenMax.to($cardDomElement, 1, {top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, ease: Expo.easeOut});
+
+            // add card events (place the card on the field)
+            // this click event will eventually be replaced or removed
+            $cardDomElement.on('click', placeCard);
         }
  
+        // this animates a card placement
         function placeCard() {
-            if ($(event.target).attr('class') === 'playerCard') {
-                TweenMax.to(event.target, 1, {width: '6%', left: '25%', top: '55%', rotation: 0, ease: Expo.easeOut});
+            let numberOfPlayerCardsInHand = $('.playerCard').length;
+            let numberOfEnemyCardsInHand = $('.enemyCard').length;
+
+            if ($(event.target).attr('class') === 'playerCard' && $('.placedPlayerCard').length < 7) {
+                let leftOffset = 95 - numberOfPlayerCardsInHand * 7 + '%';
+
+                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '55%', rotation: 0, ease: Expo.easeOut});
+
+                $(event.target).attr('class', 'placedPlayerCard');          
             }
-            else {
-                 TweenMax.to(event.target, 1, {width: '6%', left: '25%', top: '35%', rotation: 180, ease: Expo.easeOut});
+            else if ($(event.target).attr('class') === 'enemyCard' && $('.placedEnemyCard').length < 7) {
+                let leftOffset = 95 - numberOfEnemyCardsInHand * 7 + '%';
+
+                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '33%', rotation: 0, ease: Expo.easeOut});
+
+                $(event.target).attr('src', '../images/cards/cuki_card.png');
+                $(event.target).attr('class', 'placedEnemyCard');
             }
         }
  
