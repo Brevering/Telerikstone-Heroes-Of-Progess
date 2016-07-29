@@ -1,5 +1,3 @@
-/// <reference path="../typings/globals/jquery/index.d.ts" />
-
 (function () {
     'use strict';
 
@@ -17,7 +15,13 @@
 
             // Modules
             'pageLoader': './page-loader',
-            'cardCreator': './card-creator',          
+            'cardCreator': './card-creator',
+
+            // Cards
+            'card': './cards/card',
+            'minionCard': './cards/minion-card',
+            'powerCard': './cards/power-card',
+            'weaponCard': './cards/weapon-card'
         }
     });
 
