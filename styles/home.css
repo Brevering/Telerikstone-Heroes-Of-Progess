@@ -150,6 +150,10 @@ a {
     background-image: url('../images/buttons/end_turn_pressed_bg.png');
 }
 
+#playField {
+    overflow: auto;
+}
+
 #playField #exit-now {
     position: absolute;
     top: 90%;
@@ -193,6 +197,23 @@ a {
     color: white;
     font-size: 250%;
     display: inline-block;
+}
+
+#player-avatar, #enemy-avatar {
+    width: 10%;
+    height: 25%;
+    position: absolute;
+    overflow: auto;
+}
+
+#enemy-avatar {
+    left: 45%;
+    top: 12%;
+}
+
+#player-avatar {
+    top: 73%;
+    left: 45%;
 }
 
 /* End of game page styles */
