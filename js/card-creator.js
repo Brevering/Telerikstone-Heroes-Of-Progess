@@ -106,14 +106,14 @@
             if ($(event.target).attr('class') === 'playerCard' && $('.placedPlayerCard').length < 7) {
                 let leftOffset = 95 - numberOfPlayerCardsInHand * 7 + '%';
 
-                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '55%', rotation: 0, ease: Expo.easeOut});
+                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '48%', rotation: 0, ease: Expo.easeOut});
 
                 $(event.target).attr('class', 'placedPlayerCard');          
             }
             else if ($(event.target).attr('class') === 'enemyCard' && $('.placedEnemyCard').length < 7) {
                 let leftOffset = 95 - numberOfEnemyCardsInHand * 7 + '%';
 
-                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '33%', rotation: 0, ease: Expo.easeOut});
+                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '28%', rotation: 0, ease: Expo.easeOut});
 
                 $(event.target).attr('src', '../images/cards/cuki_card.png');
                 $(event.target).attr('class', 'placedEnemyCard');
