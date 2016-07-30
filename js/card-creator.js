@@ -50,10 +50,10 @@
             let rotationOfCard = -20 + numberOfPlayerCardsInHand * 5;
 
             if (numberOfPlayerCardsInHand < 6) {
-                cardInHandTopOffset = 85 - numberOfPlayerCardsInHand + 11 + '%';
+                cardInHandTopOffset = 80 - numberOfPlayerCardsInHand + 11 + '%';
             }
             else {
-                cardInHandTopOffset = 85 + numberOfPlayerCardsInHand + '%';
+                cardInHandTopOffset = 80 + numberOfPlayerCardsInHand + '%';
             }
 
             // add card to the hand
