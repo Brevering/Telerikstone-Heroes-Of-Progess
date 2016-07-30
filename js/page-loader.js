@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'noty', 'cardCreator', 'sammy'], function ($, noty, cardCreator, Sammy) {
+    define(['jquery', 'noty', 'cardCreator', 'sammy', 'engine'], function ($, noty, cardCreator, Sammy, engine) {
         const $container = $('#container');
 
         function showNotification(text, type) {
@@ -29,6 +29,7 @@
             });
         }
 
+        // add the chosen trainer's name to the local storage for further usage
         function chooseTrainerEvent() {
             $('#trainers-holder').on('click', 'img', function () {
                 let trainerName = $(this).attr('trainer-name');
@@ -49,6 +50,7 @@
             });
         }
 
+        // clears the local storage from stored data and redirects to the guest page
         function exitEvent() {
             $('#btn-exit-game', function () {
                 localStorage.removeItem('username');
@@ -73,38 +75,7 @@
                 $('body').css('background', 'url("../images/table.png") no-repeat')
                     .css('background-size', 'cover');
 
-                // testing
-                // draw 10 cards
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-                // draw 10 enemy cards
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-                cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+                engine.start();
             });
         }
 

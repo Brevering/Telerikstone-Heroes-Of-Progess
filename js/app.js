@@ -13,10 +13,12 @@
             'TweenLite': '../bower_components/gsap/src/minified/TweenLite.min',
             'Easing': '../bower_components/gsap/src/minified/easing/EasePack.min',
             'CSSPlugin': '../bower_components/gsap/src/minified/plugins/CSSPlugin.min',
+            'handlebars': '../bower_components/handlebars/handlebars.min',
 
             // Modules
             'pageLoader': './page-loader',
             'cardCreator': './card-creator',
+            'engine': './engine',
 
             // Cards
             'card': './cards/card',
@@ -28,14 +30,17 @@
 
     require(['sammy', 'pageLoader'], function (Sammy, pageLoader) {
         let router = Sammy(function () {
+            // load start page with username input
             this.get('#/', function () {
                 pageLoader.loadHomePage();
             });
 
+            // load trainers pick page
             this.get('#/home', function () {
                 pageLoader.loadTrainersPage();
             });
 
+            // load game page
             this.get('#/game', function () {
                 pageLoader.loadGamePage();
             });
