@@ -15,6 +15,7 @@
 }
 
 body {
+    overflow: hidden;
     background: url('../images/home.jpg') no-repeat;
     background-size: cover;
 }
