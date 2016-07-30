@@ -111,7 +111,11 @@
                 $('body').css('background', 'url("../images/table.png") no-repeat')
                     .css('background-size', 'cover');
 
-                loadAvatars(trainerName);
+                if (!localStorage.trainer) {
+                    localStorage.setItem('trainer', trainerName);
+                }
+
+                loadAvatars(localStorage.trainer);
                 engine.start();
             });
         }
