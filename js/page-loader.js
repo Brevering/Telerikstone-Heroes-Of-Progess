@@ -3,6 +3,7 @@
 
     define(['jquery', 'noty', 'cardCreator', 'sammy', 'engine'], function ($, noty, cardCreator, Sammy, engine) {
         const $container = $('#container');
+        let trainerName;
 
         function showNotification(text, type) {
             noty({
@@ -32,10 +33,45 @@
         // add the chosen trainer's name to the local storage for further usage
         function chooseTrainerEvent() {
             $('#trainers-holder').on('click', 'img', function () {
-                let trainerName = $(this).attr('trainer-name');
-
-                localStorage.setItem('trainerName', trainerName);
+                trainerName = $(this).attr('trainer-name');
             });
+        }
+
+        // Get random bot-player avatar
+        function getBotPlayerImageUrl(realPlayerName) {
+            let botPlayerName;
+
+            if (realPlayerName === 'koce') {
+                botPlayerName = ['doncho', 'cuki'][Math.floor(Math.random() * 2)];
+            } else if (realPlayerName === 'cuki') {
+                botPlayerName = ['doncho', 'koce'][Math.floor(Math.random() * 2)];
+            } else {
+                botPlayerName = ['cuki', 'koce'][Math.floor(Math.random() * 2)];
+            }
+
+            return getPlayerImageUrl(botPlayerName);
+        }
+
+        // Get player img url
+        function getPlayerImageUrl(playerName) {
+            switch (playerName) {
+                case 'koce': return '../images/koce.png';
+                case 'cuki': return '../images/cuki.png';
+                case 'doncho': return '../images/doncho.png';
+            }
+        }
+
+        // Load players avatars on the game field
+        function loadAvatars(playerName) {
+            let $playerAvatar = $('#player-avatar');
+            let $enemyAvatar = $('#enemy-avatar');
+
+            $playerAvatar
+                .css('background', `url("${getPlayerImageUrl(playerName)}") no-repeat`)
+                .css('background-size', '100% 100%');
+            $enemyAvatar
+                .css('background', `url("${getBotPlayerImageUrl(playerName)}") no-repeat`)
+                .css('background-size', '100% 100%');
         }
 
         function loadHomePage() {
@@ -75,6 +111,7 @@
                 $('body').css('background', 'url("../images/table.png") no-repeat')
                     .css('background-size', 'cover');
 
+                loadAvatars(trainerName);
                 engine.start();
             });
         }
