@@ -108,7 +108,11 @@
                 $container.append(html);
                 exitEvent();
 
-                $('body').css('background', 'url("../images/table.png") no-repeat')
+                $('body')
+                    .css('background', 'url("../images/table.png") no-repeat center center fixed')
+                    .css('-webkit-background-size', 'cover')
+                    .css('-moz-background-size', 'cover')
+                    .css('-o-background-size', 'cover')
                     .css('background-size', 'cover');
 
                 if (!localStorage.trainer) {

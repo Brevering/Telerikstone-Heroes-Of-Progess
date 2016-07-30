@@ -17,7 +17,7 @@
 body {
     overflow: hidden;
     background: url('../images/home.jpg') no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 /* Guest-page styles */
@@ -137,9 +137,9 @@ a {
     width: 7.1%;
     height: 6.5%;
     left: 77%;
-    top: 47.25%;
+    top: 41.5%;
     background: url('../images/buttons/end_turn_bg.png') no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 #pass-turn:hover {
@@ -209,11 +209,11 @@ a {
 
 #enemy-avatar {
     left: 45%;
-    top: 12%;
+    top: 9%;
 }
 
 #player-avatar {
-    top: 73%;
+    top: 70%;
     left: 45%;
 }
 
