@@ -41,7 +41,9 @@
             $cardDomElement.attr('class', 'playerCard').attr('src', `${cardImageSrc}`);
 
             // add card events
-            $cardDomElement.on('click', placeCard);
+            $cardDomElement.on('click', function () {
+                placeCard($(event.target));
+            });
 
             // calculate card in hand offset
             let numberOfPlayerCardsInHand = $('.playerCard').length;
@@ -95,28 +97,32 @@
 
             // add card events (place the card on the field)
             // this click event will eventually be replaced or removed
-            $cardDomElement.on('click', placeCard);
+            $cardDomElement.on('click', function () {
+                placeCard($(event.target));
+            });
         }
  
         // this animates a card placement
-        function placeCard() {
+        function placeCard($someCard) {
+            console.log($someCard);
+
             let numberOfPlayerCardsInHand = $('.playerCard').length;
             let numberOfEnemyCardsInHand = $('.enemyCard').length;
 
-            if ($(event.target).attr('class') === 'playerCard' && $('.placedPlayerCard').length < 7) {
+            if ($someCard.attr('class') === 'playerCard' && $('.placedPlayerCard').length < 7) {
                 let leftOffset = 95 - numberOfPlayerCardsInHand * 7 + '%';
 
-                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '48%', rotation: 0, ease: Expo.easeOut});
+                TweenMax.to($someCard, 1, {width: '6%', left: leftOffset, top: '48%', rotation: 0, ease: Expo.easeOut});
 
-                $(event.target).attr('class', 'placedPlayerCard');          
+                $someCard.attr('class', 'placedPlayerCard');          
             }
-            else if ($(event.target).attr('class') === 'enemyCard' && $('.placedEnemyCard').length < 7) {
+            else if ($someCard.attr('class') === 'enemyCard' && $('.placedEnemyCard').length < 7) {
                 let leftOffset = 95 - numberOfEnemyCardsInHand * 7 + '%';
 
-                TweenMax.to(event.target, 1, {width: '6%', left: leftOffset, top: '28%', rotation: 0, ease: Expo.easeOut});
+                TweenMax.to($someCard, 1, {width: '6%', left: leftOffset, top: '28%', rotation: 0, ease: Expo.easeOut});
 
-                $(event.target).attr('src', '../images/cards/cuki_card.png');
-                $(event.target).attr('class', 'placedEnemyCard');
+                $someCard.attr('src', '../images/cards/cuki_card.png');
+                $someCard.attr('class', 'placedEnemyCard');
             }
         }
  
