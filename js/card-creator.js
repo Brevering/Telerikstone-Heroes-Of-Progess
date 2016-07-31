@@ -42,7 +42,7 @@
 
             // add card events
             $cardDomElement.on('click', function () {
-                placeCard($(event.target));
+                placeCard(event.target);
             });
 
             // calculate card in hand offset
@@ -98,14 +98,13 @@
             // add card events (place the card on the field)
             // this click event will eventually be replaced or removed
             $cardDomElement.on('click', function () {
-                placeCard($(event.target));
+                placeCard(event.target);
             });
         }
  
         // this animates a card placement
-        function placeCard($someCard) {
-            console.log($someCard);
-
+        function placeCard(someCard) {
+            let $someCard = $(someCard);
             let numberOfPlayerCardsInHand = $('.playerCard').length;
             let numberOfEnemyCardsInHand = $('.enemyCard').length;
 
