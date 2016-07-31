@@ -109,11 +109,16 @@
                 exitEvent();
 
                 $('body')
-                    .css('background', 'url("../images/table.png") no-repeat center center fixed')
-                    .css('-webkit-background-size', 'cover')
-                    .css('-moz-background-size', 'cover')
-                    .css('-o-background-size', 'cover')
+                    .css('background', 'url("../images/bg_fill.jpg") no-repeat center center fixed')
                     .css('background-size', 'cover');
+
+                $('#playField')
+                    .css('oveflow', 'hidden')
+                    .css('position', 'absolute')
+                    .css('width', '100%')
+                    .css('height', '100%')
+                    .css('background', 'url("../images/table.png") no-repeat center center fixed')
+                    .css('background-size', 'contain');                    
 
                 if (!localStorage.trainer) {
                     localStorage.setItem('trainer', trainerName);
