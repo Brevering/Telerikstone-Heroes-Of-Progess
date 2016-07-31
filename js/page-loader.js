@@ -42,11 +42,13 @@
             let botPlayerName;
 
             if (realPlayerName === 'koce') {
-                botPlayerName = ['doncho', 'cuki'][Math.floor(Math.random() * 2)];
+                botPlayerName = ['doncho', 'cuki', 'evlogi'][Math.floor(Math.random() * 3)];
             } else if (realPlayerName === 'cuki') {
-                botPlayerName = ['doncho', 'koce'][Math.floor(Math.random() * 2)];
+                botPlayerName = ['doncho', 'koce', 'evlogi'][Math.floor(Math.random() * 3)];
+            } else if (realPlayerName === 'doncho') {
+                botPlayerName = ['cuki', 'koce', 'evlogi'][Math.floor(Math.random() * 3)];
             } else {
-                botPlayerName = ['cuki', 'koce'][Math.floor(Math.random() * 2)];
+                botPlayerName = ['cuki', 'koce', 'doncho'][Math.floor(Math.random() * 3)];
             }
 
             return getPlayerImageUrl(botPlayerName);
@@ -58,6 +60,7 @@
                 case 'koce': return '../images/koce.png';
                 case 'cuki': return '../images/cuki.png';
                 case 'doncho': return '../images/doncho.png';
+                case 'evlogi': return '../images/evlogi.png';
             }
         }
 
@@ -78,6 +81,7 @@
             $.get('html-parts/home-page.html', function (html) {
                 $container.empty();
                 $container.append(html);
+                localStorage.clear();
 
                 $('body').css('background', 'url("../images/home.jpg") no-repeat')
                     .css('background-size', 'cover');
@@ -89,8 +93,7 @@
         // clears the local storage from stored data and redirects to the guest page
         function exitEvent() {
             $('#btn-exit-game', function () {
-                localStorage.removeItem('username');
-                localStorage.removeItem('trainerName');
+                localStorage.clear();
             });
         }
 
@@ -99,6 +102,7 @@
                 $container.empty();
                 $container.append(html);
                 chooseTrainerEvent();
+                localStorage.clear();
             });
         }
 
@@ -118,12 +122,9 @@
                     .css('width', '100%')
                     .css('height', '100%')
                     .css('background', 'url("../images/table.png") no-repeat center center fixed')
-                    .css('background-size', 'contain');                    
+                    .css('background-size', 'contain');
 
-                if (!localStorage.trainer) {
-                    localStorage.setItem('trainer', trainerName);
-                }
-
+                localStorage.setItem('trainer', trainerName);
                 loadAvatars(localStorage.trainer);
                 engine.start();
             });
