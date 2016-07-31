@@ -31,12 +31,18 @@
 
             // Game
             'cardCreator': './game/card-creator',
-            'engine': './game/engine'
+            'engine': './game/engine',
+
+            // Cards
+            'card': './cards/card',
+            'minionCard': './cards/minion-card',
+            'powerCard': './cards/power-card',
+            'weaponCard': './cards/weapon-card'
         }
     });
 
-    require(
-        ['sammy', 'handlebars', 'requester', 'userController'],  (Sammy, Handlebars, Requester, UserController) => {
+    require(['sammy', 'handlebars', 'requester', 'userController'],
+        function (Sammy, Handlebars, Requester, UserController) {
             const container = '#container';
             const appId = 'kid_SJxQIaiv';
             const appSecret = 'dc497d5b7de74f998c00d3af6e1a55c9';

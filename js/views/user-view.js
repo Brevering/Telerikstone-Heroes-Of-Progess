@@ -114,17 +114,23 @@
                     $(selector).empty();
                     $(selector).append(html);
 
+                    $('#btn-exit-game').on('click', function () {
+                        localStorage.clear();
+                    });
                     $('body')
-                        .css('background', 'url("images/bg_fill.jpg") no-repeat center center fixed')
-                        .css('background-size', 'cover');
-
+                        .css({
+                            'background': 'url("images/bg_fill.jpg") no-repeat center center fixed',
+                            'background-size': 'cover'
+                        });
                     $('#playField')
-                        .css('oveflow', 'hidden')
-                        .css('position', 'absolute')
-                        .css('width', '100%')
-                        .css('height', '100%')
-                        .css('background', 'url("images/table.png") no-repeat center center fixed')
-                        .css('background-size', 'contain');
+                        .css({
+                            'overflow': 'hidden',
+                            'position': 'absolute',
+                            'width': '100%',
+                            'height': '100%',
+                            'background': 'url("images/table.png") no-repeat center center fixed',
+                            'background-size': 'contain'
+                        });
 
                     loadAvatars(localStorage.trainer);
                     engine.start();
