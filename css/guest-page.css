@@ -1,0 +1,30 @@
+#guest-holder {
+    background: url('../images/background.jpg');
+    background-size: 100% 100%;
+    height: 100%;
+    padding-top: 250px;
+}
+
+#guest-holder form {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+}
+
+#guest-holder form input {
+    margin-bottom: 10px;
+}
+
+#guest-holder form #buttons {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+#guest-holder form #buttons button {
+    margin: 10px;
+}
+
+#guest-holder label {
+    color: white;
+}
