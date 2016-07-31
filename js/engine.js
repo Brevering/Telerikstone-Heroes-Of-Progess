@@ -2,40 +2,33 @@
     'use strict';
 
     define(['cardCreator'], function (cardCreator) {
+        function botPlayerPlaceCard() {
+            let hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
+
+            if (hasPlayerPlacedCard === 'true') {
+                let $botPlayerCards = $('.enemyCard');
+                let $cardToPlace = $botPlayerCards[[Math.floor(Math.random() * $botPlayerCards.length)]];
+
+                localStorage.setItem('hasPlayerPlacedCard', 'false');
+                cardCreator.placeCard($cardToPlace);
+            }
+        }
+
+        function botPlayerPlaceCardEvent() {
+            $('#pass-turn').on('click', botPlayerPlaceCard);
+        }
+
+        function initializeCard(cardUrl, isPlayerCard) {
+            for (let i = 0; i < 10; i += 1) {
+                cardCreator.initializeCard(cardUrl, isPlayerCard);
+            }
+        }
+
         // starts the whole game
         function start() {
-            // testing
-            // draw 10 cards
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', true);
-
-            // draw 10 enemy cards
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
-            cardCreator.initializeCard('../images/cards/cuki_card.png', false);
+            initializeCard('../images/cards/cuki_card.png', true);
+            initializeCard('../images/cards/cuki_card.png', false);
+            botPlayerPlaceCardEvent();
         }
 
         return {

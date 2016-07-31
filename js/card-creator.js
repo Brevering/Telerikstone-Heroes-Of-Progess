@@ -4,7 +4,7 @@
     define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin'], function ($, TimelineMax, TweenMax, Easing, CSSPlugin) {
         function initializeCard(cardImageSrc, isPlayerCard) {
             let $card = $('<img>');
-            
+
             // add basic properties to the card dom element
             basicCardInit($card);
 
@@ -14,7 +14,7 @@
             }
             else {
                 enemyCardInit($card);
-            } 
+            }
         }
 
         // this adds basic properties to the card element
@@ -63,7 +63,7 @@
 
             // play player card intro animation
             // this animation will probably be attached to a button
-            TweenMax.to($cardDomElement, 2, {delay: 2, top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, width: '10%', ease: Expo.easeOut});
+            TweenMax.to($cardDomElement, 2, { delay: 2, top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, width: '10%', ease: Expo.easeOut });
         }
 
         // this initializes an enemy card
@@ -93,7 +93,7 @@
             $($cardDomElement).appendTo('#playField');
 
             // enemy card intro animation
-            TweenMax.to($cardDomElement, 1, {top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, ease: Expo.easeOut});
+            TweenMax.to($cardDomElement, 1, { top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, ease: Expo.easeOut });
 
             // add card events (place the card on the field)
             // this click event will eventually be replaced or removed
@@ -101,7 +101,7 @@
                 placeCard(event.target);
             });
         }
- 
+
         // this animates a card placement
         function placeCard(someCard) {
             let $someCard = $(someCard);
@@ -111,20 +111,21 @@
             if ($someCard.attr('class') === 'playerCard' && $('.placedPlayerCard').length < 7) {
                 let leftOffset = 95 - numberOfPlayerCardsInHand * 7 + '%';
 
-                TweenMax.to($someCard, 1, {width: '6%', left: leftOffset, top: '48%', rotation: 0, ease: Expo.easeOut});
+                TweenMax.to($someCard, 1, { width: '6%', left: leftOffset, top: '48%', rotation: 0, ease: Expo.easeOut });
+                localStorage.setItem('hasPlayerPlacedCard', 'true');
 
-                $someCard.attr('class', 'placedPlayerCard');          
+                $someCard.attr('class', 'placedPlayerCard');
             }
             else if ($someCard.attr('class') === 'enemyCard' && $('.placedEnemyCard').length < 7) {
                 let leftOffset = 95 - numberOfEnemyCardsInHand * 7 + '%';
 
-                TweenMax.to($someCard, 1, {width: '6%', left: leftOffset, top: '28%', rotation: 0, ease: Expo.easeOut});
+                TweenMax.to($someCard, 1, { width: '6%', left: leftOffset, top: '28%', rotation: 0, ease: Expo.easeOut });
 
                 $someCard.attr('src', '../images/cards/cuki_card.png');
                 $someCard.attr('class', 'placedEnemyCard');
             }
         }
- 
+
         return {
             initializeCard: initializeCard,
             placeCard: placeCard
