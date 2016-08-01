@@ -19,6 +19,7 @@
             'headers': './helpers/headers',
             'url': './helpers/url',
             'fileReader': './helpers/file-reader',
+            'validator':'./helpers/validator',
 
             // Models
             'userModel': './models/user-model',
