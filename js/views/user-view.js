@@ -48,9 +48,7 @@
                 setTimeout(function () {
                     $('body').addClass('loaded');
                 }, 1000);
-                setTimeout(function () {
-                    $('body').removeClass('loaded');
-                }, 1);
+                $('body').removeClass('loaded');
             });
         }
 
@@ -87,7 +85,9 @@
                             username: $('#username').val(),
                             name: $('#name').val(),
                             password: $('#password').val(),
-                            picture: $('#picture').attr('data-picture-data')
+                            picture: $('#picture').attr('data-picture-data'),
+                            wins: '0',
+                            defeats: '0'
                         };
 
                         Sammy(function () {

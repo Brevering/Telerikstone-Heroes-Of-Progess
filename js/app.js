@@ -37,12 +37,13 @@
             'card': './cards/card',
             'minionCard': './cards/minion-card',
             'powerCard': './cards/power-card',
-            'weaponCard': './cards/weapon-card'
+            'weaponCard': './cards/weapon-card',
+            'decks': './cards/decks'
         }
     });
 
-    require(['jquery', 'sammy', 'handlebars', 'requester', 'userController'],
-        function ($, Sammy, Handlebars, Requester, UserController) {
+    require(['jquery', 'sammy', 'handlebars', 'requester', 'userController', 'decks'],
+        function ($, Sammy, Handlebars, Requester, UserController, decks) {
             const container = '#container';
             const appId = 'kid_SJxQIaiv';
             const appSecret = 'dc497d5b7de74f998c00d3af6e1a55c9';
@@ -51,7 +52,7 @@
             const userController = new UserController();
 
             let router = Sammy(function () {
-                this.get('#/', function () {
+                this.get('#/', function () {                    
                     userController.loadGuestPage(container);
                 });
 

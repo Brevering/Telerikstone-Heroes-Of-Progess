@@ -84,8 +84,7 @@
 
             if (numberOfEnemyCardsInHand < 6) {
                 cardInHandTopOffset = -22 + numberOfEnemyCardsInHand + '%';
-            }
-            else {
+            } else {
                 cardInHandTopOffset = -22 - numberOfEnemyCardsInHand + 11 + '%';
             }
 
