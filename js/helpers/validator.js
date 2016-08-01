@@ -6,13 +6,13 @@
 
         Validator.prototype = {
             onInvalidUserName(username) {
-                if (username.length < 3 || username > 20 || !username) {
+                if (username.length < 3 || username.length > 20 || !username) {
                     return false;
                 }
                 return true;
             },
             onInvalidPassword(password) {
-                if (password.length < 3 || password > 20 || !password) {
+                if (password.length < 3 || password.length > 20 || !password) {
                     return false;
                 }
                 return true;
