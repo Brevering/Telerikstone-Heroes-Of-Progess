@@ -41,8 +41,8 @@
         }
     });
 
-    require(['sammy', 'handlebars', 'requester', 'userController'],
-        function (Sammy, Handlebars, Requester, UserController) {
+    require(['jquery', 'sammy', 'handlebars', 'requester', 'userController'],
+        function ($, Sammy, Handlebars, Requester, UserController) {
             const container = '#container';
             const appId = 'kid_SJxQIaiv';
             const appSecret = 'dc497d5b7de74f998c00d3af6e1a55c9';
@@ -91,4 +91,4 @@
 
             router.run('#/');
         });
-}());
+} ());

@@ -43,12 +43,24 @@
             return getPlayerImageUrl(botPlayerName);
         }
 
+        function showLoader() {
+            $(function () {
+                setTimeout(function () {
+                    $('body').addClass('loaded');
+                }, 1000);
+                setTimeout(function () {
+                    $('body').removeClass('loaded');
+                }, 1);
+            });
+        }
+
         function UserView() {
         }
 
         UserView.prototype = {
             showGuestPage(selector) {
                 return $.get('templates/guest-home.html', function (template) {
+                    showLoader();
                     $(selector).empty();
                     $(selector).append(template);
 
@@ -66,6 +78,7 @@
             },
             showRegisterPage(selector) {
                 return $.get('templates/register.html', function (template) {
+                    showLoader();
                     $(selector).empty();
                     $(selector).append(template);
 
@@ -85,6 +98,7 @@
             },
             showHomePage(selector, data) {
                 return $.get('templates/home.html', function (template) {
+                    showLoader();
                     $(selector).empty();
 
                     let templateFunc = Handlebars.compile(template);
@@ -101,6 +115,7 @@
             },
             showTrainersPage(selector) {
                 $.get('templates/trainers-page.html', function (html) {
+                    showLoader();
                     $(selector).empty();
                     $(selector).append(html);
 
@@ -111,6 +126,7 @@
             },
             showGamePage(selector) {
                 $.get('templates/game-page.html', function (html) {
+                    showLoader();
                     $(selector).empty();
                     $(selector).append(html);
 
@@ -140,4 +156,4 @@
 
         return UserView;
     });
-}());
+} ());
