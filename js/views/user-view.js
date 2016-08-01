@@ -52,6 +52,15 @@
             });
         }
 
+        function showNotification(text, type) {
+            noty({
+                text: text,
+                layout: 'top',
+                type: type,
+                timeout: 1500
+            });
+        }
+
         function UserView() {
         }
 
@@ -89,10 +98,14 @@
                             wins: '0',
                             defeats: '0'
                         };
-
-                        Sammy(function () {
-                            this.trigger('register', data);
-                        });
+                        let validate = new Validator();
+                        if (validate.onInvalidUserName(data.username) && validate.onInvalidPassword(data.password)) {
+                            Sammy(function () {
+                                this.trigger('register', data);
+                            });
+                        } else {
+                            showNotification('Registration failed!', 'error');
+                        }
                     });
                 });
             },

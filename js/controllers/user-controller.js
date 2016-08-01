@@ -52,10 +52,7 @@
                             Sammy(function () {
                                 this.trigger('redirectToUrl', { url: '#/' });
                             });
-                        },
-                        function (error) {
-                            showNotification('Registration failed!', 'error');
-                        });
+                        });        
                 },
                 loginUser(data, appId, appSecret) {
                     userModel.login(data, appId, appSecret)
