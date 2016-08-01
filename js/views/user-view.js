@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'sammy', 'fileReader', 'handlebars', 'engine','validator'], function ($, Sammy, fileReader, Handlebars, engine,Validator) {
+    define(['jquery', 'sammy', 'fileReader', 'handlebars', 'engine', 'validator'], function ($, Sammy, fileReader, Handlebars, engine, Validator) {
         function getPlayerImageUrl(playerName) {
             switch (playerName) {
                 case 'koce':
@@ -58,6 +58,32 @@
                 layout: 'top',
                 type: type,
                 timeout: 1500
+            });
+        }
+
+        // To be modified, just for testing purpose. DO NOT TOUCH!!!
+        function dataButtonsEvents() {
+            $('#send-user-data').on('click', function () {
+                let data = {
+                    wins: Number(localStorage.getItem('currentWins')) + 1,
+                    defeats: Number(localStorage.getItem('currentDefeats')) + 1
+                };
+
+                Sammy(function () {
+                    this.trigger('send-user-data', data);
+                });
+            });
+
+            $('#get-user-data').on('click', function () {
+                Sammy(function () {
+                    this.trigger('get-user-data');
+                });
+            });
+
+            $('#get-all-users-data').on('click', function () {
+                 Sammy(function () {
+                    this.trigger('get-all-users-data');
+                });
             });
         }
 
@@ -118,6 +144,8 @@
                     let html = templateFunc(data);
 
                     $(selector).append(html);
+
+                    dataButtonsEvents();
 
                     $('#btn-logout').on('click', function () {
                         Sammy(function () {

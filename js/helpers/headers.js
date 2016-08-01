@@ -24,6 +24,11 @@
                 }
 
                 return headers;
+            },
+            getAllUsersHeaders() {
+                return {
+                    'Authorization': 'Basic a2lkX1NKeFFJYWl2OjI2ZGE0MDMyNmVhZDQxODg4MzE4YjRhOWEyNDNhOTUz'
+                };
             }
         };
 

@@ -52,7 +52,7 @@
                             Sammy(function () {
                                 this.trigger('redirectToUrl', { url: '#/' });
                             });
-                        });        
+                        });
                 },
                 loginUser(data, appId, appSecret) {
                     userModel.login(data, appId, appSecret)
@@ -60,6 +60,8 @@
                         function (success) {
                             localStorage.setItem('sessionToken', success._kmd.authtoken);
                             localStorage.setItem('userId', success._id);
+                            localStorage.setItem('currentWins', success.wins);
+                            localStorage.setItem('currentDefeats', success.defeats);
 
                             Sammy(function () {
                                 this.trigger('redirectToUrl', { url: '#/home/' });
@@ -86,8 +88,37 @@
                         },
                         function (error) {
                             showNotification('Logout failed!', 'error');
-                        }
-                        );
+                        });
+                },
+                sendUserData(data) {
+                    userModel.sendUserData(data)
+                        .then(
+                        function (success) {
+                            console.log(JSON.stringify(success));
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                },
+                getUserData() {
+                    userModel.getUserData()
+                        .then(
+                        function (success) {
+                            console.log(JSON.stringify(success));
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                },
+                getAllUsersData() {
+                    userModel.getAllUsersData()
+                        .then(
+                        function (success) {
+                            console.log(JSON.stringify(success));
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
                 }
             };
 

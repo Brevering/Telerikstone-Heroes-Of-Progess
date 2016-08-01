@@ -19,7 +19,7 @@
             'headers': './helpers/headers',
             'url': './helpers/url',
             'fileReader': './helpers/file-reader',
-            'validator':'./helpers/validator',
+            'validator': './helpers/validator',
 
             // Models
             'userModel': './models/user-model',
@@ -53,7 +53,7 @@
             const userController = new UserController();
 
             let router = Sammy(function () {
-                this.get('#/', function () {                    
+                this.get('#/', function () {
                     userController.loadGuestPage(container);
                 });
 
@@ -73,7 +73,7 @@
                     userController.loadGamePage(container);
                 });
 
-                // Bindings
+                // Sammy events
                 this.bind('redirectToUrl', function (event, data) {
                     this.redirect(data.url);
                 });
@@ -88,6 +88,18 @@
 
                 this.bind('logout', function (event, data) {
                     userController.logoutUser();
+                });
+
+                this.bind('send-user-data', function (event, data) {
+                    userController.sendUserData(data);
+                });
+
+                this.bind('get-user-data', function (event) {
+                    userController.getUserData();
+                });
+
+                this.bind('get-all-users-data', function () {
+                    userController.getAllUsersData();
                 });
             });
 
