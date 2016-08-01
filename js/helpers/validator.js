@@ -18,6 +18,7 @@
                 return true;
             },
         };
+        return Validator;
     });
 
 } ());

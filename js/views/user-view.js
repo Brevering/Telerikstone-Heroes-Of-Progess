@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'sammy', 'fileReader', 'handlebars', 'engine'], function ($, Sammy, fileReader, Handlebars, engine) {
+    define(['jquery', 'sammy', 'fileReader', 'handlebars', 'engine','validator'], function ($, Sammy, fileReader, Handlebars, engine,Validator) {
         function getPlayerImageUrl(playerName) {
             switch (playerName) {
                 case 'koce':
