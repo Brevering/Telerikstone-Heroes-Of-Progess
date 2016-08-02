@@ -18,9 +18,15 @@
     color: white;
 }
 
-#statistics-window {
+#chartdiv {
     position: absolute;
     width: 80%;
     height: 90%;
     display: none;
+    right: 10%;
+    bottom: 5%;
+    z-index: 1000;
+    background-color: white;
+    border-radius: 10px;
+    opacity: 0.9;
 }

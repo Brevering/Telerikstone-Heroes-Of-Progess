@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['userView', 'userModel', 'noty', 'sammy', 'headers', 'requester', 'url'],
-        function (UserView, UserModel, noty, Sammy, Headers, Requester, url) {
+    define(['userView', 'userModel', 'noty', 'sammy', 'headers', 'requester', 'url', 'statistics'],
+        function (UserView, UserModel, noty, Sammy, Headers, Requester, url, statistics) {
             function showNotification(text, type) {
                 noty({
                     text: text,
@@ -114,7 +114,8 @@
                     userModel.getAllUsersData()
                         .then(
                         function (success) {
-                            console.log(JSON.stringify(success));
+                            statistics.showTopUsers(success);
+                            $('#chartdiv').show();
                         },
                         function (error) {
                             console.log(error);
