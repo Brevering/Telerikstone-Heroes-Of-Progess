@@ -15,14 +15,17 @@
             'TimelineMax': '../bower_components/gsap/src/minified/TimelineMax.min',
             'AmCharts':'./amcharts/amcharts',
             'serial':'./amcharts/serial',
-           
+            'Pixi': '../bower_components/pixi.js/bin/pixi.min',
+            'GreensockPixiPlugin': '../bower_components/gsap-pixi-plugin/PixiPlugin',
+
             // Helpers
             'requester': './helpers/requester',
             'headers': './helpers/headers',
             'url': './helpers/url',
             'fileReader': './helpers/file-reader',
             'validator': './helpers/validator',
-
+            'globalValues': './helpers/globalValues',
+            
             // Models
             'userModel': './models/user-model',
 

@@ -1,0 +1,22 @@
+{
+  "name": "gsap-pixi-plugin",
+  "homepage": "https://github.com/NoProtocol/gsap-pixi-plugin",
+  "description": "Plugin for tweening Pixi.js objects",
+  "main": "PixiPlugin.js",
+  "keywords": [
+    "gsap",
+    "pixi"
+  ],
+  "license": "MIT",
+  "version": "0.1.0",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "cea8b3a783fa6dd391d6f1080171851f7c69a8a4"
+  },
+  "_source": "https://github.com/NoProtocol/gsap-pixi-plugin.git",
+  "_target": "^0.1.0",
+  "_originalSource": "gsap-pixi-plugin",
+  "_direct": true
+}

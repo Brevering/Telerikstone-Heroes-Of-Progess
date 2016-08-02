@@ -1,112 +1,99 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin'], function ($, TimelineMax, TweenMax, Easing, CSSPlugin) {
-        function initializeCard(cardImageSrc, isPlayerCard) {
-            let $card = $('<img>');
+    define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin', 'Pixi', 'GreensockPixiPlugin', 'globalValues'], 
+    function ($, TimelineMax, TweenMax, Easing, CSSPlugin, Pixi, GreensockPixiPlugin, globalValues) {
+
+        let numberOfPlayerCardsInHand = 0;
+        let numberOfEnemyCardsInHand = 0;
+
+        function initializeCard(someStage, cardImageSrc, isPlayerCard) {
+            let cardTexture = PIXI.Texture.fromImage(cardImageSrc);
+            let cardSprite = new PIXI.Sprite(cardTexture);
+            let cardContainer = new PIXI.Container();
+            // let $card = $('<img>');
 
             // add basic properties to the card dom element
-            basicCardInit($card);
+            basicCardInit(cardSprite);
 
             // add properties to the card dom element in accordance to the card type (pleayer or enemy card)
             if (isPlayerCard === true) {
-                playerCardInit($card, cardImageSrc);
+                playerCardInit(someStage, cardSprite, cardContainer);
+
+                numberOfPlayerCardsInHand += 1;
             }
             else {
-                enemyCardInit($card);
+                enemyCardInit(someStage, cardContainer);
             }
         }
 
         // this adds basic properties to the card element
-        function basicCardInit($cardDomElement) {
-            $cardDomElement.attr('alt', 'aCard');
-
-            $cardDomElement.css({
-                position: 'absolute',
-                display: 'inline-block',
-                width: '10%',
-                height: 'auto'
-            });
+        function basicCardInit(cardSprite) {
+            cardSprite.anchor.x = 0.5;
+            cardSprite.anchor.y = 0.5;
+            cardSprite.scale = new PIXI.Point(0.5, 0.5);
         }
 
         // this initializes a player card
-        function playerCardInit($cardDomElement, cardImageSrc) {
-            $cardDomElement.css({
-                top: '25%',
-                right: '20%',
-                width: '15%'
-            });
-
-            // add card attributes
-            $cardDomElement.attr('class', 'playerCard').attr('src', `${cardImageSrc}`);
+        function playerCardInit(stage, cardSprite, cardContainer) {
+            cardSprite.position.x = globalValues.canvasWidth / 2 + 500;
+            cardSprite.position.y = globalValues.canvasHeight / 2 - 100;
 
             // add card events
-            $cardDomElement.on('click', function () {
-                placeCard(event.target);
-            });
+            // $cardDomElement.on('click', function () {
+            //     placeCard(event.target);
+            // });
 
             // calculate card in hand offset
-            let numberOfPlayerCardsInHand = $('.playerCard').length;
-            let cardInHandLeftOffset = 35 + numberOfPlayerCardsInHand * 2 + '%';
-            let cardInHandTopOffset;
-            let rotationOfCard = -20 + numberOfPlayerCardsInHand * 5;
-
-            if (numberOfPlayerCardsInHand < 6) {
-                cardInHandTopOffset = 80 - numberOfPlayerCardsInHand + 11 + '%';
-            }
-            else {
-                cardInHandTopOffset = 80 + numberOfPlayerCardsInHand + '%';
-            }
+            let rotationOfCard;
+            let cardInHandTopOffset = globalValues.canvasHeight - 10;
+            let cardInHandLeftOffset = 600 + numberOfPlayerCardsInHand * 50;
 
             // add card to the hand
-            $($cardDomElement).appendTo('#playField');
-
+            cardContainer.addChild(cardSprite);
+            stage.addChild(cardContainer);
+            
             // play player card intro animation
             // this animation will probably be attached to a button
-            TweenMax.to($cardDomElement, 2, { delay: 2, top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, width: '10%', ease: Expo.easeOut });
+            TweenLite.to(cardSprite, 2, {delay: 2, x: cardInHandLeftOffset, y: cardInHandTopOffset, ease: Expo.easeOut});
         }
 
         // this initializes an enemy card
-        function enemyCardInit($cardDomElement) {
-            $cardDomElement.css({
-                top: '-40%',
-                left: '35%'
-            });
-
-            // add card attributes
-            $cardDomElement.attr('class', 'enemyCard').attr('src', 'images/cards/card_back.png');
+        function enemyCardInit(stage, cardContainer) {
+            // set card texture
+            let cardTexture = PIXI.Texture.fromImage('images/cards/card_back.png');
+            let cardSprite = new PIXI.Sprite(cardTexture);
+            
+            cardSprite.position.x = globalValues.canvasWidth / 2;
+            cardSprite.position.y = globalValues.canvasHeight / 2;
 
             // calculate card in hand offset
-            let numberOfEnemyCardsInHand = $('.enemyCard').length;
-            let cardInHandLeftOffset = 35 + numberOfEnemyCardsInHand * 2 + '%';
-            let cardInHandTopOffset;
-            let rotationOfCard = 20 - numberOfEnemyCardsInHand * 5;
+            // let numberOfEnemyCardsInHand = $('.enemyCard').length;
+            // let cardInHandLeftOffset = 35 + numberOfEnemyCardsInHand * 2 + '%';
+            // let cardInHandTopOffset;
+            // let rotationOfCard = 20 - numberOfEnemyCardsInHand * 5;
 
-            if (numberOfEnemyCardsInHand < 6) {
-                cardInHandTopOffset = -22 + numberOfEnemyCardsInHand + '%';
-            } else {
-                cardInHandTopOffset = -22 - numberOfEnemyCardsInHand + 11 + '%';
-            }
+            // if (numberOfEnemyCardsInHand < 6) {
+            //     cardInHandTopOffset = -22 + numberOfEnemyCardsInHand + '%';
+            // } else {
+            //     cardInHandTopOffset = -22 - numberOfEnemyCardsInHand + 11 + '%';
+            // }
 
             // add card to the field
-            $($cardDomElement).appendTo('#playField');
-
+            cardContainer.addChild(cardSprite);
+            stage.addChild(cardContainer);
             // enemy card intro animation
-            TweenMax.to($cardDomElement, 1, { top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, ease: Expo.easeOut });
+            // TweenMax.to($cardDomElement, 1, { top: cardInHandTopOffset, left: cardInHandLeftOffset, rotation: rotationOfCard, ease: Expo.easeOut });
 
             // add card events (place the card on the field)
             // this click event will eventually be replaced or removed
-            $cardDomElement.on('click', function () {
-                placeCard(event.target);
-            });
+            // $cardDomElement.on('click', function () {
+            //     placeCard(event.target);
+            // });
         }
 
         // this animates a card placement
         function placeCard(someCard) {
-            let $someCard = $(someCard);
-            let numberOfPlayerCardsInHand = $('.playerCard').length;
-            let numberOfEnemyCardsInHand = $('.enemyCard').length;
-
             if ($someCard.attr('class') === 'playerCard' && $('.placedPlayerCard').length < 7) {
                 let leftOffset = 95 - numberOfPlayerCardsInHand * 7 + '%';
 

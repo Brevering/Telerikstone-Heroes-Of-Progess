@@ -181,14 +181,31 @@
                                 'background-size': 'cover'
                             });
                         $('#playField')
+                        .css({
+                            'overflow': 'hidden',
+                            'position': 'absolute',
+                            'width': '100%',
+                            'height': '100%',
+                            'background-size': 'contain',
+                            'display': 'flex',
+                            'align-items': 'center',
+                            'justify-content': 'center'
+                        });
+                        $('#canvasWrapper')
                             .css({
-                                'overflow': 'hidden',
-                                'position': 'absolute',
-                                'width': '100%',
-                                'height': '100%',
-                                'background': 'url("images/table.png") no-repeat center center fixed',
-                                'background-size': 'contain'
+                                'display': 'flex',
+                                'align-items': 'center',
+                                'justify-content': 'center',
+                                'width': 'auto',
+                                'height': '100%'
                             });
+
+                        if (window.outerWidth <= 1366) {
+                            $('body').css('zoom', '0.75');
+                        }
+                        else{
+                            $('body').css('zoom', '1');
+                        }
 
                         loadAvatars(localStorage.trainer);
                         engine.start();
