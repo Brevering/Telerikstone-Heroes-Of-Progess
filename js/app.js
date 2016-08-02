@@ -13,7 +13,8 @@
             'Easing': '../bower_components/gsap/src/minified/easing/EasePack.min',
             'CSSPlugin': '../bower_components/gsap/src/minified/plugins/CSSPlugin.min',
             'TimelineMax': '../bower_components/gsap/src/minified/TimelineMax.min',
-
+            // 'AmCharts':'../bower_components/amcharts/amcharts',
+            // 'serial':'../bower_components/amcharts/serial',
             // Helpers
             'requester': './helpers/requester',
             'headers': './helpers/headers',
