@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'globalValues'], function (cardCreator, globalValues) {
+    define(['cardCreator', 'globalValues', 'card'], function (cardCreator, globalValues, Card) {
         let stage = new PIXI.Container();
 
         function botPlayerPlaceCard() {
@@ -22,9 +22,9 @@
 
         function initializeCard(stage, cardUrl, isPlayerCard) {
             for (let i = 0; i < 10; i += 1) {
-                cardCreator.initializeCard(stage, cardUrl, isPlayerCard);
+                let cardInstance = new Card(4, 5, 6, cardUrl, isPlayerCard);
+                cardCreator.initializeCard(stage, cardInstance);
             }
-            // cardCreator.initializeCard(stage, cardUrl, isPlayerCard);
         }
 
         function setUpTable() {
@@ -50,7 +50,7 @@
             setUpTable();
 
             initializeCard(stage, 'images/cards/cuki_card.png', true);
-            //initializeCard(stage, 'images/cards/cuki_card.png', false);
+            initializeCard(stage, 'images/cards/cuki_card.png', false);
             // botPlayerPlaceCardEvent();
         }
 

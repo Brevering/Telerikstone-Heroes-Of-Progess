@@ -2,12 +2,12 @@
     'use strict';
 
     define([], function () {
-        function Card(attack, health, mana, imgUrl, cardType, ability) {
+        function Card(attack, health, mana, imgUrl, isPlayerCard, ability) {
             this.attack = attack;
             this.health = health;
             this.mana = mana;
             this.imgUrl = imgUrl;
-            this.cardType = cardType;
+            this.isPlayerCard = isPlayerCard;
             this.ability = ability;
         }
 
@@ -36,11 +36,11 @@
             set imgUrl(value) {
                 this._imgUrl = value;
             },
-            get cardType() {
-                return this._cardType;
+            get isPlayerCard() {
+                return this._isPlayerCard;
             },
-            set cardType(value) {
-                this._cardType = value;
+            set isPlayerCard(value) {
+                this._isPlayerCard = value;
             },
             specialAbility() {
                 this.ability();
