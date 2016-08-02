@@ -1,12 +1,62 @@
 (function () {
 
     define(['jquery', 'sammy'], function ($, Sammy) {
-        function showTopUsers() {
+        function showMyStatistics(data) {
+            AmCharts.ready(function () {
+                // SERIAL CHART
+                var chart = new AmCharts.AmSerialChart();
+                chart.dataProvider = data;
+                chart.categoryField = "name";
+                chart.startDuration = 1;
+                // sometimes we need to set margins manually
+                // autoMargins should be set to false in order chart to use custom margin values
+                chart.autoMargins = false;
+                chart.marginRight = 0;
+                chart.marginLeft = 0;
+                chart.marginBottom = 0;
+                chart.marginTop = 0;
+
+                // AXES
+                // category
+                var categoryAxis = chart.categoryAxis;
+                categoryAxis.inside = true;
+                categoryAxis.axisAlpha = 0;
+                categoryAxis.gridAlpha = 0;
+                categoryAxis.tickLength = 0;
+
+                // value
+                var valueAxis = new AmCharts.ValueAxis();
+                valueAxis.minimum = 0;
+                valueAxis.axisAlpha = 0;
+                valueAxis.maximum = 80000;
+                valueAxis.dashLength = 4;
+                chart.addValueAxis(valueAxis);
+
+                // GRAPH
+                var graph = new AmCharts.AmGraph();
+                graph.valueField = "points";
+                graph.customBulletField = "bullet"; // field of the bullet in data provider
+                graph.bulletOffset = 16; // distance from the top of the column to the bullet
+                graph.colorField = "color";
+                graph.bulletSize = 34; // bullet image should be rectangle (width = height)
+                graph.type = "column";
+                graph.fillAlphas = 0.8;
+                graph.cornerRadiusTop = 8;
+                graph.lineAlpha = 0;
+                graph.balloonText = "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>";
+                chart.addGraph(graph);
+
+                // WRITE
+                chart.write("chartdiv");
+            });
+
+        }
+        function showTopUsers(data) {
 
             AmCharts.ready(function () {
                 // SERIAL CHART
                 chart = new AmCharts.AmSerialChart();
-                chart.dataProvider = chartData;
+                chart.dataProvider = data;
                 chart.categoryField = "name";
                 chart.startDuration = 1;
                 chart.plotAreaBorderColor = "#DADADA";
@@ -62,7 +112,8 @@
             });
         }
         return {
-            showTopUsers: showTopUsers
+            showTopUsers: showTopUsers,
+            showMyStatistics:showMyStatistics
         };
     });
 
