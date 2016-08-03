@@ -125,7 +125,9 @@
                                 wins: '0',
                                 defeats: '0'
                             };
+
                             let validate = new Validator();
+
                             if (validate.onInvalidUserName(data.username) && validate.onInvalidPassword(data.password)) {
                                 Sammy(function () {
                                     this.trigger('register', data);
@@ -171,6 +173,10 @@
                         showLoader();
                         $(selector).empty();
                         $(selector).append(html);
+                        localStorage.setItem('enemyCardId', '1');
+                        localStorage.setItem('playerCardId', 0);
+                        localStorage.setItem('hasAttacked', 'false');
+                        localStorage.setItem('currentCardAttack', '0');
 
                         $('#btn-exit-game').on('click', function () {
                             localStorage.clear();

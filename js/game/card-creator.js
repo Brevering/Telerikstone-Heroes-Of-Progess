@@ -3,7 +3,6 @@
 
     define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin', 'Pixi', 'GreensockPixiPlugin', 'globalValues'],
         function ($, TimelineMax, TweenMax, Easing, CSSPlugin, Pixi, GreensockPixiPlugin, globalValues) {
-
             let numberOfPlayerCardsInHand = 0;
             let numberOfEnemyCardsInHand = 0;
             let numberOfPlayerCardsOnTable = 0;
@@ -22,6 +21,9 @@
                 if (cardObject.isPlayerCard === true) {
                     cardObject.cardTexture = PIXI.Texture.fromImage(cardObject.imgUrl);
                     cardObject.cardSprite = new PIXI.Sprite(cardObject.cardTexture);
+                    cardObject.cardId = Number(localStorage.getItem('playerCardId'));
+                    cardObject.cardSprite.cardId = Number(localStorage.getItem('playerCardId'));
+                    localStorage.setItem('playerCardId', Number(localStorage.getItem('playerCardId')) + 2);
 
                     // add basic properties to the card
                     basicCardInit(cardObject);
@@ -33,6 +35,9 @@
                 else {
                     cardObject.cardTexture = PIXI.Texture.fromImage('images/cards/card_back.png');
                     cardObject.cardSprite = new PIXI.Sprite(cardObject.cardTexture);
+                    cardObject.cardId = Number(localStorage.getItem('enemyCardId'));
+                    cardObject.cardSprite.cardId = Number(localStorage.getItem('enemyCardId'));
+                    localStorage.setItem('enemyCardId', Number(localStorage.getItem('enemyCardId')) + 2);
 
                     // add basic properties to the card
                     basicCardInit(cardObject);
@@ -68,7 +73,7 @@
                     align: 'center'
                 });
                 damageStat.x = -cardObject.cardContainer.scale.x - 9 * widthOnePercent;
-                damageStat.y = cardObject.cardContainer.scale.y + 18 * heightOnePercent;;
+                damageStat.y = cardObject.cardContainer.scale.y + 18 * heightOnePercent;
                 cardObject.cardContainer.addChild(damageStat);
             }
 
@@ -193,4 +198,4 @@
                 getPlayersCards: getPlayersCards
             };
         });
-} ());
+}());

@@ -7,8 +7,6 @@
         let heightOnePercent = globalValues.heightOnePercent;
 
         function botPlayerPlaceCard(allCards, endTurnButton) {
-            console.log(allCards);
-
             let enemyCards = allCards.enemyCards;
             let hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
 
@@ -99,6 +97,39 @@
             }
         }
 
+        function attackEnemyCard(allCards) {
+            let playerCards = allCards.playerCards;
+            let enemyCards = allCards.enemyCards;
+
+            for (let i = 0; i < playerCards.length; i += 1) {
+                playerCards[i].cardSprite.on('mousedown', function (event) {
+                    let cardId = this.cardId;
+                    let cardObject = playerCards.filter(obj => obj.cardId === cardId)[0];
+
+                    if (cardObject.isPlayerCard && cardObject.isPlaced) {
+                        localStorage.setItem('hasAttacked', 'true');
+                        localStorage.setItem('currentCardAttack', cardObject.attack);
+                    }
+                });
+            }
+
+            for (let i = 0; i < enemyCards.length; i += 1) {
+                enemyCards[i].cardSprite.on('mousedown', function (event) {
+                    let cardId = this.cardId;
+                    let cardObject = enemyCards.filter(obj => obj.cardId === cardId)[0];
+
+                    if (!cardObject.isPlayerCard && cardObject.isPlaced) {
+                        localStorage.setItem('hasAttacked', 'false');
+                        console.log('before ' + cardObject.health);
+                        cardObject.health -= Number(localStorage.getItem('currentCardAttack'));
+                        console.log('after ' + cardObject.health);
+                        localStorage.setItem('currentCardAttack', '0');
+                    }
+                });
+            }
+
+        }
+
         // starts the whole game
         function start() {
             setUpTable();
@@ -120,6 +151,8 @@
                 endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
             });
 
+            attackEnemyCard(allCards);
+
             stage.addChild(endTurnButton);
         }
 
@@ -127,4 +160,4 @@
             start: start
         };
     });
-} ());
+}());
