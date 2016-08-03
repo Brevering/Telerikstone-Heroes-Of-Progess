@@ -10,7 +10,6 @@
             function initializeCard(stage, cardUrl, isPlayerCard) {
                 for (let i = 0; i < 10; i += 1) {
                     let cardInstance = new Card(4, 5, 6, cardUrl, isPlayerCard);
-
                     cardCreator.initializeCard(stage, cardInstance);
                 }
             }

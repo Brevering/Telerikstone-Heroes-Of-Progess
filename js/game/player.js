@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define([], function () {
+    define(['cardCreator'], function (cardCreator) {
         function attachAttackEnemyCardEvents(allCards) {
             let playerCards = allCards.playerCards;
             let enemyCards = allCards.enemyCards;
@@ -14,6 +14,7 @@
                     if (cardObject.isPlayerCard && cardObject.isPlaced) {
                         localStorage.setItem('currentCardAttack', cardObject.attack);
                         localStorage.setItem('canAttack', 'true');
+                        localStorage.setItem('attackerId', cardObject.cardId);
                     }
                 });
             }
@@ -32,6 +33,9 @@
                         localStorage.setItem('canAttack', 'false');
                         localStorage.setItem('isPlayerTurn', 'false');
                         localStorage.setItem('hasPlayerPlacedCard', 'true');
+
+                        let attacker = playerCards.filter(c => c.cardId === Number(localStorage.attackerId))[0];
+                        cardCreator.performAttackAnimation(attacker, cardObject);
                     } else {
                         cardObject.isJustPlaced = false;
                     }

@@ -106,7 +106,7 @@
 
                 // play player card intro animation
                 // this animation will probably be attached to a button
-                TweenLite.to(cardObject.cardContainer, 2, {
+                TweenMax.to(cardObject.cardContainer, 2, {
                     delay: 2,
                     pixi: {
                         x: cardInHandLeftOffset + 30 * widthOnePercent,
@@ -130,7 +130,7 @@
                 stage.addChild(cardObject.cardContainer);
 
                 // enemy card intro animation
-                TweenLite.to(cardObject.cardContainer, 2, {
+                TweenMax.to(cardObject.cardContainer, 2, {
                     delay: 2,
                     pixi: {
                         x: cardInHandLeftOffset + 30 * widthOnePercent,
@@ -152,7 +152,7 @@
 
                     if (localStorage.getItem('isPlayerTurn') === 'true') {
                         cardObject.isJustPlaced = true;
-                        TweenLite.to(cardObject.cardContainer, 1, {
+                        TweenMax.to(cardObject.cardContainer, 1, {
                             pixi: {
                                 x: leftOffset,
                                 y: 50 * heightOnePercent,
@@ -172,7 +172,7 @@
                     let leftOffset = 22 * widthOnePercent + numberOfEnemyCardsOnTable * widthOnePercent * 7;
 
                     cardObject.isJustPlaced = true;
-                    TweenLite.to(cardObject.cardContainer, 1, {
+                    TweenMax.to(cardObject.cardContainer, 1, {
                         pixi: {
                             x: leftOffset,
                             y: 34 * heightOnePercent,
@@ -196,10 +196,24 @@
                 };
             }
 
+            function performAttackAnimation(fromCard, toCard) {
+                let startX = fromCard.cardContainer.x;
+                let startY = fromCard.cardContainer.y;
+                let destinationX = toCard.cardContainer.x;
+                let destinationY = toCard.cardContainer.y;
+
+                TweenMax.to(fromCard, 1.5, {
+                    x: destinationX,
+                    y: destinationY,
+                    repeat: 1
+                });
+            }
+
             return {
                 initializeCard: initializeCard,
                 placeCard: placeCard,
-                getPlayersCards: getPlayersCards
+                getPlayersCards: getPlayersCards,
+                performAttackAnimation: performAttackAnimation
             };
         });
 }());
