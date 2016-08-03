@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'globalValues', 'card'], function (cardCreator, globalValues, Card) {
+    define(['cardCreator', 'globalValues', 'card', 'minionCard'], function (cardCreator, globalValues, Card, MinionCard) {
         let stage = new PIXI.Container();
 
         function botPlayerPlaceCard() {
@@ -23,6 +23,7 @@
         function initializeCard(stage, cardUrl, isPlayerCard) {
             for (let i = 0; i < 10; i += 1) {
                 let cardInstance = new Card(4, 5, 6, cardUrl, isPlayerCard);
+
                 cardCreator.initializeCard(stage, cardInstance);
             }
         }
@@ -85,13 +86,15 @@
             endTurnButton.position.y = 384;
 
             endTurnButton.on('mousedown', function () {
-                console.log(this);
+                console.log('FIRED');
+                endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
             });
 
             return endTurnButton;
         }
 
         function setUpTable() {
+            console.log(globalValues);
             let renderer = PIXI.autoDetectRenderer(globalValues.canvasWidth, globalValues.canvasHeight);
             $('#playFieldCanvas').append(renderer.view);
             let background = new PIXI.Sprite(PIXI.Texture.fromImage('images/table.png'));
@@ -105,7 +108,7 @@
             stage.addChild(background);
             stage.addChild(playersAvatars[0]);
             stage.addChild(playersAvatars[1]);
-            stage.addChild(endTurnButton)
+            stage.addChild(endTurnButton);
 
             initPixi();
 
@@ -118,6 +121,8 @@
         // starts the whole game
         function start() {
             setUpTable();
+            let allCards = cardCreator.getPlayersCards();
+            console.log(allCards);
 
             initializeCard(stage, 'images/cards/cuki_card.png', true);
             initializeCard(stage, 'images/cards/cuki_card.png', false);

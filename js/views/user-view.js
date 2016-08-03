@@ -198,14 +198,7 @@
                                 'justify-content': 'center',
                                 'width': 'auto',
                                 'height': '100%'
-                            });
-
-                        if (window.outerWidth <= 1366) {
-                            $('body').css('zoom', '0.75');
-                        }
-                        else{
-                            $('body').css('zoom', '1');
-                        }
+                            });                       
 
                         loadAvatars(localStorage.trainer);
                         engine.start();
