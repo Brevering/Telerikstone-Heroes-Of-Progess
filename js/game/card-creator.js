@@ -45,30 +45,30 @@
 
             function initStats(cardObject) {
                 let healthStat = new PIXI.Text(cardObject.health, {
-                    font: 'bold ' + 1.5 * widthOnePercent + 'px Arial',
-                    fill: 'black',
+                    font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                    fill: 'cyan',
                     align: 'center'
                 });
-                healthStat.x = cardObject.cardSprite.texture.baseTexture.width - 4 * widthOnePercent;
-                healthStat.y = cardObject.cardSprite.texture.baseTexture.height - 7 * heightOnePercent;
+                healthStat.x = cardObject.cardContainer.scale.x + 6 * widthOnePercent;
+                healthStat.y = cardObject.cardContainer.scale.y + 18 * heightOnePercent;
                 cardObject.cardContainer.addChild(healthStat);
 
                 let manaStat = new PIXI.Text(cardObject.mana, {
-                    font: 'bold ' + 1.5 * widthOnePercent + 'px Arial',
-                    fill: 'black',
+                    font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                    fill: 'cyan',
                     align: 'center'
                 });
-                manaStat.x = -cardObject.cardSprite.texture.baseTexture.width + 3.5 * widthOnePercent;
-                manaStat.y = -cardObject.cardSprite.texture.baseTexture.height + 5.5 * heightOnePercent;
+                manaStat.x = -cardObject.cardContainer.scale.x - 9 * widthOnePercent;
+                manaStat.y = -cardObject.cardContainer.scale.y - 23.5 * heightOnePercent;
                 cardObject.cardContainer.addChild(manaStat);
 
                 let damageStat = new PIXI.Text(cardObject.attack, {
-                    font: 'bold ' + 1.5 * widthOnePercent + 'px Arial',
-                    fill: 'black',
+                    font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                    fill: 'cyan',
                     align: 'center'
                 });
-                damageStat.x = -cardObject.cardSprite.texture.baseTexture.width + 3.5 * widthOnePercent;
-                damageStat.y = cardObject.cardSprite.texture.baseTexture.height - 7 * heightOnePercent;
+                damageStat.x = -cardObject.cardContainer.scale.x - 9 * widthOnePercent;
+                damageStat.y = cardObject.cardContainer.scale.y + 18 * heightOnePercent;;
                 cardObject.cardContainer.addChild(damageStat);
             }
 
