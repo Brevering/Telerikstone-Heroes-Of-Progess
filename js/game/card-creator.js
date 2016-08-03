@@ -225,8 +225,10 @@
                     playerCards[i].cardSprite.on('mouseover', function () {
                         if (!currentCard.isPlaced) {
                             TweenMax.to(currentCard.cardContainer, 0.5, {
-                                y: normalY - heightOnePercent * -5,
-                                scale: 1.8
+                                pixi: {
+                                    y: normalY - heightOnePercent * 20,
+                                    scale: 0.1 * globalValues.heightOnePercent
+                                }
                             });
                         }
                     });
@@ -234,8 +236,10 @@
                     playerCards[i].cardSprite.on('mouseout', function () {
                         if (!currentCard.isPlaced) {
                             TweenMax.to(currentCard.cardContainer, 0.5, {
-                                y: normalY + 30 * heightOnePercent,
-                                scale: 1
+                                pixi: {
+                                    y: normalY + heightOnePercent * 30,
+                                    scale: 0.05 * globalValues.heightOnePercent
+                                }
                             });
                         }
                     });
