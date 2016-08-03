@@ -114,6 +114,8 @@
                     userModel.getAllUsersData()
                         .then(
                         function (success) {
+                            success = success.slice(0, 10).sort((a, b) => Number(a.wins) - Number(b.wins)).reverse();
+
                             statistics.showTopUsers(success);
                             $('#chartdiv').show();
                         },

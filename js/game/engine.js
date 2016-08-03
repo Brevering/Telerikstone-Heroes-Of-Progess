@@ -27,6 +27,70 @@
             }
         }
 
+        function getPlayerImageUrl(playerName) {
+            switch (playerName) {
+                case 'koce':
+                    return 'images/koce.png';
+                case 'cuki':
+                    return 'images/cuki.png';
+                case 'doncho':
+                    return 'images/doncho.png';
+                case 'evlogi':
+                    return 'images/evlogi.png';
+            }
+        }
+
+        function getBotPlayerImageUrl(realPlayerName) {
+            let botPlayerName;
+
+            if (realPlayerName === 'koce') {
+                botPlayerName = ['doncho', 'cuki', 'evlogi'][Math.floor(Math.random() * 3)];
+            } else if (realPlayerName === 'cuki') {
+                botPlayerName = ['doncho', 'koce', 'evlogi'][Math.floor(Math.random() * 3)];
+            } else if (realPlayerName === 'doncho') {
+                botPlayerName = ['cuki', 'koce', 'evlogi'][Math.floor(Math.random() * 3)];
+            } else {
+                botPlayerName = ['cuki', 'koce', 'doncho'][Math.floor(Math.random() * 3)];
+            }
+
+            return getPlayerImageUrl(botPlayerName);
+        }
+
+        function loadAvatars(playerName) {
+            let playerAvatar = new PIXI.Sprite(PIXI.Texture.fromImage(getPlayerImageUrl(playerName)));
+            let enemyAvatar = new PIXI.Sprite(PIXI.Texture.fromImage(getBotPlayerImageUrl(playerName)));
+
+            playerAvatar.width = 150;
+            playerAvatar.height = 200;
+
+            enemyAvatar.width = 150;
+            enemyAvatar.height = 200;
+
+            playerAvatar.position.x = 720;
+            playerAvatar.position.y = 600;
+
+            enemyAvatar.position.x = 720;
+            enemyAvatar.position.y = 90;
+
+            return [playerAvatar, enemyAvatar];
+        }
+
+        function setupEndTurnBtn() {
+            let endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
+
+            endTurnButton.interactive = true;
+            endTurnButton.width = 105;
+            endTurnButton.height = 55;
+            endTurnButton.position.x = 1235;
+            endTurnButton.position.y = 384;
+
+            endTurnButton.on('mousedown', function () {
+                console.log(this);
+            });
+
+            return endTurnButton;
+        }
+
         function setUpTable() {
             let renderer = PIXI.autoDetectRenderer(globalValues.canvasWidth, globalValues.canvasHeight);
             $('#playFieldCanvas').append(renderer.view);
@@ -35,7 +99,13 @@
             background.width = globalValues.canvasWidth;
             background.height = globalValues.canvasHeight;
 
+            let playersAvatars = loadAvatars(localStorage.trainer);
+            let endTurnButton = setupEndTurnBtn();
+
             stage.addChild(background);
+            stage.addChild(playersAvatars[0]);
+            stage.addChild(playersAvatars[1]);
+            stage.addChild(endTurnButton)
 
             initPixi();
 
