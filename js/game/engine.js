@@ -106,6 +106,7 @@
                 });
 
                 player.attachAttackEnemyCardEvents(allCards);
+                cardCreator.hoverPlayerCard();
 
                 stage.addChild(endTurnButton);
             }

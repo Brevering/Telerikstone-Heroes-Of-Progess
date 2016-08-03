@@ -185,9 +185,7 @@
                     });
 
                     cardObject.cardSprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
-
                     cardObject.isPlaced = true;
-
                     numberOfEnemyCardsOnTable += 1;
                 }
             }
@@ -217,11 +215,39 @@
                     });
             }
 
+            function hoverPlayerCard() {
+                for (let i = 0; i < playerCards.length; i += 1) {
+                    let currentCard = playerCards[i];
+                    let normalY = currentCard.cardContainer.y;
+                    let normalWidth = currentCard.cardContainer.width;
+                    let normalHeight = currentCard.cardContainer.height;
+
+                    playerCards[i].cardSprite.on('mouseover', function () {
+                        if (!currentCard.isPlaced) {
+                            TweenMax.to(currentCard.cardContainer, 0.5, {
+                                y: normalY - heightOnePercent * -5,
+                                scale: 1.8
+                            });
+                        }
+                    });
+
+                    playerCards[i].cardSprite.on('mouseout', function () {
+                        if (!currentCard.isPlaced) {
+                            TweenMax.to(currentCard.cardContainer, 0.5, {
+                                y: normalY + 30 * heightOnePercent,
+                                scale: 1
+                            });
+                        }
+                    });
+                }
+            }
+
             return {
                 initializeCard: initializeCard,
                 placeCard: placeCard,
                 getPlayersCards: getPlayersCards,
-                performAttackAnimation: performAttackAnimation
+                performAttackAnimation: performAttackAnimation,
+                hoverPlayerCard: hoverPlayerCard
             };
         });
 }());
