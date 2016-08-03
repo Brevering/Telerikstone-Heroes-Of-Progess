@@ -150,24 +150,28 @@
                 if (cardObject.isPlayerCard === true && numberOfPlayerCardsOnTable < 7 && cardObject.isPlaced === false) {
                     let leftOffset = 22 * widthOnePercent + numberOfPlayerCardsOnTable * widthOnePercent * 7;
 
-                    TweenLite.to(cardObject.cardContainer, 1, {
-                        pixi: {
-                            x: leftOffset,
-                            y: 50 * heightOnePercent,
-                            scale: 0.025 * heightOnePercent
-                        },
-                        ease: Expo.easeOut
-                    });
+                    if (localStorage.getItem('isPlayerTurn') === 'true') {
+                        cardObject.isJustPlaced = true;
+                        TweenLite.to(cardObject.cardContainer, 1, {
+                            pixi: {
+                                x: leftOffset,
+                                y: 50 * heightOnePercent,
+                                scale: 0.025 * heightOnePercent
+                            },
+                            ease: Expo.easeOut
+                        });
 
-                    localStorage.setItem('hasPlayerPlacedCard', 'true');
+                        localStorage.setItem('hasPlayerPlacedCard', 'true');
 
-                    cardObject.isPlaced = true;
-
-                    numberOfPlayerCardsOnTable += 1;
+                        cardObject.isPlaced = true;
+                        numberOfPlayerCardsOnTable += 1;
+                        localStorage.setItem('isPlayerTurn', 'false');
+                    }
                 }
                 else if (cardObject.isPlayerCard === false && numberOfEnemyCardsOnTable < 7 && cardObject.isPlaced === false) {
                     let leftOffset = 22 * widthOnePercent + numberOfEnemyCardsOnTable * widthOnePercent * 7;
 
+                    cardObject.isJustPlaced = true;
                     TweenLite.to(cardObject.cardContainer, 1, {
                         pixi: {
                             x: leftOffset,

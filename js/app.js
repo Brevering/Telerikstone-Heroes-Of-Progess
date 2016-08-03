@@ -13,8 +13,8 @@
             'Easing': '../bower_components/gsap/src/minified/easing/EasePack.min',
             'CSSPlugin': '../bower_components/gsap/src/minified/plugins/CSSPlugin.min',
             'TimelineMax': '../bower_components/gsap/src/minified/TimelineMax.min',
-            'AmCharts':'./amcharts/amcharts',
-            'serial':'./amcharts/serial',
+            'AmCharts': './amcharts/amcharts',
+            'serial': './amcharts/serial',
             'Pixi': '../bower_components/pixi.js/bin/pixi.min',
             'GreensockPixiPlugin': '../bower_components/gsap-pixi-plugin/PixiPlugin',
 
@@ -25,7 +25,7 @@
             'fileReader': './helpers/file-reader',
             'validator': './helpers/validator',
             'globalValues': './helpers/globalValues',
-            
+
             // Models
             'userModel': './models/user-model',
 
@@ -39,6 +39,8 @@
             'cardCreator': './game/card-creator',
             'engine': './game/engine',
             'statistics': './chart-stats/statistic',
+            'ai': './game/ai',
+            'player': './game/player',
 
             // Cards
             'card': './cards/card',
@@ -111,4 +113,4 @@
 
             router.run('#/');
         });
-} ());
+}());

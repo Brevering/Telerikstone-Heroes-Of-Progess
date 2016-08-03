@@ -1,0 +1,46 @@
+(function () {
+    'use strict';
+
+    define([], function () {
+        function attachAttackEnemyCardEvents(allCards) {
+            let playerCards = allCards.playerCards;
+            let enemyCards = allCards.enemyCards;
+
+            for (let i = 0; i < playerCards.length; i += 1) {
+                playerCards[i].cardSprite.on('mousedown', function (event) {
+                    let cardId = this.cardId;
+                    let cardObject = playerCards.filter(obj => obj.cardId === cardId)[0];
+
+                    if (cardObject.isPlayerCard && cardObject.isPlaced) {
+                        localStorage.setItem('currentCardAttack', cardObject.attack);
+                        localStorage.setItem('canAttack', 'true');
+                    }
+                });
+            }
+
+            for (let i = 0; i < enemyCards.length; i += 1) {
+                enemyCards[i].cardSprite.on('mousedown', function (event) {
+                    let cardId = this.cardId;
+                    let cardObject = enemyCards.filter(obj => obj.cardId === cardId)[0];
+
+                    if (!cardObject.isPlayerCard && cardObject.isPlaced && !cardObject.isJustPlaced &&
+                        localStorage.getItem('canAttack') === 'true') {
+                        console.log('before ' + cardObject.health);
+                        cardObject.health -= Number(localStorage.getItem('currentCardAttack'));
+                        console.log('after ' + cardObject.health);
+                        localStorage.setItem('currentCardAttack', '0');
+                        localStorage.setItem('canAttack', 'false');
+                        localStorage.setItem('isPlayerTurn', 'false');
+                        localStorage.setItem('hasPlayerPlacedCard', 'true');
+                    } else {
+                        cardObject.isJustPlaced = false;
+                    }
+                });
+            }
+        }
+
+        return {
+            attachAttackEnemyCardEvents: attachAttackEnemyCardEvents
+        };
+    });
+}());
