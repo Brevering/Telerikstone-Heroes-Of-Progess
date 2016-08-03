@@ -49,13 +49,16 @@
             }
 
             function initStats(cardObject) {
+                let containerWidthPercent = cardObject.cardSprite.texture.baseTexture.width / 100;
+                let containerHeightPercent = cardObject.cardSprite.texture.baseTexture.height / 100;  
+
                 let healthStat = new PIXI.Text(cardObject.health, {
-                    font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                    font: 'bold ' + 100 * containerWidthPercent + 'px Arial',
                     fill: 'cyan',
                     align: 'center'
                 });
-                healthStat.x = cardObject.cardContainer.scale.x + 6 * widthOnePercent;
-                healthStat.y = cardObject.cardContainer.scale.y + 18 * heightOnePercent;
+                healthStat.x = 120 * containerWidthPercent;
+                healthStat.y = 180 * containerHeightPercent;
                 cardObject.cardContainer.addChild(healthStat);
 
                 let manaStat = new PIXI.Text(cardObject.mana, {
@@ -63,8 +66,8 @@
                     fill: 'cyan',
                     align: 'center'
                 });
-                manaStat.x = -cardObject.cardContainer.scale.x - 9 * widthOnePercent;
-                manaStat.y = -cardObject.cardContainer.scale.y - 23.5 * heightOnePercent;
+                manaStat.x = -(170 * containerWidthPercent);
+                manaStat.y = -(250 * containerHeightPercent);
                 cardObject.cardContainer.addChild(manaStat);
 
                 let damageStat = new PIXI.Text(cardObject.attack, {
@@ -72,8 +75,8 @@
                     fill: 'cyan',
                     align: 'center'
                 });
-                damageStat.x = -cardObject.cardContainer.scale.x - 9 * widthOnePercent;
-                damageStat.y = cardObject.cardContainer.scale.y + 18 * heightOnePercent;
+                damageStat.x = -(170 * containerWidthPercent);
+                damageStat.y = 180 * containerHeightPercent;
                 cardObject.cardContainer.addChild(damageStat);
             }
 
