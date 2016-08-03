@@ -17,14 +17,24 @@
             }
         }
 
-        function attackPlayerCard(allCards) {
+        function attackPlayerCard(allCards, stage) {
             let placedPlayerCards = allCards.playerCards.filter(c => c.isPlaced);
             let cardToAttack = placedPlayerCards[Math.floor(Math.random() * placedPlayerCards.length)];
             let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced)[0];
+            let playerCards = allCards.playerCards;
 
             cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
             cardToAttack.health -= currentPlacedCard.attack;
             localStorage.setItem('isPlayerTurn', 'true');
+
+            if (cardToAttack.health <= 0) {
+                let indexToRemove = playerCards.indexOf(cardToAttack);
+
+                console.log(playerCards);
+                stage.removeChild(cardToAttack.cardContainer);
+                playerCards.splice(indexToRemove, 1);
+                console.log(playerCards);
+            }
         }
 
         return {

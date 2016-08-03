@@ -198,29 +198,29 @@
             }
 
             function performAttackAnimation(fromCard, toCard) {
-                let startX = fromCard.cardContainer.x;
-                let startY = fromCard.cardContainer.y;
-                let destinationX = toCard.cardContainer.x;
-                let destinationY = toCard.cardContainer.y;
-                let animation = new TimelineMax();
+                if (fromCard && toCard) {
+                    let startX = fromCard.cardContainer.x;
+                    let startY = fromCard.cardContainer.y;
+                    let destinationX = toCard.cardContainer.x;
+                    let destinationY = toCard.cardContainer.y;
+                    let animation = new TimelineMax();
 
-                animation
-                    .to(fromCard.cardContainer, 0.5, {
-                        x: destinationX,
-                        y: destinationY
-                    })
-                    .to(fromCard.cardContainer, 0.5, {
-                        x: startX,
-                        y: startY
-                    });
+                    animation
+                        .to(fromCard.cardContainer, 0.5, {
+                            x: destinationX,
+                            y: destinationY
+                        })
+                        .to(fromCard.cardContainer, 0.5, {
+                            x: startX,
+                            y: startY
+                        });
+                }
             }
 
             function hoverPlayerCard() {
                 for (let i = 0; i < playerCards.length; i += 1) {
                     let currentCard = playerCards[i];
                     let normalY = currentCard.cardContainer.y;
-                    let normalWidth = currentCard.cardContainer.width;
-                    let normalHeight = currentCard.cardContainer.height;
 
                     playerCards[i].cardSprite.on('mouseover', function () {
                         if (!currentCard.isPlaced) {

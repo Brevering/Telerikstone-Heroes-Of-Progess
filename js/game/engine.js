@@ -106,11 +106,11 @@
                         endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
                         localStorage.setItem('hasToPlaceCard', 'false');
                     } else {
-                        AI.attackPlayerCard(allCards);
+                        AI.attackPlayerCard(allCards, stage);
                     }
                 });
 
-                player.attachAttackEnemyCardEvents(allCards);
+                player.attachAttackEnemyCardEvents(allCards, stage);
                 cardCreator.hoverPlayerCard();
 
                 stage.addChild(endTurnButton);
