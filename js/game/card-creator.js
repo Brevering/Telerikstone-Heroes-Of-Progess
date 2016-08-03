@@ -77,7 +77,7 @@
                 // set scales and anchors
                 cardObject.cardSprite.anchor.x = 0.5;
                 cardObject.cardSprite.anchor.y = 0.5;
-                cardObject.cardContainer.scale = {x: 0.5, y: 0.5};
+                cardObject.cardContainer.scale = {x: 0.05 * heightOnePercent, y: 0.05 * heightOnePercent};
             }
 
             // this initializes a player card
@@ -149,7 +149,7 @@
                         pixi: {
                             x: leftOffset,
                             y: 50 * heightOnePercent,
-                            scale: 0.25
+                            scale: 0.025 * heightOnePercent
                         },
                         ease: Expo.easeOut
                     });
@@ -167,7 +167,7 @@
                         pixi: {
                             x: leftOffset,
                             y: 34 * heightOnePercent,
-                            scale: 0.25
+                            scale: 0.025 * heightOnePercent
                         },
                         ease: Expo.easeOut
                     });
