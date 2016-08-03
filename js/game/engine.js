@@ -3,6 +3,8 @@
 
     define(['cardCreator', 'globalValues', 'card', 'minionCard'], function (cardCreator, globalValues, Card, MinionCard) {
         let stage = new PIXI.Container();
+        let widthOnePercent = globalValues.widthOnePercent;
+        let heightOnePercent = globalValues.heightOnePercent;
 
         function botPlayerPlaceCard() {
             let hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
@@ -61,17 +63,17 @@
             let playerAvatar = new PIXI.Sprite(PIXI.Texture.fromImage(getPlayerImageUrl(playerName)));
             let enemyAvatar = new PIXI.Sprite(PIXI.Texture.fromImage(getBotPlayerImageUrl(playerName)));
 
-            playerAvatar.width = 150;
-            playerAvatar.height = 200;
+            playerAvatar.width = 8.5 * widthOnePercent;
+            playerAvatar.height = 20 * heightOnePercent;
 
-            enemyAvatar.width = 150;
-            enemyAvatar.height = 200;
+            enemyAvatar.width = 8.5 * widthOnePercent;
+            enemyAvatar.height = 20 * heightOnePercent;
 
-            playerAvatar.position.x = 720;
-            playerAvatar.position.y = 600;
+            playerAvatar.position.x = 39.3 * widthOnePercent;
+            playerAvatar.position.y = 59.5 * heightOnePercent;
 
-            enemyAvatar.position.x = 720;
-            enemyAvatar.position.y = 90;
+            enemyAvatar.position.x = 39.3 * widthOnePercent;
+            enemyAvatar.position.y = 8.8 * heightOnePercent;
 
             return [playerAvatar, enemyAvatar];
         }
