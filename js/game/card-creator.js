@@ -50,7 +50,7 @@
 
             function initStats(cardObject) {
                 let containerWidthPercent = cardObject.cardSprite.texture.baseTexture.width / 100;
-                let containerHeightPercent = cardObject.cardSprite.texture.baseTexture.height / 100;  
+                let containerHeightPercent = cardObject.cardSprite.texture.baseTexture.height / 100;
 
                 let healthStat = new PIXI.Text(cardObject.health, {
                     font: 'bold ' + 100 * containerWidthPercent + 'px Arial',
@@ -204,12 +204,17 @@
                 let startY = fromCard.cardContainer.y;
                 let destinationX = toCard.cardContainer.x;
                 let destinationY = toCard.cardContainer.y;
+                let animation = new TimelineMax();
 
-                TweenMax.to(fromCard, 1.5, {
-                    x: destinationX,
-                    y: destinationY,
-                    repeat: 1
-                });
+                animation
+                    .to(fromCard.cardContainer, 1, {
+                        x: destinationX,
+                        y: destinationY
+                    })
+                    .to(fromCard.cardContainer, 1, {
+                        x: startX,
+                        y: startY
+                    });
             }
 
             return {
