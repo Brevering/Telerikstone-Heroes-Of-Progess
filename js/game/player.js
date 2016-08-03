@@ -8,9 +8,7 @@
 
             if (!cardObject.isPlayerCard && cardObject.isPlaced && !cardObject.isJustPlaced &&
                 localStorage.getItem('canAttack') === 'true') {
-                console.log('before ' + cardObject.health);
                 cardObject.health -= Number(localStorage.getItem('currentCardAttack'));
-                console.log('after ' + cardObject.health);
                 localStorage.setItem('currentCardAttack', '0');
                 localStorage.setItem('canAttack', 'false');
                 localStorage.setItem('isPlayerTurn', 'false');

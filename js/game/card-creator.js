@@ -205,11 +205,11 @@
                 let animation = new TimelineMax();
 
                 animation
-                    .to(fromCard.cardContainer, 1, {
+                    .to(fromCard.cardContainer, 0.5, {
                         x: destinationX,
                         y: destinationY
                     })
-                    .to(fromCard.cardContainer, 1, {
+                    .to(fromCard.cardContainer, 0.5, {
                         x: startX,
                         y: startY
                     });

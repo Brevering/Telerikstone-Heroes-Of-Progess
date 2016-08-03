@@ -178,6 +178,7 @@
                         localStorage.setItem('hasAttacked', 'false');
                         localStorage.setItem('currentCardAttack', '0');
                         localStorage.setItem('isPlayerTurn', 'true');
+                        localStorage.setItem('hasToPlaceCard', 'true');
 
                         $('#btn-exit-game').on('click', function () {
                             localStorage.clear();

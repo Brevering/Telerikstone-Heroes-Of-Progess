@@ -17,8 +17,19 @@
             }
         }
 
+        function attackPlayerCard(allCards) {
+            let placedPlayerCards = allCards.playerCards.filter(c => c.isPlaced);
+            let cardToAttack = placedPlayerCards[Math.floor(Math.random() * placedPlayerCards.length)];
+            let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced)[0];
+
+            cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
+            cardToAttack.health -= currentPlacedCard.attack;
+            localStorage.setItem('isPlayerTurn', 'true');
+        }
+
         return {
-            placeCard: placeCard
+            placeCard: placeCard,
+            attackPlayerCard: attackPlayerCard
         };
     });
 }());

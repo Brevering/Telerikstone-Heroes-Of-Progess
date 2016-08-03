@@ -101,8 +101,13 @@
                 endTurnButton.position.y = 37.7 * heightOnePercent;
 
                 endTurnButton.on('mousedown', function () {
-                    AI.placeCard(allCards, endTurnButton);
-                    endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
+                    if (localStorage.getItem('hasToPlaceCard') === 'true') {
+                        AI.placeCard(allCards, endTurnButton);
+                        endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
+                        localStorage.setItem('hasToPlaceCard', 'false');
+                    } else {
+                        AI.attackPlayerCard(allCards);
+                    }
                 });
 
                 player.attachAttackEnemyCardEvents(allCards);
