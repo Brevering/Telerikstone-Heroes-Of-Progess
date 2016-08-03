@@ -77,8 +77,7 @@
                 // set scales and anchors
                 cardObject.cardSprite.anchor.x = 0.5;
                 cardObject.cardSprite.anchor.y = 0.5;
-                cardObject.cardSprite.width = 10 * widthOnePercent;
-                cardObject.cardSprite.height = 20 * heightOnePercent;
+                cardObject.cardContainer.scale = {x: 0.5, y: 0.5};
             }
 
             // this initializes a player card
@@ -92,8 +91,8 @@
                 });
 
                 // calculate card in hand offset
-                let cardInHandTopOffset = 83 * heightOnePercent;
-                let cardInHandLeftOffset = numberOfPlayerCardsInHand * 2 * widthOnePercent;
+                let cardInHandTopOffset = 90 * heightOnePercent;
+                let cardInHandLeftOffset = numberOfPlayerCardsInHand * 3 * widthOnePercent;
 
                 // add card to the hand
                 cardObject.cardContainer.addChild(cardObject.cardSprite);
@@ -118,8 +117,8 @@
                 cardObject.cardContainer.position.y = 20 * heightOnePercent;
 
                 // calculate card in hand offset
-                let cardInHandTopOffset = 6 * heightOnePercent;
-                let cardInHandLeftOffset = numberOfEnemyCardsInHand * 2 * widthOnePercent;
+                let cardInHandTopOffset = -5 * heightOnePercent;
+                let cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
 
                 // add card to the field
                 cardObject.cardContainer.addChild(cardObject.cardSprite);
@@ -150,7 +149,7 @@
                         pixi: {
                             x: leftOffset,
                             y: 50 * heightOnePercent,
-                            scale: 0.8
+                            scale: 0.25
                         },
                         ease: Expo.easeOut
                     });
@@ -168,7 +167,7 @@
                         pixi: {
                             x: leftOffset,
                             y: 34 * heightOnePercent,
-                            scale: 0.8
+                            scale: 0.25
                         },
                         ease: Expo.easeOut
                     });
