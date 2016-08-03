@@ -17,7 +17,6 @@
 
                 localStorage.setItem('hasPlayerPlacedCard', 'false');
                 cardCreator.placeCard(cardToPlace);
-                debugger;
                 endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
             }
         }
@@ -107,7 +106,7 @@
             initializeCard(stage, 'images/cards/cuki_card.png', false);
 
             let allCards = cardCreator.getPlayersCards();
-            
+
             let endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
 
             endTurnButton.interactive = true;
