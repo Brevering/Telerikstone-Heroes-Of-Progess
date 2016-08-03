@@ -6,20 +6,20 @@
         let widthOnePercent = globalValues.widthOnePercent;
         let heightOnePercent = globalValues.heightOnePercent;
 
-        function botPlayerPlaceCard() {
+        function botPlayerPlaceCard(allCards, endTurnButton) {
+            console.log(allCards);
+
+            let enemyCards = allCards.enemyCards;
             let hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
 
             if (hasPlayerPlacedCard === 'true') {
-                let $botPlayerCards = $('.enemyCard');
-                let $cardToPlace = $botPlayerCards[[Math.floor(Math.random() * $botPlayerCards.length)]];
+                let cardToPlace = enemyCards[[Math.floor(Math.random() * enemyCards.length)]];
 
                 localStorage.setItem('hasPlayerPlacedCard', 'false');
-                cardCreator.placeCard($cardToPlace);
+                cardCreator.placeCard(cardToPlace);
+                debugger;
+                endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
             }
-        }
-
-        function botPlayerPlaceCardEvent() {
-            //$('#pass-turn').on('click', botPlayerPlaceCard);
         }
 
         function initializeCard(stage, cardUrl, isPlayerCard) {
@@ -78,25 +78,7 @@
             return [playerAvatar, enemyAvatar];
         }
 
-        function setupEndTurnBtn() {
-            let endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
-
-            endTurnButton.interactive = true;
-            endTurnButton.width = 105;
-            endTurnButton.height = 55;
-            endTurnButton.position.x = 1235;
-            endTurnButton.position.y = 384;
-
-            endTurnButton.on('mousedown', function () {
-                console.log('FIRED');
-                endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
-            });
-
-            return endTurnButton;
-        }
-
         function setUpTable() {
-            console.log(globalValues);
             let renderer = PIXI.autoDetectRenderer(globalValues.canvasWidth, globalValues.canvasHeight);
             $('#playFieldCanvas').append(renderer.view);
             let background = new PIXI.Sprite(PIXI.Texture.fromImage('images/table.png'));
@@ -105,12 +87,10 @@
             background.height = globalValues.canvasHeight;
 
             let playersAvatars = loadAvatars(localStorage.trainer);
-            let endTurnButton = setupEndTurnBtn();
 
             stage.addChild(background);
             stage.addChild(playersAvatars[0]);
             stage.addChild(playersAvatars[1]);
-            stage.addChild(endTurnButton);
 
             initPixi();
 
@@ -123,12 +103,25 @@
         // starts the whole game
         function start() {
             setUpTable();
-            let allCards = cardCreator.getPlayersCards();
-            console.log(allCards);
-
             initializeCard(stage, 'images/cards/cuki_card.png', true);
             initializeCard(stage, 'images/cards/cuki_card.png', false);
-            // botPlayerPlaceCardEvent();
+
+            let allCards = cardCreator.getPlayersCards();
+            
+            let endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
+
+            endTurnButton.interactive = true;
+            endTurnButton.width = 6 * widthOnePercent;
+            endTurnButton.height = 5.9 * heightOnePercent;
+            endTurnButton.position.x = 67.3 * widthOnePercent;
+            endTurnButton.position.y = 37.7 * heightOnePercent;
+
+            endTurnButton.on('mousedown', function () {
+                botPlayerPlaceCard(allCards, endTurnButton);
+                endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
+            });
+
+            stage.addChild(endTurnButton);
         }
 
         return {
