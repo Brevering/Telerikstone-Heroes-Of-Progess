@@ -193,9 +193,8 @@
                 if (cardObject.isPlayerCard === true && numberOfPlayerCardsOnTable < 7 && cardObject.isPlaced === false) {
                     let leftOffset = 22 * widthOnePercent + numberOfPlayerCardsOnTable * widthOnePercent * 7;
 
-                    cardObject.isPlaced = true;
-
                     if (localStorage.getItem('isPlayerTurn') === 'true') {
+                        cardObject.isPlaced = true;
                         cardObject.isJustPlaced = true;
                         TweenMax.to(cardObject.cardContainer, 1, {
                             pixi: {
@@ -215,21 +214,25 @@
                 else if (cardObject.isPlayerCard === false && numberOfEnemyCardsOnTable < 7 && cardObject.isPlaced === false) {
                     let leftOffset = 22 * widthOnePercent + numberOfEnemyCardsOnTable * widthOnePercent * 7;
 
-                    cardObject.isPlaced = true;
-                    makeStatsVisible(cardObject);
+                    if (localStorage.getItem('isPlayerTurn') === 'false') {
+                        cardObject.isPlaced = true;
+                        makeStatsVisible(cardObject);
 
-                    cardObject.isJustPlaced = true;
-                    TweenMax.to(cardObject.cardContainer, 1, {
-                        pixi: {
-                            x: leftOffset,
-                            y: 34 * heightOnePercent,
-                            scale: 0.025 * heightOnePercent
-                        },
-                        ease: Expo.easeOut
-                    });
+                        cardObject.isJustPlaced = true;
+                        TweenMax.to(cardObject.cardContainer, 1, {
+                            pixi: {
+                                x: leftOffset,
+                                y: 34 * heightOnePercent,
+                                scale: 0.025 * heightOnePercent
+                            },
+                            ease: Expo.easeOut
+                        });
 
-                    cardObject.cardSprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
-                    numberOfEnemyCardsOnTable += 1;
+                        cardObject.cardSprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
+                        numberOfEnemyCardsOnTable += 1;
+
+                        localStorage.setItem('isPlayerTurn', 'true');
+                    }
                 }
             }
 
@@ -259,7 +262,19 @@
                         });
                 }
             }
+            
+            function performStealHealthFromPlayerAnimation() {
 
+            }
+
+            function performStealManaFromCard() {
+
+            }
+
+            function perfomrStealAttackFormCard() {
+
+            }
+            
             function hoverPlayerCard() {
                 for (let i = 0; i < playerCards.length; i += 1) {
                     let currentCard = playerCards[i];
