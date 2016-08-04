@@ -106,11 +106,14 @@
                 endTurnButton.on('mousedown', function () {
                     if (localStorage.getItem('hasToPlaceCard') === 'true') {
                         AI.placeCard(allCards, endTurnButton);
-                        endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
                         localStorage.setItem('hasToPlaceCard', 'false');
                     } else {
-                        AI.attackPlayerCard(allCards, stage);
+                        AI.attackPlayerCard(allCards, stage, endTurnButton);
                     }
+
+                    setTimeout(function () {
+                        endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
+                    }, 100);
                 });
 
                 player.attachAttackEnemyCardEvents(allCards, stage);

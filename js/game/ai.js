@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'cardAbilities'], function (cardCreator, cardAbilities) {
+    define(['cardCreator', 'cardAbilities', 'Pixi'], function (cardCreator, cardAbilities, PIXI) {
         function placeCard(allCards, endTurnButton) {
             let enemyCards = allCards.enemyCards;
             let hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
@@ -11,13 +11,16 @@
 
                 localStorage.setItem('hasPlayerPlacedCard', 'false');
                 cardCreator.placeCard(cardToPlace);
-                endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
                 localStorage.setItem('isPlayerTurn', 'true');
                 localStorage.setItem('canAttack', 'false');
+
+                setTimeout(function () {
+                    endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
+                }, 200);
             }
         }
 
-        function attackPlayerCard(allCards, stage) {
+        function attackPlayerCard(allCards, stage, endTurnButton) {
             let placedPlayerCards = allCards.playerCards.filter(c => c.isPlaced);
             let cardToAttack = placedPlayerCards[Math.floor(Math.random() * placedPlayerCards.length)];
             let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced)[0];
@@ -42,6 +45,10 @@
                     console.log(playerCards);
                 }
             }
+
+            setTimeout(function () {
+                endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
+            }, 200);
 
             localStorage.setItem('isPlayerTurn', 'true');
         }
