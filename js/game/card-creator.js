@@ -262,9 +262,43 @@
                         });
                 }
             }
-            
-            function performStealHealthFromPlayerAnimation() {
 
+            function performStealHealthFromPlayerAnimation(thisCard, target, healthToSteal) {
+                let spotContainer = new PIXI.Container();
+                let spotTexture = PIXI.Texture.fromImage('images/effects/healthSteal.png');
+                let spotSprite = new PIXI.Sprite(spotTexture);
+
+                let widthPercent = thisCard.cardSprite.texture.baseTexture.width / 100;
+                let heightPercent = thisCard.cardSprite.texture.baseTexture.height / 100;
+
+                spotContainer.x = target.cardContainer.x - widthPercent * 10;
+                spotContainer.y = target.cardContainer.y - heightPercent * 10;
+
+                let spotText = new PIXI.Text(healthToSteal, {
+                    font: 'bold ' + 10 * heightPercent + 'px Arial',
+                    fill: 'white',
+                    align: 'center'
+                });
+
+                spotText.x = 6.5 * widthPercent;
+                spotText.y = 1.1 * heightPercent;
+
+                spotSprite.scale = {x: 0.03 * heightPercent, y: 0.03 * heightPercent};
+
+                spotContainer.addChild(spotSprite);
+                spotContainer.addChild(spotText);
+                gameStage.addChild(spotContainer);
+
+                let stealAnimation = new TimelineMax({onComplete: remove});
+
+                stealAnimation.to(spotContainer, 1, {
+                        x: thisCard.cardContainer.x - widthPercent * 10,
+                        y: thisCard.cardContainer.y - heightPercent * 10
+                    });
+
+                function remove() {
+                    gameStage.removeChild(spotContainer);
+                }
             }
 
             function performStealManaFromCard() {
@@ -312,6 +346,7 @@
                 placeCard: placeCard,
                 getPlayersCards: getPlayersCards,
                 performAttackAnimation: performAttackAnimation,
+                performStealHealthFromPlayerAnimation: performStealHealthFromPlayerAnimation,
                 hoverPlayerCard: hoverPlayerCard
             };
         });

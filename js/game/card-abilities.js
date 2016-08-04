@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['Pixi', 'globalValues'], function (PIXI, globalValues) {
+    define(['Pixi', 'globalValues', 'cardCreator'], function (PIXI, globalValues, cardCreator) {
         let widthOnePercent = globalValues.widthOnePercent;
         let heightOnePercent = globalValues.heightOnePercent;
 
@@ -21,7 +21,7 @@
             localStorage.setItem('playerHealth', playerHealth);
             localStorage.setItem('enemyHealth', enemyHealth);
 
-            // perform animation
+            cardCreator.performStealHealthFromPlayerAnimation(attacker, target, healthToSteal);
         }
 
         function stealManaFromEnemyCard(attacker, target) {
