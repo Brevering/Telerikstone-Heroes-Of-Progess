@@ -20,7 +20,7 @@
             }
         }
 
-        function attackPlayerCard(allCards, stage, endTurnButton) {
+        function attackPlayerCard(allCards, stage, endTurnButton, playerAvatars) {
             let placedPlayerCards = allCards.playerCards.filter(c => c.isPlaced);
             let cardToAttack = placedPlayerCards[Math.floor(Math.random() * placedPlayerCards.length)];
             let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced)[0];
@@ -28,7 +28,7 @@
 
             if (currentPlacedCard) {
                 if (currentPlacedCard.ability === 'stealEnemyHealth') {
-                    cardAbilities.stealFromEnemyHealth(currentPlacedCard, cardToAttack);
+                    cardAbilities.stealFromEnemyHealth(currentPlacedCard, playerAvatars);
                 } else if (currentPlacedCard.ability === 'stealMana') {
                     cardAbilities.stealManaFromEnemyCard(currentPlacedCard, cardToAttack);
                 } else if (currentPlacedCard.ability === 'stealAttack') {

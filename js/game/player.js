@@ -2,7 +2,7 @@
     'use strict';
 
     define(['cardCreator', 'cardAbilities'], function (cardCreator, cardAbilities) {
-        function attackEnemyCardEvent(event, enemyCards, playerCards, stage) {
+        function attackEnemyCardEvent(event, enemyCards, playerCards, stage, playerAvatars) {
             let cardId = this.cardId;
             let cardObject = enemyCards.filter(obj => obj.cardId === cardId)[0];
 
@@ -15,7 +15,7 @@
                 let attacker = playerCards.filter(c => c.cardId === Number(localStorage.attackerId))[0];
 
                 if (attacker.ability === 'stealEnemyHealth') {
-                    cardAbilities.stealFromEnemyHealth(attacker, cardObject);
+                    cardAbilities.stealFromEnemyHealth(attacker, cardObject, playerAvatars);
                 } else if (attacker.ability === 'stealMana') {
                     cardAbilities.stealManaFromEnemyCard(attacker, cardObject)
                 } else {
@@ -46,7 +46,7 @@
             }
         }
 
-        function attachAttackEnemyCardEvents(allCards, stage) {
+        function attachAttackEnemyCardEvents(allCards, stage, playerAvatars) {
             let playerCards = allCards.playerCards;
             let enemyCards = allCards.enemyCards;
 
@@ -58,7 +58,7 @@
 
             for (let i = 0; i < enemyCards.length; i += 1) {
                 enemyCards[i].cardSprite.on('mousedown', function (event) {
-                    attackEnemyCardEvent.call(this, event, enemyCards, playerCards, stage);
+                    attackEnemyCardEvent.call(this, event, enemyCards, playerCards, stage, playerAvatars);
                 });
             }
         }

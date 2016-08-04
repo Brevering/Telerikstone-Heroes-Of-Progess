@@ -70,12 +70,7 @@
                 background.width = globalValues.canvasWidth;
                 background.height = globalValues.canvasHeight;
 
-                let playersAvatars = loadAvatars(localStorage.trainer);
-
                 stage.addChild(background);
-                stage.addChild(playersAvatars[0]);
-                stage.addChild(playersAvatars[1]);
-
                 initPixi();
 
                 function initPixi() {
@@ -94,6 +89,10 @@
                 initializeCard(stage, enemyDeck, false);
 
                 let allCards = cardCreator.getPlayersCards();
+                let playersAvatars = loadAvatars(localStorage.trainer);
+
+                stage.addChild(playersAvatars[0]);
+                stage.addChild(playersAvatars[1]);
 
                 let endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
 
@@ -108,7 +107,7 @@
                         AI.placeCard(allCards, endTurnButton);
                         localStorage.setItem('hasToPlaceCard', 'false');
                     } else {
-                        AI.attackPlayerCard(allCards, stage, endTurnButton);
+                        AI.attackPlayerCard(allCards, stage, endTurnButton, playersAvatars);
                     }
 
                     setTimeout(function () {
@@ -116,7 +115,7 @@
                     }, 100);
                 });
 
-                player.attachAttackEnemyCardEvents(allCards, stage);
+                player.attachAttackEnemyCardEvents(allCards, stage, playersAvatars);
                 cardCreator.hoverPlayerCard();
 
                 stage.addChild(endTurnButton);

@@ -5,23 +5,27 @@
         let widthOnePercent = globalValues.widthOnePercent;
         let heightOnePercent = globalValues.heightOnePercent;
 
-        function stealFromEnemyHealth(attacker, target) {
+        function stealFromEnemyHealth(attacker, target, playerAvatars) {
             let playerHealth = Number(localStorage.getItem('playerHealth'));
             let enemyHealth = Number(localStorage.getItem('enemyHealth'));
             let healthToSteal = attacker.attack;
+            let avatar;
 
             if (attacker.isPlayerCard) {
                 enemyHealth -= healthToSteal;
                 playerHealth += healthToSteal;
+                avatar = playerAvatars[1];
             } else {
                 enemyHealth += healthToSteal;
                 playerHealth -= healthToSteal;
+                avatar = playerAvatars[1];
             }
 
+            console.log(avatar);
             localStorage.setItem('playerHealth', playerHealth);
             localStorage.setItem('enemyHealth', enemyHealth);
 
-            cardCreator.performStealHealthFromPlayerAnimation(attacker, target, healthToSteal);
+            cardCreator.performStealHealthFromPlayerAnimation(attacker, {sprite: avatar}, healthToSteal);
         }
 
         function stealManaFromEnemyCard(attacker, target) {
