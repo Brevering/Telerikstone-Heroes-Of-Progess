@@ -25,7 +25,7 @@
             localStorage.setItem('playerHealth', playerHealth);
             localStorage.setItem('enemyHealth', enemyHealth);
 
-            cardCreator.performStealHealthFromPlayerAnimation(attacker, {sprite: avatar}, healthToSteal);
+            cardCreator.performStealHealthFromPlayerAnimation({sprite: playerAvatars[0]}, {sprite: avatar}, healthToSteal);
         }
 
         function stealManaFromEnemyCard(attacker, target) {
@@ -40,7 +40,7 @@
                 target.manaStat.text = target.mana;
             }
 
-            // perform animation
+            cardCreator.performStealManaFromCardAnimation(attacker, target, manaToSteal);
         }
 
         function stealAttackFromEnemyCard(attacker, target, allCards) {

@@ -51,13 +51,13 @@
             let enemyCards = allCards.enemyCards;
 
             for (let i = 0; i < playerCards.length; i += 1) {
-                playerCards[i].cardSprite.on('mousedown', function (event) {
+                playerCards[i].sprite.on('mousedown', function (event) {
                     initializeAttackEvent.call(this, event, playerCards);
                 });
             }
 
             for (let i = 0; i < enemyCards.length; i += 1) {
-                enemyCards[i].cardSprite.on('mousedown', function (event) {
+                enemyCards[i].sprite.on('mousedown', function (event) {
                     attackEnemyCardEvent.call(this, event, enemyCards, playerCards, stage, playerAvatars);
                 });
             }

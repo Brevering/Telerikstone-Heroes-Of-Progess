@@ -24,9 +24,9 @@
                 // add properties to the card in accordance to the card type (pleayer or enemy card)
                 if (cardObject.isPlayerCard === true) {
                     cardObject.cardTexture = PIXI.Texture.fromImage(cardObject.imgUrl);
-                    cardObject.cardSprite = new PIXI.Sprite(cardObject.cardTexture);
+                    cardObject.sprite = new PIXI.Sprite(cardObject.cardTexture);
                     cardObject.cardId = Number(localStorage.getItem('playerCardId'));
-                    cardObject.cardSprite.cardId = Number(localStorage.getItem('playerCardId'));
+                    cardObject.sprite.cardId = Number(localStorage.getItem('playerCardId'));
                     localStorage.setItem('playerCardId', Number(localStorage.getItem('playerCardId')) + 2);
 
                     // add basic properties to the card
@@ -38,9 +38,9 @@
                 }
                 else {
                     cardObject.cardTexture = PIXI.Texture.fromImage('images/cards/card_back.png');
-                    cardObject.cardSprite = new PIXI.Sprite(cardObject.cardTexture);
+                    cardObject.sprite = new PIXI.Sprite(cardObject.cardTexture);
                     cardObject.cardId = Number(localStorage.getItem('enemyCardId'));
-                    cardObject.cardSprite.cardId = Number(localStorage.getItem('enemyCardId'));
+                    cardObject.sprite.cardId = Number(localStorage.getItem('enemyCardId'));
                     localStorage.setItem('enemyCardId', Number(localStorage.getItem('enemyCardId')) + 2);
 
                     // add basic properties to the card
@@ -53,8 +53,8 @@
             }
 
             function initStats(cardObject) {
-                let containerWidthPercent = cardObject.cardSprite.texture.baseTexture.width / 100;
-                let containerHeightPercent = cardObject.cardSprite.texture.baseTexture.height / 100;
+                let containerWidthPercent = cardObject.sprite.texture.baseTexture.width / 100;
+                let containerHeightPercent = cardObject.sprite.texture.baseTexture.height / 100;
 
                 if (cardObject.health) {
                     cardObject.healthStat = new PIXI.Text(cardObject.health, {
@@ -122,8 +122,8 @@
             // this adds basic properties to the card
             function basicCardInit(cardObject) {
                 // set scales and anchors
-                cardObject.cardSprite.anchor.x = 0.5;
-                cardObject.cardSprite.anchor.y = 0.5;
+                cardObject.sprite.anchor.x = 0.5;
+                cardObject.sprite.anchor.y = 0.5;
                 cardObject.cardContainer.scale = {x: 0.05 * heightOnePercent, y: 0.05 * heightOnePercent};
             }
 
@@ -132,8 +132,8 @@
                 cardObject.cardContainer.position.x = 80 * widthOnePercent;
                 cardObject.cardContainer.position.y = 60 * heightOnePercent;
 
-                cardObject.cardSprite.interactive = true;
-                cardObject.cardSprite.on('mousedown', function () {
+                cardObject.sprite.interactive = true;
+                cardObject.sprite.on('mousedown', function () {
                     placeCard(cardObject);
                 });
 
@@ -142,7 +142,7 @@
                 let cardInHandLeftOffset = numberOfPlayerCardsInHand * 10 * widthOnePercent;
 
                 // add card to the hand
-                cardObject.cardContainer.addChild(cardObject.cardSprite);
+                cardObject.cardContainer.addChild(cardObject.sprite);
 
                 gameStage = stage;
                 stage.addChild(cardObject.cardContainer);
@@ -169,7 +169,7 @@
                 let cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
 
                 // add card to the field
-                cardObject.cardContainer.addChild(cardObject.cardSprite);
+                cardObject.cardContainer.addChild(cardObject.sprite);
                 stage.addChild(cardObject.cardContainer);
 
                 // enemy card intro animation
@@ -182,8 +182,8 @@
                     ease: Expo.easeOut,
                 }, 0);
 
-                cardObject.cardSprite.interactive = true;
-                cardObject.cardSprite.on('mousedown', function () {
+                cardObject.sprite.interactive = true;
+                cardObject.sprite.on('mousedown', function () {
                     placeCard(cardObject);
                 });
             }
@@ -228,7 +228,7 @@
                             ease: Expo.easeOut
                         });
 
-                        cardObject.cardSprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
+                        cardObject.sprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
                         numberOfEnemyCardsOnTable += 1;
 
                         localStorage.setItem('isPlayerTurn', 'true');
@@ -263,27 +263,83 @@
                 }
             }
 
-            function performStealHealthFromPlayerAnimation(thisCard, target, healthToSteal) {
+            function performStealHealthFromPlayerAnimation(attacker, target, healthToSteal) {
+                let stealImage = 'images/effects/healthSteal.png';
+                let leftOffset = 0.263;
+                let textSize = 10;
+                let spriteScale = 0.03;
+                let textLeftOffset = 6.5;
+                let textTopOffset = 1.1;
+
+                performStealAnim(
+                    attacker,
+                    target,
+                    healthToSteal,
+                    stealImage,
+                    leftOffset,
+                    textSize,
+                    spriteScale,
+                    textLeftOffset,
+                    textTopOffset)
+            }
+
+            function performStealManaFromCardAnimation(attackerCard, targetCard, manaToSteal) {
+                let stealImage = 'images/effects/manaSteal.png';
+                let leftOffset = 0.263;
+                let textSize = 10;
+                let spriteScale = 0.03;
+                let textLeftOffset = 6.5;
+                let textTopOffset = 1.1;
+
+                performStealAnim(
+                    attackerCard,
+                    targetCard,
+                    manaToSteal,
+                    stealImage,
+                    leftOffset,
+                    textSize,
+                    spriteScale,
+                    textLeftOffset,
+                    textTopOffset)
+            }
+
+            function performStealAttackFormCardAnimation() {
+
+            }
+
+            function performStealAnim(
+                attacker,
+                target,
+                valueToSteal,
+                stealImage,
+                leftOffset,
+                textSize,
+                spriteScale,
+                textLeftOffset,
+                textTopOffset)
+            {
+                leftOffset = leftOffset || 1;
+
                 let spotContainer = new PIXI.Container();
-                let spotTexture = PIXI.Texture.fromImage('images/effects/healthSteal.png');
+                let spotTexture = PIXI.Texture.fromImage(stealImage);
                 let spotSprite = new PIXI.Sprite(spotTexture);
 
-                let widthPercent = thisCard.cardSprite.texture.baseTexture.width / 100;
-                let heightPercent = thisCard.cardSprite.texture.baseTexture.height / 100;
+                let widthPercent = attacker.sprite.texture.baseTexture.width / 100;
+                let heightPercent = attacker.sprite.texture.baseTexture.height / 100;
 
-                spotContainer.x = target.cardContainer.x - widthPercent * 10;
-                spotContainer.y = target.cardContainer.y - heightPercent * 10;
+                spotContainer.x = target.sprite.x * widthPercent * leftOffset;
+                spotContainer.y = target.sprite.y;
 
-                let spotText = new PIXI.Text(healthToSteal, {
-                    font: 'bold ' + 10 * heightPercent + 'px Arial',
+                let spotText = new PIXI.Text(valueToSteal, {
+                    font: 'bold ' + textSize * heightPercent + 'px Arial',
                     fill: 'white',
                     align: 'center'
                 });
 
-                spotText.x = 6.5 * widthPercent;
-                spotText.y = 1.1 * heightPercent;
+                spotText.x = textLeftOffset * widthPercent;
+                spotText.y = textTopOffset * heightPercent;
 
-                spotSprite.scale = {x: 0.03 * heightPercent, y: 0.03 * heightPercent};
+                spotSprite.scale = {x: spriteScale * heightPercent, y: spriteScale * heightPercent};
 
                 spotContainer.addChild(spotSprite);
                 spotContainer.addChild(spotText);
@@ -292,29 +348,21 @@
                 let stealAnimation = new TimelineMax({onComplete: remove});
 
                 stealAnimation.to(spotContainer, 1, {
-                        x: thisCard.cardContainer.x - widthPercent * 10,
-                        y: thisCard.cardContainer.y - heightPercent * 10
-                    });
+                    x: attacker.sprite.x * widthPercent * leftOffset,
+                    y: attacker.sprite.y
+                });
 
                 function remove() {
                     gameStage.removeChild(spotContainer);
                 }
             }
 
-            function performStealManaFromCard() {
-
-            }
-
-            function perfomrStealAttackFormCard() {
-
-            }
-            
             function hoverPlayerCard() {
                 for (let i = 0; i < playerCards.length; i += 1) {
                     let currentCard = playerCards[i];
                     let normalY = currentCard.cardContainer.y;
 
-                    playerCards[i].cardSprite.on('mouseover', function () {
+                    playerCards[i].sprite.on('mouseover', function () {
                         if (!currentCard.isPlaced && !playerCardAnim.isActive()) {
                             gameStage.removeChild(currentCard.cardContainer);
                             gameStage.addChildAt(currentCard.cardContainer, gameStage.children.length - 1);
@@ -328,7 +376,7 @@
                         }
                     });
 
-                    playerCards[i].cardSprite.on('mouseout', function () {
+                    playerCards[i].sprite.on('mouseout', function () {
                         if (!currentCard.isPlaced && !playerCardAnim.isActive()) {
                             TweenMax.to(currentCard.cardContainer, 0.5, {
                                 pixi: {
@@ -347,6 +395,8 @@
                 getPlayersCards: getPlayersCards,
                 performAttackAnimation: performAttackAnimation,
                 performStealHealthFromPlayerAnimation: performStealHealthFromPlayerAnimation,
+                performStealManaFromCardAnimation: performStealManaFromCardAnimation,
+                performStealAttackFormCardAnimation: performStealAttackFormCardAnimation,
                 hoverPlayerCard: hoverPlayerCard
             };
         });
