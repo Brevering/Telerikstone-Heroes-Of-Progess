@@ -18,8 +18,8 @@
                     cardAbilities.stealFromEnemyHealth(attacker, playerAvatars);
                 } else if (attacker.ability === 'stealMana') {
                     cardAbilities.stealManaFromEnemyPlayer(attacker, playerAvatars)
-                } else if (currentPlacedCard.ability === 'stealAttack') {
-                    cardAbilities.stealAttackFromEnemyCard(attacker, cardObject);
+                } else if (attacker.ability === 'stealAttack') {
+                    cardAbilities.stealAttackFromEnemyCard(attacker, cardObject, playerCards);
                 } else {
                     cardObject.health -= attacker.attack;
                     cardCreator.performAttackAnimation(attacker, cardObject);

@@ -56,7 +56,7 @@
         Deck.prototype = {
             getCukiDeck(isPlayerCard) {
                 let cukiSpecialCards = [
-                    new MinionCard(6, 3, 9, 'images/cuki-deck/avl-tree.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(6, 3, 9, 'images/cuki-deck/avl-tree.png', isPlayerCard, 'stealAttack'),
                     new MinionCard(9, 3, 7, 'images/cuki-deck/CukiStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
                     new MinionCard(3, 4, 6, 'images/cuki-deck/recursion.png', isPlayerCard, 'stealMana'),
                     new MinionCard(1, 3, 4, 'images/cuki-deck/ninja.png', isPlayerCard, 'stealMana')
