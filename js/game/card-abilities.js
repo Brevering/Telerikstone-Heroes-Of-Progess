@@ -46,18 +46,17 @@
             cardCreator.performStealManaFromCardAnimation(attacker, avatar, manaToSteal);
         }
 
-        function stealAttackFromEnemyCard(attacker, target, allCards) {
+        function stealAttackFromEnemyCard(attacker, target, cards) {
             let attackToSteal = Math.round(target.attack / 2);
 
             if (attackToSteal > 0) {
                 let receiver;
-                let containerWidthPercent = receiver.cardSprite.texture.baseTexture.width / 100;
 
                 if (attacker.isPlayerCard) {
-                    let playerCardsWhichAttack = allCards.playerCards.filter(c => c.ability === 'normal');
+                    let playerCardsWhichAttack = cards.filter(c => c.ability === 'normal');
                     receiver = playerCardsWhichAttack[Math.floor(Math.random() * playerCardsWhichAttack.length)];
                 } else {
-                    let enemyCardsWhichAttack = allCards.enemyCards.filter(c => c.ability === 'normal');
+                    let enemyCardsWhichAttack = cards.filter(c => c.ability === 'normal');
                     receiver = enemyCardsWhichAttack[Math.floor(Math.random() * enemyCardsWhichAttack.length)];
                 }
 

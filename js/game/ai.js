@@ -8,15 +8,23 @@
 
             if (hasPlayerPlacedCard === 'true') {
                 let cardToPlace = enemyCards[[Math.floor(Math.random() * enemyCards.length)]];
+                let enemyMana = Number(localStorage.getItem('enemyMana'));
+                let playerMana = Number(localStorage.getItem('playerMana'));
 
-                localStorage.setItem('hasPlayerPlacedCard', 'false');
-                cardCreator.placeCard(cardToPlace);
-                localStorage.setItem('isPlayerTurn', 'true');
-                localStorage.setItem('canAttack', 'false');
+                if (enemyMana - cardToPlace.mana >= 0) {
+                    localStorage.setItem('hasPlayerPlacedCard', 'false');
+                    cardCreator.placeCard(cardToPlace);
+                    localStorage.setItem('isPlayerTurn', 'true');
+                    localStorage.setItem('canAttack', 'false');
+                    localStorage.setItem('enemyMana', enemyMana - cardToPlace.mana);
+                    localStorage.setItem('playerMana', 10);
 
-                setTimeout(function () {
-                    endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
-                }, 200);
+                    setTimeout(function () {
+                        endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
+                    }, 200);
+                } else {
+                    console.log('Not enough ENEMY mana!');
+                }
             }
         }
 
@@ -32,7 +40,7 @@
                 } else if (currentPlacedCard.ability === 'stealMana') {
                     cardAbilities.stealManaFromEnemyPlayer(currentPlacedCard, playerAvatars);
                 } else if (currentPlacedCard.ability === 'stealAttack') {
-                    cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack);
+                    cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack, allCards.enemyCards);
                 } else {
                     cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
                     cardToAttack.health -= currentPlacedCard.attack;
@@ -55,6 +63,7 @@
             }, 200);
 
             localStorage.setItem('isPlayerTurn', 'true');
+            localStorage.setItem('playerMana', 10);
         }
 
         return {

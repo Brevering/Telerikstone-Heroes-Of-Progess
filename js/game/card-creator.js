@@ -134,7 +134,13 @@
 
                 cardObject.sprite.interactive = true;
                 cardObject.sprite.on('mousedown', function () {
-                    placeCard(cardObject);
+                    let playerMana = Number(localStorage.getItem('playerMana'));
+
+                    if (playerMana - cardObject.mana >= 0) {
+                        placeCard(cardObject);
+                        localStorage.setItem('playerMana', playerMana - cardObject.mana);
+                        localStorage.setItem('enemyMana', 10);
+                    }
                 });
 
                 // calculate card in hand offset
@@ -307,17 +313,15 @@
 
             }
 
-            function performStealAnim(
-                attacker,
-                target,
-                valueToSteal,
-                stealImage,
-                leftOffset,
-                textSize,
-                spriteScale,
-                textLeftOffset,
-                textTopOffset)
-            {
+            function performStealAnim(attacker,
+                                      target,
+                                      valueToSteal,
+                                      stealImage,
+                                      leftOffset,
+                                      textSize,
+                                      spriteScale,
+                                      textLeftOffset,
+                                      textTopOffset) {
                 leftOffset = leftOffset || 1;
 
                 let spotContainer = new PIXI.Container();
