@@ -41,6 +41,7 @@
             'statistics': './chart-stats/statistic',
             'ai': './game/ai',
             'player': './game/player',
+            'cardAbilities': './game/card-abilities',
 
             // Cards
             'card': './cards/card',

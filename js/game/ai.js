@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['cardCreator'], function (cardCreator) {
+    define(['cardCreator', 'cardAbilities'], function (cardCreator, cardAbilities) {
         function placeCard(allCards, endTurnButton) {
             let enemyCards = allCards.enemyCards;
             let hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
@@ -23,18 +23,27 @@
             let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced)[0];
             let playerCards = allCards.playerCards;
 
-            cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
-            cardToAttack.health -= currentPlacedCard.attack;
-            localStorage.setItem('isPlayerTurn', 'true');
+            if (currentPlacedCard.ability === 'stealEnemyHealth') {
+                cardAbilities.stealFromEnemyHealth(currentPlacedCard, cardToAttack);
+            } else if (currentPlacedCard.ability === 'stealMana') {
+                cardAbilities.stealManaFromEnemyCard(currentPlacedCard, cardToAttack);
+            } else if (currentPlacedCard.ability === 'stealAttack') {
+                cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack);
+            } else {
+                cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
+                cardToAttack.health -= currentPlacedCard.attack;
 
-            if (cardToAttack.health <= 0) {
-                let indexToRemove = playerCards.indexOf(cardToAttack);
+                if (cardToAttack.health <= 0) {
+                    let indexToRemove = playerCards.indexOf(cardToAttack);
 
-                console.log(playerCards);
-                stage.removeChild(cardToAttack.cardContainer);
-                playerCards.splice(indexToRemove, 1);
-                console.log(playerCards);
+                    console.log(playerCards);
+                    stage.removeChild(cardToAttack.cardContainer);
+                    playerCards.splice(indexToRemove, 1);
+                    console.log(playerCards);
+                }
             }
+
+            localStorage.setItem('isPlayerTurn', 'true');
         }
 
         return {

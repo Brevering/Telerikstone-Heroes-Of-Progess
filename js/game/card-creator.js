@@ -2,7 +2,7 @@
     'use strict';
 
     define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin', 'Pixi', 'GreensockPixiPlugin', 'globalValues'],
-        function ($, TimelineMax, TweenMax, Easing, CSSPlugin, Pixi, GreensockPixiPlugin, globalValues) {
+        function ($, TimelineMax, TweenMax, Easing, CSSPlugin, PIXI, GreensockPixiPlugin, globalValues) {
             let numberOfPlayerCardsInHand = 0;
             let numberOfEnemyCardsInHand = 0;
             let numberOfPlayerCardsOnTable = 0;

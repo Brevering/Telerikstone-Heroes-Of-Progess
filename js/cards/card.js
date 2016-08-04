@@ -42,8 +42,11 @@
             set isPlayerCard(value) {
                 this._isPlayerCard = value;
             },
-            specialAbility() {
-                this.ability();
+            get ability() {
+                return this._ability;
+            },
+            set ability(value) {
+                this._ability = value;
             }
         };
 
