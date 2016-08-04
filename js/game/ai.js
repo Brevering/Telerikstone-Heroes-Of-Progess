@@ -30,7 +30,7 @@
                 if (currentPlacedCard.ability === 'stealEnemyHealth') {
                     cardAbilities.stealFromEnemyHealth(currentPlacedCard, playerAvatars);
                 } else if (currentPlacedCard.ability === 'stealMana') {
-                    cardAbilities.stealManaFromEnemyCard(currentPlacedCard, cardToAttack);
+                    cardAbilities.stealManaFromEnemyPlayer(currentPlacedCard, playerAvatars);
                 } else if (currentPlacedCard.ability === 'stealAttack') {
                     cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack);
                 } else {

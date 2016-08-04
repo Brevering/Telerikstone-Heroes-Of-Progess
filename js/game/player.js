@@ -15,9 +15,11 @@
                 let attacker = playerCards.filter(c => c.cardId === Number(localStorage.attackerId))[0];
 
                 if (attacker.ability === 'stealEnemyHealth') {
-                    cardAbilities.stealFromEnemyHealth(attacker, cardObject, playerAvatars);
+                    cardAbilities.stealFromEnemyHealth(attacker, playerAvatars);
                 } else if (attacker.ability === 'stealMana') {
-                    cardAbilities.stealManaFromEnemyCard(attacker, cardObject)
+                    cardAbilities.stealManaFromEnemyPlayer(attacker, playerAvatars)
+                } else if (currentPlacedCard.ability === 'stealAttack') {
+                    cardAbilities.stealAttackFromEnemyCard(attacker, cardObject);
                 } else {
                     cardObject.health -= attacker.attack;
                     cardCreator.performAttackAnimation(attacker, cardObject);

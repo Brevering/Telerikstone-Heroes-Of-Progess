@@ -181,6 +181,8 @@
                         localStorage.setItem('hasToPlaceCard', 'true');
                         localStorage.setItem('playerHealth', 30);
                         localStorage.setItem('enemyHealth', 30);
+                        localStorage.setItem('playerMana', 10);
+                        localStorage.setItem('enemyMana', 10);
 
                         $('#btn-exit-game').on('click', function () {
                             localStorage.clear();

@@ -5,7 +5,7 @@
         let widthOnePercent = globalValues.widthOnePercent;
         let heightOnePercent = globalValues.heightOnePercent;
 
-        function stealFromEnemyHealth(attacker, target, playerAvatars) {
+        function stealFromEnemyHealth(attacker, playerAvatars) {
             let playerHealth = Number(localStorage.getItem('playerHealth'));
             let enemyHealth = Number(localStorage.getItem('enemyHealth'));
             let healthToSteal = attacker.attack;
@@ -18,29 +18,32 @@
             } else {
                 enemyHealth += healthToSteal;
                 playerHealth -= healthToSteal;
-                avatar = playerAvatars[1];
+                avatar = playerAvatars[0];
             }
 
-            console.log(avatar);
             localStorage.setItem('playerHealth', playerHealth);
             localStorage.setItem('enemyHealth', enemyHealth);
 
             cardCreator.performStealHealthFromPlayerAnimation({sprite: playerAvatars[0]}, {sprite: avatar}, healthToSteal);
         }
 
-        function stealManaFromEnemyCard(attacker, target) {
-            let manaToSteal = Math.round(target.mana / 2);
+        function stealManaFromEnemyPlayer(attacker, avatars) {
+            let playerMana = Number(localStorage.getItem('playerMana'));
+            let enemyMana = Number(localStorage.getItem('enemyMana'));
+            let manaToSteal = Math.round(attacker.mana / 2);
+            let avatar;
 
-            if (manaToSteal > 0) {
-                console.log(`Mana before : ${attacker.mana}`)
-                attacker.mana += manaToSteal;
-                target.mana -= manaToSteal;
-                console.log(`Mana after : ${attacker.mana}`)
-                attacker.manaStat.text = attacker.mana;
-                target.manaStat.text = target.mana;
+            if (attacker.isPlayerCard) {
+                localStorage.setItem('playerMana', playerMana + manaToSteal);
+                localStorage.setItem('enemyMana', enemyMana - manaToSteal);
+                avatar = avatars[1];
+            } else {
+                localStorage.setItem('playerMana', playerMana - manaToSteal);
+                localStorage.setItem('enemyMana', enemyMana + manaToSteal);
+                avatar = avatars[0];
             }
 
-            cardCreator.performStealManaFromCardAnimation(attacker, target, manaToSteal);
+            cardCreator.performStealManaFromCardAnimation(attacker, avatar, manaToSteal);
         }
 
         function stealAttackFromEnemyCard(attacker, target, allCards) {
@@ -70,7 +73,7 @@
 
         return {
             stealFromEnemyHealth: stealFromEnemyHealth,
-            stealManaFromEnemyCard: stealManaFromEnemyCard,
+            stealManaFromEnemyPlayer: stealManaFromEnemyPlayer,
             stealAttackFromEnemyCard: stealAttackFromEnemyCard
         };
     });
