@@ -59,7 +59,7 @@
 
             // WRITE
             chart.write("chartdiv");
-
+            //hide window stats
             $('#chartdiv').on('click', function () {
                 $('#chartdiv').hide();
             });
@@ -122,7 +122,7 @@
 
             // WRITE
             chart.write("chartdiv");
-            
+            //hide window stats
             $('#chartdiv').on('click', function () {
                 $('#chartdiv').hide();
             });
