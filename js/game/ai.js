@@ -26,24 +26,28 @@
             let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced)[0];
             let playerCards = allCards.playerCards;
 
-            if (currentPlacedCard.ability === 'stealEnemyHealth') {
-                cardAbilities.stealFromEnemyHealth(currentPlacedCard, cardToAttack);
-            } else if (currentPlacedCard.ability === 'stealMana') {
-                cardAbilities.stealManaFromEnemyCard(currentPlacedCard, cardToAttack);
-            } else if (currentPlacedCard.ability === 'stealAttack') {
-                cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack);
-            } else {
-                cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
-                cardToAttack.health -= currentPlacedCard.attack;
+            if (currentPlacedCard) {
+                if (currentPlacedCard.ability === 'stealEnemyHealth') {
+                    cardAbilities.stealFromEnemyHealth(currentPlacedCard, cardToAttack);
+                } else if (currentPlacedCard.ability === 'stealMana') {
+                    cardAbilities.stealManaFromEnemyCard(currentPlacedCard, cardToAttack);
+                } else if (currentPlacedCard.ability === 'stealAttack') {
+                    cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack);
+                } else {
+                    cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
+                    cardToAttack.health -= currentPlacedCard.attack;
 
-                if (cardToAttack.health <= 0) {
-                    let indexToRemove = playerCards.indexOf(cardToAttack);
+                    if (cardToAttack.health <= 0) {
+                        let indexToRemove = playerCards.indexOf(cardToAttack);
 
-                    console.log(playerCards);
-                    stage.removeChild(cardToAttack.cardContainer);
-                    playerCards.splice(indexToRemove, 1);
-                    console.log(playerCards);
+                        stage.removeChild(cardToAttack.cardContainer);
+                        playerCards.splice(indexToRemove, 1);
+                    }
+
+                    cardToAttack.healthStat.text = cardToAttack.health;
                 }
+            } else {
+                placeCard(allCards, endTurnButton);
             }
 
             setTimeout(function () {

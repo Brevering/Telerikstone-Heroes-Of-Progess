@@ -22,7 +22,7 @@
         }
 
         function getRandomValue() {
-            return [1, 2, 3, 4, 5, 6, 7, 8, 9][Math.floor(Math.random() * 10)];
+            return [1, 2, 3, 4, 5, 6, 7, 8, 9][Math.floor(Math.random() * 9)];
         }
 
         function getRandomStats() {

@@ -59,7 +59,7 @@
                 if (cardObject.health) {
                     cardObject.healthStat = new PIXI.Text(cardObject.health, {
                         font: 'bold ' + 100 * containerWidthPercent + 'px Arial',
-                        fill: 'cyan',
+                        fill: 'white',
                         align: 'center'
                     });
                     cardObject.healthStat.x = 120 * containerWidthPercent;
@@ -70,7 +70,7 @@
                 if (cardObject.mana) {
                     cardObject.manaStat = new PIXI.Text(cardObject.mana, {
                         font: 'bold ' + 5 * widthOnePercent + 'px Arial',
-                        fill: 'cyan',
+                        fill: 'white',
                         align: 'center'
                     });
                     cardObject.manaStat.x = -(170 * containerWidthPercent);
@@ -81,7 +81,7 @@
                 if (cardObject.attack) {
                     cardObject.damageStat = new PIXI.Text(cardObject.attack, {
                         font: 'bold ' + 5 * widthOnePercent + 'px Arial',
-                        fill: 'cyan',
+                        fill: 'white',
                         align: 'center'
                     });
                     cardObject.damageStat.x = -(170 * containerWidthPercent);

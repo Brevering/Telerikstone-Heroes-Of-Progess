@@ -28,6 +28,8 @@
                         stage.removeChild(cardObject.cardContainer);
                         enemyCards.splice(indexToRemove, 1);
                     }
+
+                    cardObject.healthStat.text = cardObject.health;
                 }
             } else {
                 cardObject.isJustPlaced = false;
