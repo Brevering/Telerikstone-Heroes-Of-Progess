@@ -9,7 +9,7 @@
             let decks = new Decks();
 
             function initializeCard(stage, deck, isPlayerCard) {
-                for (let i = 0; i < deck.length; i += 1) {
+                for (let i = 0; i < deck.length - 3; i += 1) {
                     cardCreator.initializeCard(stage, deck[i]);
                 }
             }
