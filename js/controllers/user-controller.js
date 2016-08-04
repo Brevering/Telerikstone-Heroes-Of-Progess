@@ -105,6 +105,9 @@
                         .then(
                         function (success) {
                             console.log(JSON.stringify(success));
+                            success = success;
+                            statistics.showMyStats(success);
+                            $('#chartdiv').show();
                         },
                         function (error) {
                             console.log(error);
