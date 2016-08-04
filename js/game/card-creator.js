@@ -52,32 +52,38 @@
                 let containerWidthPercent = cardObject.cardSprite.texture.baseTexture.width / 100;
                 let containerHeightPercent = cardObject.cardSprite.texture.baseTexture.height / 100;
 
-                let healthStat = new PIXI.Text(cardObject.health, {
-                    font: 'bold ' + 100 * containerWidthPercent + 'px Arial',
-                    fill: 'cyan',
-                    align: 'center'
-                });
-                healthStat.x = 120 * containerWidthPercent;
-                healthStat.y = 180 * containerHeightPercent;
-                cardObject.cardContainer.addChild(healthStat);
+                if (cardObject.health) {
+                    let healthStat = new PIXI.Text(cardObject.health, {
+                        font: 'bold ' + 100 * containerWidthPercent + 'px Arial',
+                        fill: 'cyan',
+                        align: 'center'
+                    });
+                    healthStat.x = 120 * containerWidthPercent;
+                    healthStat.y = 180 * containerHeightPercent;
+                    cardObject.cardContainer.addChild(healthStat);
+                }
 
-                let manaStat = new PIXI.Text(cardObject.mana, {
-                    font: 'bold ' + 5 * widthOnePercent + 'px Arial',
-                    fill: 'cyan',
-                    align: 'center'
-                });
-                manaStat.x = -(170 * containerWidthPercent);
-                manaStat.y = -(250 * containerHeightPercent);
-                cardObject.cardContainer.addChild(manaStat);
+                if (cardObject.mana) {
+                    let manaStat = new PIXI.Text(cardObject.mana, {
+                        font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                        fill: 'cyan',
+                        align: 'center'
+                    });
+                    manaStat.x = -(170 * containerWidthPercent);
+                    manaStat.y = -(250 * containerHeightPercent);
+                    cardObject.cardContainer.addChild(manaStat);
+                }
 
-                let damageStat = new PIXI.Text(cardObject.attack, {
-                    font: 'bold ' + 5 * widthOnePercent + 'px Arial',
-                    fill: 'cyan',
-                    align: 'center'
-                });
-                damageStat.x = -(170 * containerWidthPercent);
-                damageStat.y = 180 * containerHeightPercent;
-                cardObject.cardContainer.addChild(damageStat);
+                if (cardObject.attack) {
+                    let damageStat = new PIXI.Text(cardObject.attack, {
+                        font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                        fill: 'cyan',
+                        align: 'center'
+                    });
+                    damageStat.x = -(170 * containerWidthPercent);
+                    damageStat.y = 180 * containerHeightPercent;
+                    cardObject.cardContainer.addChild(damageStat);
+                }
             }
 
             // this adds basic properties to the card

@@ -1,16 +1,16 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player'],
-        function (cardCreator, globalValues, Card, MinionCard, AI, player) {
+    define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks'],
+        function (cardCreator, globalValues, Card, MinionCard, AI, player, Decks) {
             let stage = new PIXI.Container();
             let widthOnePercent = globalValues.widthOnePercent;
             let heightOnePercent = globalValues.heightOnePercent;
+            let decks = new Decks();
 
-            function initializeCard(stage, cardUrl, isPlayerCard) {
-                for (let i = 0; i < 10; i += 1) {
-                    let cardInstance = new Card(4, 5, 6, cardUrl, isPlayerCard);
-                    cardCreator.initializeCard(stage, cardInstance);
+            function initializeCard(stage, deck, isPlayerCard) {
+                for (let i = 0; i < deck.length; i += 1) {
+                    cardCreator.initializeCard(stage, deck[i]);
                 }
             }
 
@@ -86,9 +86,12 @@
 
             // starts the whole game
             function start() {
+                let playerDeck = decks.getCukiDeck(true);
+                let enemyDeck = decks.getCukiDeck(false);
+
                 setUpTable();
-                initializeCard(stage, 'images/cards/cuki_card.png', true);
-                initializeCard(stage, 'images/cards/cuki_card.png', false);
+                initializeCard(stage, playerDeck, true);
+                initializeCard(stage, enemyDeck, false);
 
                 let allCards = cardCreator.getPlayersCards();
 
