@@ -6,16 +6,17 @@
             let playerAvatar = playersAvatars[0],
                 playerCards = allCards.playerCards,
                 enemyAvatar = playersAvatars[1],
-                enemyCards = allCards.enemyCards;
+                enemyCards = allCards.enemyCards,
+                isEndGame = false;
 
             if (enemyAvatar.health <= 0) {
-                console.log('GAME OVER: You win!');
+                isEndGame = true;
             } else if (playerAvatar.health <= 0) {
-                console.log('GAME OVER: You lose!');
+                isEndGame = true;
             } else if (playerCards.length <= 1) {
-                console.log('GAME OVER: You lose!');
+                isEndGame = true;
             } else if (enemyCards.length <= 1) {
-                console.log('GAME OVER: You win!');
+                isEndGame = true;
             }
         }
 

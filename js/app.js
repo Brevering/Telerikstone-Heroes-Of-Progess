@@ -110,6 +110,10 @@
                 this.bind('get-all-users-data', function () {
                     userController.getAllUsersData();
                 });
+
+                this.bind('end-game-page', function (event, chartData) {
+                    userController.loadEndGamePage(container, chartData);
+                });
             });
 
             router.run('#/');

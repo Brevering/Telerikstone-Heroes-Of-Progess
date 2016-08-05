@@ -87,12 +87,6 @@
                     });
                 });
 
-               /* $('#get-all-users-data, #get-user-data').on('click', function () {
-                    setTimeout(function () {
-                        $('#close-charts').show();
-                    }, 200);
-                }); */
-
                 $('#close-charts').on('click', function () {
                     $('#chartdiv').hide().empty();
                     $(this).hide();
@@ -168,7 +162,7 @@
                     });
                 },
                 showTrainersPage(selector) {
-                    $.get('templates/trainers-page.html', function (html) {
+                    return $.get('templates/trainers-page.html', function (html) {
                         showLoader();
                         $(selector).empty();
                         $(selector).append(html);
@@ -179,7 +173,7 @@
                     });
                 },
                 showGamePage(selector) {
-                    $.get('templates/game-page.html', function (html) {
+                    return $.get('templates/game-page.html', function (html) {
                         showLoader();
                         $(selector).empty();
                         $(selector).append(html);
@@ -221,6 +215,12 @@
 
                         loadAvatars(localStorage.trainer);
                         engine.start();
+                    });
+                },
+                showEndGamePage(selector) {
+                    return $.get('templates/end-game.html', function (html) {
+                        $(selector).empty();
+                        $(selector).append(html);
                     });
                 }
             };

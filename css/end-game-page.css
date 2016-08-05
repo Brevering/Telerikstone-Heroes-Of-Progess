@@ -1,0 +1,20 @@
+#end-game-container {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    left: 10%;
+}
+
+#end-game-chart {
+    position: absolute;
+    width: 80%;
+    height: 90%;
+    left: 10%;
+    top: 5%;
+}
+
+#end-game-buttons {
+    position: absolute;
+    top: 95%;
+    left: 40%;
+}

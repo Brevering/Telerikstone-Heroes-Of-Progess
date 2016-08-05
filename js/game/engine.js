@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks'],
-        function (cardCreator, globalValues, Card, MinionCard, AI, player, Decks) {
+    define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks', 'sammy'],
+        function (cardCreator, globalValues, Card, MinionCard, AI, player, Decks, Sammy) {
             let stage = new PIXI.Container(),
                 widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent,
@@ -60,6 +60,10 @@
                 playerAvatar.sprite.cardId = 98;
                 playerAvatar.isPlaced = true;
                 playerAvatar.isJustPlaced = false;
+                playerAvatar.manaStolen = 0;
+                playerAvatar.healthStolen = 0;
+                playerAvatar.attackStolen = 0;
+                playerAvatar.damageDealt = 0;
                 allCards.playerCards.push(playerAvatar);
 
                 enemyAvatar.cardContainer = new PIXI.Container();
@@ -75,6 +79,10 @@
                 enemyAvatar.sprite.cardId = 99;
                 enemyAvatar.isJustPlaced = false;
                 enemyAvatar.isPlaced = true;
+                enemyAvatar.manaStolen = 0;
+                enemyAvatar.healthStolen = 0;
+                enemyAvatar.attackStolen = 0;
+                enemyAvatar.damageDealt = 0;
                 allCards.enemyCards.push(enemyAvatar);
 
                 return [playerAvatar, enemyAvatar];
@@ -95,6 +103,33 @@
                     requestAnimationFrame(initPixi);
                     renderer.render(stage);
                 }
+            }
+
+            function getChartData(playerAvatars) {
+                return [
+                    {
+                        "damageDealt": playerAvatars[0].damageDealt,
+                        "healthStolen": playerAvatars[0].healthStolen,
+                        "manaStolen": playerAvatars[0].manaStolen,
+                        "attackStolen": localStorage.getItem('playerStolenAttack'),
+                        "player": "You"
+                    },
+                    {
+                        "damageDealt": playerAvatars[1].damageDealt,
+                        "healthStolen": playerAvatars[1].healthStolen,
+                        "manaStolen": playerAvatars[1].manaStolen,
+                        "attackStolen": localStorage.getItem('enemyStolenAttack'),
+                        "player": "Enemy"
+                    }
+                ];
+            }
+
+            function attachEndGameButtonEvent(playersAvatars) {
+                $('#end-game-button').on('click', function () {
+                    Sammy(function () {
+                        this.trigger('end-game-page', getChartData(playersAvatars));
+                    });
+                });
             }
 
             // starts the whole game
@@ -132,6 +167,7 @@
 
                 player.attachAttackEnemyCardEvents(allCards, stage, playersAvatars);
                 cardCreator.hoverPlayerCard();
+                attachEndGameButtonEvent(playersAvatars);
 
                 stage.addChild(endTurnButton);
             }

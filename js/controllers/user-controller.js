@@ -43,6 +43,9 @@
                 loadGamePage(selector) {
                     return userView.showGamePage(selector);
                 },
+                loadEndGamePage(selector) {
+                    return userView.showEndGamePage(selector);
+                },
                 registerUser(data, appId, appSecret) {
                     userModel.register(data, appId, appSecret)
                         .then(
@@ -129,6 +132,18 @@
                         .then(function (success) {
                             $('#close-charts').show();
                         });
+                },
+                loadEndGamePage(selector, chartData) {
+                    userView.showEndGamePage(selector, chartData)
+                        .then(
+                            function (success) {
+                                console.log(chartData);
+                                statistics.endGameChart(chartData);
+                            },
+                            function (error) {
+                                console.log(error);
+                            }
+                        );
                 }
             };
 
