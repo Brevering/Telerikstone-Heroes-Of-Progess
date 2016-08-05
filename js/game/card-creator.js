@@ -255,13 +255,21 @@
                         destinationX,
                         destinationY;
 
-                    if (toCard.isAvatar) {
+                    if (toCard.isAvatar && toCard.isPlayerCard === false) {
                         destinationX = toCard.sprite.position.x * globalValues.widthOnePercent * 0.058;
                         destinationY = toCard.sprite.position.y * globalValues.heightOnePercent * 0.3;
 
                         gameStage.removeChild(fromCard.cardContainer);
                         gameStage.addChildAt(fromCard.cardContainer, gameStage.children.length - 1);
-                    } else {
+                    }
+                    else if (toCard.isAvatar && toCard.isPlayerCard === true){
+                        destinationX = toCard.sprite.position.x * globalValues.widthOnePercent * 0.058;
+                        destinationY = toCard.sprite.position.y;
+
+                        gameStage.removeChild(fromCard.cardContainer);
+                        gameStage.addChildAt(fromCard.cardContainer, gameStage.children.length - 1);
+                    }
+                    else {
                         destinationX = toCard.cardContainer.x;
                         destinationY = toCard.cardContainer.y;
                     }
@@ -300,11 +308,11 @@
 
             function performStealManaFromCardAnimation(attackerCard, targetCard, manaToSteal) {
                 let stealImage = 'images/effects/manaSteal.png',
-                    leftOffset = 0.263,
+                    leftOffset = 0.25,
                     textSize = 10,
-                    spriteScale = 0.03,
-                    textLeftOffset = 6.5,
-                    textTopOffset = 1.1;
+                    spriteScale = 0.15,
+                    textLeftOffset = 17,
+                    textTopOffset = 9;
 
                 performStealAnim(
                     attackerCard,
