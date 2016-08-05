@@ -256,8 +256,11 @@
                         destinationY;
 
                     if (toCard.isAvatar) {
-                        destinationX = toCard.sprite.position.x;
-                        destinationY = toCard.sprite.position.y;
+                        destinationX = toCard.sprite.position.x * globalValues.widthOnePercent * 0.058;
+                        destinationY = toCard.sprite.position.y * globalValues.heightOnePercent * 0.3;
+
+                        gameStage.removeChild(fromCard.cardContainer);
+                        gameStage.addChildAt(fromCard.cardContainer, gameStage.children.length - 1);
                     } else {
                         destinationX = toCard.cardContainer.x;
                         destinationY = toCard.cardContainer.y;
