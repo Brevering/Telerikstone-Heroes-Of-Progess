@@ -82,6 +82,10 @@
                     userController.loadGamePage(container);
                 });
 
+                this.get('#/end-game/', function () {
+                    userController.loadEndGamePage(container);
+                });
+
                 // Sammy events
                 this.bind('redirectToUrl', function (event, data) {
                     this.redirect(data.url);

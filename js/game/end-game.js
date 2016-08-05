@@ -38,38 +38,15 @@
             animation.to(canvas, 1, {width: 0, height: 0});
         }
 
-        function getChartData(playerAvatars) {
-            return [
-                {
-                    "damageDealt": playerAvatars[0].damageDealt,
-                    "healthStolen": playerAvatars[0].healthStolen,
-                    "manaStolen": playerAvatars[0].manaStolen,
-                    "attackStolen": localStorage.getItem('playerStolenAttack'),
-                    "player": "You"
-                },
-                {
-                    "damageDealt": playerAvatars[1].damageDealt,
-                    "healthStolen": playerAvatars[1].healthStolen,
-                    "manaStolen": playerAvatars[1].manaStolen,
-                    "attackStolen": localStorage.getItem('enemyStolenAttack'),
-                    "player": "Enemy"
-                }
-            ];
-        }
-
-        function enableEndGameButton(playersAvatars) {
-            let $button = $('<button>');
+        function enableEndGameButton() {
+            let $button = $('<a>');
 
             $button.attr('id', 'end-game');
+            $button.attr('href', '#/end-game/');
             $button.css({
                 background: 'url(images/buttons/endGame.png)',
                 width: '256px',
                 height: '256px'
-            });
-            $button.on('click', function () {
-                Sammy(function () {
-                    this.trigger('end-game-page', getChartData(playersAvatars));
-                });
             });
 
             $button.appendTo($('#playField'));

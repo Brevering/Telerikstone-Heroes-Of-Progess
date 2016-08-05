@@ -23,8 +23,6 @@
                     setTimeout(function () {
                         endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
                     }, 200);
-                } else {
-                    console.log('Not enough ENEMY mana!');
                 }
             }
         }
@@ -59,7 +57,7 @@
                     }
 
                     endGame.checkForEndGame(playerAvatars, allCards);
-                    playerAvatars[1].damageDealt = currentPlacedCard.attack;
+                    localStorage.enemyDamageDealt = Number(localStorage.enemyDamageDealt) + Number(currentPlacedCard.attack);
                 }
             } else {
                 placeCard(allCards, endTurnButton);

@@ -31,17 +31,14 @@
                         stage.removeChild(cardObject.cardContainer);
                         allCards.enemyCards.splice(indexToRemove, 1);
                         localStorage.setItem('hasToPlaceCard', 'true');
-                        console.log(allCards.enemyCards);
                     }
 
                     if (cardObject.healthStat) {
                         cardObject.healthStat.text = cardObject.health;
                     }
 
-                    console.log(playerAvatars[1].health);
-
                     endGame.checkForEndGame(playerAvatars, allCards);
-                    playerAvatars[0].damageDealt += attacker.attack;
+                    localStorage.playerDamageDealt = Number(localStorage.playerDamageDealt) + Number(attacker.attack);
                 }
             } else {
                 cardObject.isJustPlaced = false;

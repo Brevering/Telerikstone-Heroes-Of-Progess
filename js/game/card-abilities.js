@@ -15,7 +15,7 @@
             if (attacker.isPlayerCard) {
                 enemyHealth -= healthToSteal;
                 playerHealth += healthToSteal;
-                playerAvatars[0].healthStolen += healthToSteal;
+                localStorage.setItem('playerHealthStolen', Number(localStorage.getItem('playerHealthStolen') + healthToSteal));
                 avatar = playerAvatars[0];
                 enemyAvatar = playerAvatars[1];
             } else {
@@ -23,7 +23,7 @@
                 playerHealth -= healthToSteal;
                 avatar = playerAvatars[1];
                 enemyAvatar = playerAvatars[0];
-                playerAvatars[1].healthStolen += healthToSteal
+                localStorage.setItem('enemyHealthStolen', Number(localStorage.getItem('enemyHealthStolen') + healthToSteal));
             }
 
             playerAvatars[0].health = playerHealth;
@@ -40,14 +40,14 @@
 
             if (attacker.isPlayerCard) {
                 avatars[0].mana += manaToSteal;
-                avatars[0].manaStolen += manaToSteal;
+                localStorage.setItem('playerManaStolen', Number(localStorage.getItem('playerManaStolen') + manaToSteal));
                 avatars[1].mana -= manaToSteal;
                 avatar = avatars[0];
                 enemyAvatar = avatars[1];
             } else {
                 avatars[0].mana -= manaToSteal;
                 avatars[1].mana += manaToSteal;
-                avatars[1].manaStolen += manaToSteal;
+                localStorage.setItem('enemyManaStolen', Number(localStorage.getItem('enemyManaStolen') + manaToSteal));
                 avatar = avatars[1];
                 enemyAvatar = avatars[0];
             }
@@ -78,7 +78,7 @@
                 receiver.damageStat.text = receiver.attack;
                 target.damageStat.text = target.attack;
 
-                if(stealer === 'player') {
+                if (stealer === 'player') {
                     let previouslyStolen = Number(localStorage.getItem('playerStolenAttack'));
                     localStorage.setItem('playerStolenAttack', previouslyStolen + attackToSteal);
                 } else {

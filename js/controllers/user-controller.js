@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['userView', 'userModel', 'noty', 'sammy', 'headers', 'requester', 'url', 'statistics'],
-        function (UserView, UserModel, noty, Sammy, Headers, Requester, url, statistics) {
+    define(['userView', 'userModel', 'noty', 'sammy', 'headers', 'requester', 'url', 'statistics', 'engine'],
+        function (UserView, UserModel, noty, Sammy, Headers, Requester, url, statistics, engine) {
             function showNotification(text, type) {
                 noty({
                     text: text,
@@ -10,6 +10,25 @@
                     type: type,
                     timeout: 1500
                 });
+            }
+
+            function getChartData() {
+                return [
+                    {
+                        "damageDealt": localStorage.getItem('playerDamageDealt'),
+                        "healthStolen": localStorage.getItem('playerHealthStolen'),
+                        "manaStolen": localStorage.getItem('playerManaStolen'),
+                        "attackStolen": localStorage.getItem('playerStolenAttack'),
+                        "player": "You"
+                    },
+                    {
+                        "damageDealt": localStorage.getItem('enemyDamageDealt'),
+                        "healthStolen": localStorage.getItem('enemyHealthStolen'),
+                        "manaStolen": localStorage.getItem('enemyManaStolen'),
+                        "attackStolen": localStorage.getItem('enemyStolenAttack'),
+                        "player": "Enemy"
+                    }
+                ];
             }
 
             let userView = new UserView(),
@@ -38,9 +57,15 @@
                             });
                 },
                 loadTrainersPage(selector) {
+                    localStorage.isReloaded = 'false';
                     return userView.showTrainersPage(selector);
                 },
                 loadGamePage(selector) {
+                    if (localStorage.isReloaded === 'false') {
+                        document.location.reload(true);
+                        localStorage.isReloaded = 'true';
+                    }
+
                     return userView.showGamePage(selector);
                 },
                 loadEndGamePage(selector) {
@@ -133,11 +158,13 @@
                             $('#close-charts').show();
                         });
                 },
-                loadEndGamePage(selector, chartData) {
-                    userView.showEndGamePage(selector, chartData)
+                loadEndGamePage(selector) {
+                    let chartData = getChartData();
+
+                    userView.showEndGamePage(selector)
                         .then(
                             function (success) {
-                                console.log(chartData);
+
                                 statistics.endGameChart(chartData);
                             },
                             function (error) {

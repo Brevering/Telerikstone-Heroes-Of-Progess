@@ -6,7 +6,8 @@
             let stage = new PIXI.Container(),
                 widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent,
-                decks = new Decks();
+                decks = new Decks(),
+                playersAvatars;
 
             function initializeCard(stage, deck, isPlayerCard, avatars) {
                 for (let i = 0; i < deck.length; i += 1) {
@@ -110,9 +111,9 @@
                 let playerDeck = decks.getCukiDeck(true),
                     enemyDeck = decks.getCukiDeck(false),
                     allCards = cardCreator.getPlayersCards(),
-                    playersAvatars = loadAvatars(localStorage.trainer, allCards),
                     endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
 
+                playersAvatars = loadAvatars(localStorage.trainer, allCards);
                 setUpTable();
                 initializeCard(stage, playerDeck, true, playersAvatars);
                 initializeCard(stage, enemyDeck, false, playersAvatars);
@@ -145,7 +146,8 @@
             }
 
             return {
-                start: start
+                start: start,
+                avatars: playersAvatars
             };
         });
 }());
