@@ -41,6 +41,7 @@
 
             UserController.prototype = {
                 loadGuestPage(selector) {
+                    localStorage.clear();
                     return userView.showGuestPage(selector);
                 },
                 loadRegisterPage(selector) {

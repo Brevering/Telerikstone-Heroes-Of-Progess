@@ -15,7 +15,7 @@
             if (attacker.isPlayerCard) {
                 enemyHealth -= healthToSteal;
                 playerHealth += healthToSteal;
-                localStorage.setItem('playerHealthStolen', Number(localStorage.getItem('playerHealthStolen') + healthToSteal));
+                localStorage.playerHealthStolen = Number(localStorage.playerHealthStolen) + Number(healthToSteal);
                 avatar = playerAvatars[0];
                 enemyAvatar = playerAvatars[1];
             } else {
@@ -23,7 +23,7 @@
                 playerHealth -= healthToSteal;
                 avatar = playerAvatars[1];
                 enemyAvatar = playerAvatars[0];
-                localStorage.setItem('enemyHealthStolen', Number(localStorage.getItem('enemyHealthStolen') + healthToSteal));
+                localStorage.enemyHealthStolen = Number(localStorage.enemyHealthStolen) + Number(healthToSteal);
             }
 
             playerAvatars[0].health = playerHealth;
@@ -40,14 +40,14 @@
 
             if (attacker.isPlayerCard) {
                 avatars[0].mana += manaToSteal;
-                localStorage.setItem('playerManaStolen', Number(localStorage.getItem('playerManaStolen') + manaToSteal));
+                localStorage.playerManaStolen = Number(localStorage.playerManaStolen) + Number(manaToSteal);
                 avatars[1].mana -= manaToSteal;
                 avatar = avatars[0];
                 enemyAvatar = avatars[1];
             } else {
                 avatars[0].mana -= manaToSteal;
                 avatars[1].mana += manaToSteal;
-                localStorage.setItem('enemyManaStolen', Number(localStorage.getItem('enemyManaStolen') + manaToSteal));
+                localStorage.enemyManaStolen = Number(localStorageenemyManaStolen) + Number(manaToSteal);
                 avatar = avatars[1];
                 enemyAvatar = avatars[0];
             }
@@ -60,4 +60,4 @@
             stealManaFromEnemyPlayer: stealManaFromEnemyPlayer,
         };
     });
-}());
+} ());
