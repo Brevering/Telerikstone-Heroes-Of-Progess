@@ -188,12 +188,10 @@
                         localStorage.setItem('playerDamageDealt', 0);
                         localStorage.setItem('playerHealthStolen', 0);
                         localStorage.setItem('manaStolen', 0);
-                        localStorage.setItem('playerStolenAttack', 0);
 
                         localStorage.setItem('enemyDamageDealt', 0);
                         localStorage.setItem('enemyHealthStolen', 0);
                         localStorage.setItem('manaStolen', 0);
-                        localStorage.setItem('playerStolenAttack', 0);
 
                         $('#btn-exit-game').on('click', function () {
                             localStorage.clear();
@@ -233,19 +231,6 @@
                         showLoader();
                         $(selector).empty();
                         $(selector).append(html);
-
-                        $('#play-again-button').on('click', function () {
-                            localStorage.removeItem('attackerId');
-                            localStorage.removeItem('canAttack');
-                            localStorage.removeItem('currentCardAttack');
-                            localStorage.removeItem('enemyCardId');
-                            localStorage.removeItem('hasAttacked');
-                            localStorage.removeItem('hasPlayerPlacedCard');
-                            localStorage.removeItem('hasToPlaceCard');
-                            localStorage.removeItem('isPlayerTurn');
-                            localStorage.removeItem('playerCardId');
-                            localStorage.removeItem('trainer');
-                        });
                     });
                 }
             };

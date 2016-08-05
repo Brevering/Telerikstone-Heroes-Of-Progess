@@ -141,16 +141,6 @@
             graph3.fillAlphas = 1;
             chart.addGraph(graph3);
 
-            let graph4 = new AmCharts.AmGraph();
-            graph4.type = "column";
-            graph4.title = "Attack stolen";
-            graph4.valueField = "attackStolen";
-            graph4.balloonText = "Attack stolen:[[value]]";
-            graph4.lineAlpha = 0;
-            graph4.fillColors = "#efb72a";
-            graph4.fillAlphas = 1;
-            chart.addGraph(graph4);
-
             let legend = new AmCharts.AmLegend();
             chart.addLegend(legend);
             chart.write("end-game-chart");

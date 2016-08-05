@@ -39,9 +39,7 @@
                     endGame.checkForEndGame(playerAvatars, allCards);
                 } else if (currentPlacedCard.ability === 'stealMana') {
                     cardAbilities.stealManaFromEnemyPlayer(currentPlacedCard, playerAvatars);
-                } else if (currentPlacedCard.ability === 'stealAttack') {
-                    cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack, allCards.enemyCards);
-                } else if (currentPlacedCard.ability === 'normal') {
+                }  else if (currentPlacedCard.ability === 'normal') {
                     cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
                     cardToAttack.health -= currentPlacedCard.attack;
 
