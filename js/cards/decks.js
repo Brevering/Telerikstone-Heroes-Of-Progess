@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['minionCard',  'weaponCard'], function (MinionCard,  WeaponCard) {
+    define(['minionCard', 'weaponCard'], function (MinionCard, WeaponCard) {
         function getStandartDeck(isPLayerCard) {
             let standartDeck = [
                 new MinionCard(getRandomStats()[0], getRandomStats()[1], getRandomStats()[2], 'images/cards/Team-Crazy-Cat/atacata.png', isPLayerCard, 'normal'),
@@ -26,17 +26,17 @@
         }
 
         function getRandomStats() {
-            let attack = getRandomValue();
-            let mana = getRandomValue();
-            let health = getRandomValue();
+            let attack = getRandomValue(),
+                mana = getRandomValue(),
+                health = getRandomValue();
 
             return [attack, mana, health];
         }
 
         function getDeck(trainerDeck, isPlayerCard) {
-            let newDeck = trainerDeck.slice(0, 3);
-            let standartDeck = getStandartDeck(isPlayerCard);
-            let used = [];
+            let newDeck = trainerDeck.slice(0, 3),
+                standartDeck = getStandartDeck(isPlayerCard),
+                used = [];
 
             while (newDeck.length !== 10) {
                 let standartCardIndex = Math.floor(Math.random() * 10);
@@ -56,7 +56,7 @@
         Deck.prototype = {
             getCukiDeck(isPlayerCard) {
                 let cukiSpecialCards = [
-                    new MinionCard(6, 3, 9, 'images/cuki-deck/avl-tree.png', isPlayerCard, 'stealAttack'),
+                    new MinionCard(6, 3, 9, 'images/cuki-deck/avl-tree.png', isPlayerCard, 'stealAttac'),
                     new MinionCard(9, 3, 7, 'images/cuki-deck/CukiStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
                     new MinionCard(3, 4, 6, 'images/cuki-deck/recursion.png', isPlayerCard, 'stealMana'),
                     new MinionCard(1, 3, 4, 'images/cuki-deck/ninja.png', isPlayerCard, 'stealMana')
@@ -77,4 +77,4 @@
 
         return Deck;
     });
-} ());
+}());

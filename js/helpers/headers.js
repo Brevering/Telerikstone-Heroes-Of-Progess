@@ -1,14 +1,14 @@
 (function () {
     'use strict';
 
-    define([], function() {
+    define([], function () {
         function Headers() {
         }
 
         Headers.prototype = {
             getHeaders(sendData, useSessionToken, appId, appSecret) {
-                let headers = {};
-                let token;
+                let headers = {},
+                    token;
 
                 if (sendData) {
                     headers['Content-Type'] = 'application/json';
@@ -34,4 +34,4 @@
 
         return Headers;
     });
-} ());
+}());

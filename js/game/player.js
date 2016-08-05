@@ -3,8 +3,8 @@
 
     define(['cardCreator', 'cardAbilities'], function (cardCreator, cardAbilities) {
         function attackEnemyCardEvent(event, enemyCards, playerCards, stage, playerAvatars) {
-            let cardId = this.cardId;
-            let cardObject = enemyCards.filter(obj => obj.cardId === cardId)[0];
+            let cardId = this.cardId,
+                cardObject = enemyCards.filter(obj => obj.cardId === cardId)[0];
 
             if (!cardObject.isPlayerCard && cardObject.isPlaced && !cardObject.isJustPlaced &&
                 localStorage.getItem('canAttack') === 'true') {
@@ -20,7 +20,7 @@
                     cardAbilities.stealManaFromEnemyPlayer(attacker, playerAvatars)
                 } else if (attacker.ability === 'stealAttack') {
                     cardAbilities.stealAttackFromEnemyCard(attacker, cardObject, playerCards);
-                } else {
+                } else if (attacker.ability === 'normal') {
                     cardObject.health -= attacker.attack;
                     cardCreator.performAttackAnimation(attacker, cardObject);
 
@@ -29,6 +29,7 @@
 
                         stage.removeChild(cardObject.cardContainer);
                         enemyCards.splice(indexToRemove, 1);
+                        localStorage.setItem('hasToPlaceCard', 'true');
                     }
 
                     cardObject.healthStat.text = cardObject.health;
@@ -36,11 +37,13 @@
             } else {
                 cardObject.isJustPlaced = false;
             }
+
+            playerAvatars[1].mana = 10;
         }
 
         function initializeAttackEvent(event, playerCards) {
-            let cardId = this.cardId;
-            let cardObject = playerCards.filter(obj => obj.cardId === cardId)[0];
+            let cardId = this.cardId,
+                cardObject = playerCards.filter(obj => obj.cardId === cardId)[0];
 
             if (cardObject.isPlayerCard && cardObject.isPlaced) {
                 localStorage.setItem('canAttack', 'true');
@@ -49,8 +52,8 @@
         }
 
         function attachAttackEnemyCardEvents(allCards, stage, playerAvatars) {
-            let playerCards = allCards.playerCards;
-            let enemyCards = allCards.enemyCards;
+            let playerCards = allCards.playerCards,
+                enemyCards = allCards.enemyCards;
 
             for (let i = 0; i < playerCards.length; i += 1) {
                 playerCards[i].sprite.on('mousedown', function (event) {

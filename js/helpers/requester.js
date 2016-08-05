@@ -4,10 +4,10 @@
     'use strict';
 
     define(['jquery'], $ => {
-        const GET = 'GET';
-        const POST = 'POST';
-        const PUT = 'PUT';
-        const DELETE = 'DELETE';
+        const GET = 'GET',
+            POST = 'POST',
+            PUT = 'PUT',
+            DELETE = 'DELETE';
 
         function makeRequest(method, url, headers, data) {
             let promise = new Promise((resolve, reject) => {
@@ -48,4 +48,4 @@
 
         return Requester;
     });
-} ());
+}());

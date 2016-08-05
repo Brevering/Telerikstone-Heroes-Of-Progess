@@ -54,12 +54,11 @@
 
     require(['jquery', 'sammy', 'handlebars', 'requester', 'userController', 'decks'],
         function ($, Sammy, Handlebars, Requester, UserController, decks) {
-            const container = '#container';
-            const appId = 'kid_SJxQIaiv';
-            const appSecret = 'dc497d5b7de74f998c00d3af6e1a55c9';
-
-            const requester = new Requester();
-            const userController = new UserController();
+            const container = '#container',
+                appId = 'kid_SJxQIaiv',
+                appSecret = 'dc497d5b7de74f998c00d3af6e1a55c9',
+                requester = new Requester(),
+                userController = new UserController();
 
             let router = Sammy(function () {
                 this.get('#/', function () {

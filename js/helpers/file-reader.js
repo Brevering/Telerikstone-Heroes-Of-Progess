@@ -10,6 +10,7 @@
 
         $($body).on('change', '#picture', function () {
             let file = this.files[0];
+
             if (file.type.match(/image\/.*/)) {
                 let reader = new FileReader();
 

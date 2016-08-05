@@ -16,13 +16,13 @@
 
             // AXES
             // Category
-            var categoryAxis = chart.categoryAxis;
+            let categoryAxis = chart.categoryAxis;
             categoryAxis.gridPosition = "start";
             categoryAxis.gridAlpha = 0.1;
             categoryAxis.axisAlpha = 0;
 
             // Value
-            var valueAxis = new AmCharts.ValueAxis();
+            let valueAxis = new AmCharts.ValueAxis();
             valueAxis.axisAlpha = 0;
             valueAxis.gridAlpha = 0.1;
             valueAxis.position = "top";
@@ -30,7 +30,7 @@
 
             // GRAPHS
             // first graph
-            var graph1 = new AmCharts.AmGraph();
+            let graph1 = new AmCharts.AmGraph();
             graph1.type = "column";
             graph1.title = "Wins";
             graph1.valueField = "wins";
@@ -41,7 +41,7 @@
             chart.addGraph(graph1);
 
             // second graph
-            var graph2 = new AmCharts.AmGraph();
+            let graph2 = new AmCharts.AmGraph();
             graph2.type = "column";
             graph2.title = "Defeats";
             graph2.valueField = "defeats";
@@ -52,7 +52,7 @@
             chart.addGraph(graph2);
 
             // LEGEND
-            var legend = new AmCharts.AmLegend();
+            let legend = new AmCharts.AmLegend();
             chart.addLegend(legend);
 
             chart.creditsPosition = "top-right";
@@ -64,6 +64,7 @@
                 $('#chartdiv').hide();
             });
         }
+
         function showMyStats(data) {
             let chart;
 
@@ -79,13 +80,13 @@
 
             // AXES
             // Category
-            var categoryAxis = chart.categoryAxis;
+            let categoryAxis = chart.categoryAxis;
             categoryAxis.gridPosition = "start";
             categoryAxis.gridAlpha = 0.1;
             categoryAxis.axisAlpha = 0;
 
             // Value
-            var valueAxis = new AmCharts.ValueAxis();
+            let valueAxis = new AmCharts.ValueAxis();
             valueAxis.axisAlpha = 0;
             valueAxis.gridAlpha = 0.1;
             valueAxis.position = "top";
@@ -93,7 +94,7 @@
 
             // GRAPHS
             // first graph
-            var graph1 = new AmCharts.AmGraph();
+            let graph1 = new AmCharts.AmGraph();
             graph1.type = "column";
             graph1.title = "Wins";
             graph1.valueField = "wins";
@@ -104,7 +105,7 @@
             chart.addGraph(graph1);
 
             // second graph
-            var graph2 = new AmCharts.AmGraph();
+            let graph2 = new AmCharts.AmGraph();
             graph2.type = "column";
             graph2.title = "Defeats";
             graph2.valueField = "defeats";
@@ -115,7 +116,7 @@
             chart.addGraph(graph2);
 
             // LEGEND
-            var legend = new AmCharts.AmLegend();
+            let legend = new AmCharts.AmLegend();
             chart.addLegend(legend);
 
             chart.creditsPosition = "top-right";

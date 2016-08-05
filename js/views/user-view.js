@@ -17,8 +17,8 @@
             }
 
             function loadAvatars(playerName) {
-                let $playerAvatar = $('#player-avatar');
-                let $enemyAvatar = $('#enemy-avatar');
+                let $playerAvatar = $('#player-avatar'),
+                    $enemyAvatar = $('#enemy-avatar');
 
                 $playerAvatar
                     .css('background', `url("${getPlayerImageUrl(playerName)}") no-repeat`)
@@ -85,7 +85,7 @@
                     Sammy(function () {
                         this.trigger('get-all-users-data');
                     });
-                });                
+                });
             }
 
             function UserView() {
@@ -143,11 +143,10 @@
                         showLoader();
                         $(selector).empty();
 
-                        let templateFunc = Handlebars.compile(template);
-                        let html = templateFunc(data);
+                        let templateFunc = Handlebars.compile(template),
+                            html = templateFunc(data);
 
                         $(selector).append(html);
-
                         dataButtonsEvents();
 
                         $('#btn-logout').on('click', function () {
@@ -179,30 +178,27 @@
                         localStorage.setItem('currentCardAttack', '0');
                         localStorage.setItem('isPlayerTurn', 'true');
                         localStorage.setItem('hasToPlaceCard', 'true');
-                        localStorage.setItem('playerHealth', 30);
-                        localStorage.setItem('enemyHealth', 30);
-                        localStorage.setItem('playerMana', 10);
-                        localStorage.setItem('enemyMana', 10);
 
                         $('#btn-exit-game').on('click', function () {
                             localStorage.clear();
                         });
+
                         $('body')
                             .css({
                                 'background': 'url("images/bg_fill.jpg") no-repeat center center fixed',
                                 'background-size': 'cover'
                             });
                         $('#playField')
-                        .css({
-                            'overflow': 'hidden',
-                            'position': 'absolute',
-                            'width': '100%',
-                            'height': '100%',
-                            'background-size': 'contain',
-                            'display': 'flex',
-                            'align-items': 'center',
-                            'justify-content': 'center'
-                        });
+                            .css({
+                                'overflow': 'hidden',
+                                'position': 'absolute',
+                                'width': '100%',
+                                'height': '100%',
+                                'background-size': 'contain',
+                                'display': 'flex',
+                                'align-items': 'center',
+                                'justify-content': 'center'
+                            });
                         $('#canvasWrapper')
                             .css({
                                 'display': 'flex',
@@ -210,7 +206,7 @@
                                 'justify-content': 'center',
                                 'width': 'auto',
                                 'height': '100%'
-                            });                       
+                            });
 
                         loadAvatars(localStorage.trainer);
                         engine.start();
@@ -220,4 +216,4 @@
 
             return UserView;
         });
-} ());
+}());

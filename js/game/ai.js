@@ -2,22 +2,23 @@
     'use strict';
 
     define(['cardCreator', 'cardAbilities', 'Pixi'], function (cardCreator, cardAbilities, PIXI) {
-        function placeCard(allCards, endTurnButton) {
-            let enemyCards = allCards.enemyCards;
-            let hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
+        function placeCard(allCards, endTurnButton, avatars) {
+            let enemyCards = allCards.enemyCards,
+                hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
 
             if (hasPlayerPlacedCard === 'true') {
-                let cardToPlace = enemyCards[[Math.floor(Math.random() * enemyCards.length)]];
-                let enemyMana = Number(localStorage.getItem('enemyMana'));
-                let playerMana = Number(localStorage.getItem('playerMana'));
+                let placeableCards = enemyCards.filter(c => !c.isPlaced && c.cardId !== 99),
+                    cardToPlace = placeableCards[[Math.floor(Math.random() * placeableCards.length)]],
+                    enemyMana = avatars[1].mana,
+                    playerMana = avatars[0].mana;
 
                 if (enemyMana - cardToPlace.mana >= 0) {
                     localStorage.setItem('hasPlayerPlacedCard', 'false');
                     cardCreator.placeCard(cardToPlace);
                     localStorage.setItem('isPlayerTurn', 'true');
                     localStorage.setItem('canAttack', 'false');
-                    localStorage.setItem('enemyMana', enemyMana - cardToPlace.mana);
-                    localStorage.setItem('playerMana', 10);
+                    avatars[1].mana -= cardToPlace.mana;
+                    avatars[0].mana = 10;
 
                     setTimeout(function () {
                         endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
@@ -31,7 +32,7 @@
         function attackPlayerCard(allCards, stage, endTurnButton, playerAvatars) {
             let placedPlayerCards = allCards.playerCards.filter(c => c.isPlaced);
             let cardToAttack = placedPlayerCards[Math.floor(Math.random() * placedPlayerCards.length)];
-            let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced)[0];
+            let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced && !c.isAvatar)[0];
             let playerCards = allCards.playerCards;
 
             if (currentPlacedCard) {
@@ -41,7 +42,7 @@
                     cardAbilities.stealManaFromEnemyPlayer(currentPlacedCard, playerAvatars);
                 } else if (currentPlacedCard.ability === 'stealAttack') {
                     cardAbilities.stealAttackFromEnemyCard(currentPlacedCard, cardToAttack, allCards.enemyCards);
-                } else {
+                } else if (currentPlacedCard.ability === 'normal') {
                     cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
                     cardToAttack.health -= currentPlacedCard.attack;
 
@@ -52,7 +53,9 @@
                         playerCards.splice(indexToRemove, 1);
                     }
 
-                    cardToAttack.healthStat.text = cardToAttack.health;
+                    if (cardToAttack.healthStat) {
+                        cardToAttack.healthStat.text = cardToAttack.health;
+                    }
                 }
             } else {
                 placeCard(allCards, endTurnButton);
@@ -63,7 +66,7 @@
             }, 200);
 
             localStorage.setItem('isPlayerTurn', 'true');
-            localStorage.setItem('playerMana', 10);
+            playerAvatars[0].mana = 10;
         }
 
         return {

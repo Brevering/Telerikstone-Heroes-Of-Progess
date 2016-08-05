@@ -3,14 +3,14 @@
 
     define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks'],
         function (cardCreator, globalValues, Card, MinionCard, AI, player, Decks) {
-            let stage = new PIXI.Container();
-            let widthOnePercent = globalValues.widthOnePercent;
-            let heightOnePercent = globalValues.heightOnePercent;
-            let decks = new Decks();
+            let stage = new PIXI.Container(),
+                widthOnePercent = globalValues.widthOnePercent,
+                heightOnePercent = globalValues.heightOnePercent,
+                decks = new Decks();
 
-            function initializeCard(stage, deck, isPlayerCard) {
+            function initializeCard(stage, deck, isPlayerCard, avatars) {
                 for (let i = 0; i < deck.length - 3; i += 1) {
-                    cardCreator.initializeCard(stage, deck[i]);
+                    cardCreator.initializeCard(stage, deck[i], avatars);
                 }
             }
 
@@ -43,21 +43,39 @@
                 return getPlayerImageUrl(botPlayerName);
             }
 
-            function loadAvatars(playerName) {
-                let playerAvatar = new PIXI.Sprite(PIXI.Texture.fromImage(getPlayerImageUrl(playerName)));
-                let enemyAvatar = new PIXI.Sprite(PIXI.Texture.fromImage(getBotPlayerImageUrl(playerName)));
+            function loadAvatars(playerName, allCards) {
+                let playerAvatar = new MinionCard(0, 30, 10, getPlayerImageUrl(playerName), true, 'none'),
+                    enemyAvatar = new MinionCard(0, 30, 10, getBotPlayerImageUrl(playerName), false, 'none');
 
-                playerAvatar.width = 8.5 * widthOnePercent;
-                playerAvatar.height = 20 * heightOnePercent;
+                playerAvatar.cardContainer = new PIXI.Container();
+                playerAvatar.cardTexture = PIXI.Texture.fromImage(getPlayerImageUrl(playerName));
+                playerAvatar.sprite = new PIXI.Sprite(playerAvatar.cardTexture);
+                playerAvatar.sprite.width = 8.5 * widthOnePercent;
+                playerAvatar.sprite.height = 20 * heightOnePercent;
+                playerAvatar.sprite.position.x = 39.3 * widthOnePercent;
+                playerAvatar.sprite.position.y = 59.5 * heightOnePercent;
+                playerAvatar.sprite.interactive = true;
+                playerAvatar.isAvatar = true;
+                playerAvatar.cardId = 98;
+                playerAvatar.sprite.cardId = 98;
+                playerAvatar.isPlaced = true;
+                playerAvatar.isJustPlaced = false;
+                allCards.playerCards.push(playerAvatar);
 
-                enemyAvatar.width = 8.5 * widthOnePercent;
-                enemyAvatar.height = 20 * heightOnePercent;
-
-                playerAvatar.position.x = 39.3 * widthOnePercent;
-                playerAvatar.position.y = 59.5 * heightOnePercent;
-
-                enemyAvatar.position.x = 39.3 * widthOnePercent;
-                enemyAvatar.position.y = 8.8 * heightOnePercent;
+                enemyAvatar.cardContainer = new PIXI.Container();
+                enemyAvatar.cardTexture = PIXI.Texture.fromImage(getBotPlayerImageUrl(playerName));
+                enemyAvatar.sprite = new PIXI.Sprite(enemyAvatar.cardTexture);
+                enemyAvatar.sprite.width = 8.5 * widthOnePercent;
+                enemyAvatar.sprite.height = 20 * heightOnePercent;
+                enemyAvatar.sprite.position.x = 39.3 * widthOnePercent;
+                enemyAvatar.sprite.position.y = 8.8 * heightOnePercent;
+                enemyAvatar.sprite.interactive = true;
+                enemyAvatar.isAvatar = true;
+                enemyAvatar.cardId = 99;
+                enemyAvatar.sprite.cardId = 99;
+                enemyAvatar.isJustPlaced = false;
+                enemyAvatar.isPlaced = true;
+                allCards.enemyCards.push(enemyAvatar);
 
                 return [playerAvatar, enemyAvatar];
             }
@@ -81,20 +99,17 @@
 
             // starts the whole game
             function start() {
-                let playerDeck = decks.getCukiDeck(true);
-                let enemyDeck = decks.getCukiDeck(false);
+                let playerDeck = decks.getCukiDeck(true),
+                    enemyDeck = decks.getCukiDeck(false),
+                    allCards = cardCreator.getPlayersCards(),
+                    playersAvatars = loadAvatars(localStorage.trainer, allCards),
+                    endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
 
                 setUpTable();
-                initializeCard(stage, playerDeck, true);
-                initializeCard(stage, enemyDeck, false);
-
-                let allCards = cardCreator.getPlayersCards();
-                let playersAvatars = loadAvatars(localStorage.trainer);
-
-                stage.addChild(playersAvatars[0]);
-                stage.addChild(playersAvatars[1]);
-
-                let endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
+                initializeCard(stage, playerDeck, true, playersAvatars);
+                initializeCard(stage, enemyDeck, false, playersAvatars);
+                stage.addChild(playersAvatars[0].sprite);
+                stage.addChild(playersAvatars[1].sprite);
 
                 endTurnButton.interactive = true;
                 endTurnButton.width = 6 * widthOnePercent;
@@ -104,7 +119,7 @@
 
                 endTurnButton.on('mousedown', function () {
                     if (localStorage.getItem('hasToPlaceCard') === 'true') {
-                        AI.placeCard(allCards, endTurnButton);
+                        AI.placeCard(allCards, endTurnButton, playersAvatars);
                         localStorage.setItem('hasToPlaceCard', 'false');
                     } else {
                         AI.attackPlayerCard(allCards, stage, endTurnButton, playersAvatars);

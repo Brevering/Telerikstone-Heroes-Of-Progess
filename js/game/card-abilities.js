@@ -2,14 +2,16 @@
     'use strict';
 
     define(['Pixi', 'globalValues', 'cardCreator'], function (PIXI, globalValues, cardCreator) {
-        let widthOnePercent = globalValues.widthOnePercent;
-        let heightOnePercent = globalValues.heightOnePercent;
+        let widthOnePercent = globalValues.widthOnePercent,
+            heightOnePercent = globalValues.heightOnePercent;
 
         function stealFromEnemyHealth(attacker, playerAvatars) {
-            let playerHealth = Number(localStorage.getItem('playerHealth'));
-            let enemyHealth = Number(localStorage.getItem('enemyHealth'));
-            let healthToSteal = attacker.attack;
-            let avatar;
+            let playerHealth = playerAvatars[0].health,
+                enemyHealth = playerAvatars[1].health,
+                healthToSteal = attacker.attack,
+                avatar;
+
+            console.log(`Health before: Player ${playerHealth}  enemy${enemyHealth}`);
 
             if (attacker.isPlayerCard) {
                 enemyHealth -= healthToSteal;
@@ -21,25 +23,24 @@
                 avatar = playerAvatars[0];
             }
 
-            localStorage.setItem('playerHealth', playerHealth);
-            localStorage.setItem('enemyHealth', enemyHealth);
-
+            playerAvatars[0].health = playerHealth;
+            playerAvatars[1].health = enemyHealth;
             cardCreator.performStealHealthFromPlayerAnimation({sprite: playerAvatars[0]}, {sprite: avatar}, healthToSteal);
         }
 
         function stealManaFromEnemyPlayer(attacker, avatars) {
-            let playerMana = Number(localStorage.getItem('playerMana'));
-            let enemyMana = Number(localStorage.getItem('enemyMana'));
-            let manaToSteal = Math.round(attacker.mana / 2);
-            let avatar;
+            let playerMana = Number(localStorage.getItem('playerMana')),
+                enemyMana = Number(localStorage.getItem('enemyMana')),
+                manaToSteal = Math.round(attacker.mana / 2),
+                avatar;
 
             if (attacker.isPlayerCard) {
-                localStorage.setItem('playerMana', playerMana + manaToSteal);
-                localStorage.setItem('enemyMana', enemyMana - manaToSteal);
+                avatars[0].mana += manaToSteal;
+                avatars[1].mana -= manaToSteal;
                 avatar = avatars[1];
             } else {
-                localStorage.setItem('playerMana', playerMana - manaToSteal);
-                localStorage.setItem('enemyMana', enemyMana + manaToSteal);
+                avatars[0].mana -= manaToSteal;
+                avatars[1].mana += manaToSteal;
                 avatar = avatars[0];
             }
 

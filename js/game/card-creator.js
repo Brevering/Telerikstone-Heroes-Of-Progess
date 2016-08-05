@@ -3,20 +3,19 @@
 
     define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin', 'Pixi', 'GreensockPixiPlugin', 'globalValues'],
         function ($, TimelineMax, TweenMax, Easing, CSSPlugin, PIXI, GreensockPixiPlugin, globalValues) {
-            let numberOfPlayerCardsInHand = 0;
-            let numberOfEnemyCardsInHand = 0;
-            let numberOfPlayerCardsOnTable = 0;
-            let numberOfEnemyCardsOnTable = 0;
-            let playerCards = [];
-            let enemyCards = [];
-            let widthOnePercent = globalValues.widthOnePercent;
-            let heightOnePercent = globalValues.heightOnePercent;
+            let numberOfPlayerCardsInHand = 0,
+                numberOfEnemyCardsInHand = 0,
+                numberOfPlayerCardsOnTable = 0,
+                numberOfEnemyCardsOnTable = 0,
+                playerCards = [],
+                enemyCards = [],
+                widthOnePercent = globalValues.widthOnePercent,
+                heightOnePercent = globalValues.heightOnePercent,
+                playerCardAnim = new TimelineMax(),
+                enemyCardAnim = new TimelineMax(),
+                gameStage;
 
-            let playerCardAnim = new TimelineMax();
-            let enemyCardAnim = new TimelineMax();
-            let gameStage;
-
-            function initializeCard(someStage, cardObject) {
+            function initializeCard(someStage, cardObject, avatars) {
                 cardObject.cardContainer = new PIXI.Container();
                 cardObject.placedTexture = cardObject.imgUrl.toString();
                 cardObject.isPlaced = false;
@@ -31,12 +30,11 @@
 
                     // add basic properties to the card
                     basicCardInit(cardObject);
-                    playerCardInit(someStage, cardObject);
+                    playerCardInit(someStage, cardObject, avatars);
                     initStats(cardObject);
                     playerCards.push(cardObject);
                     numberOfPlayerCardsInHand += 1;
-                }
-                else {
+                } else {
                     cardObject.cardTexture = PIXI.Texture.fromImage('images/cards/card_back.png');
                     cardObject.sprite = new PIXI.Sprite(cardObject.cardTexture);
                     cardObject.cardId = Number(localStorage.getItem('enemyCardId'));
@@ -53,8 +51,8 @@
             }
 
             function initStats(cardObject) {
-                let containerWidthPercent = cardObject.sprite.texture.baseTexture.width / 100;
-                let containerHeightPercent = cardObject.sprite.texture.baseTexture.height / 100;
+                let containerWidthPercent = cardObject.sprite.texture.baseTexture.width / 100,
+                    containerHeightPercent = cardObject.sprite.texture.baseTexture.height / 100;
 
                 if (cardObject.health) {
                     cardObject.healthStat = new PIXI.Text(cardObject.health, {
@@ -128,24 +126,24 @@
             }
 
             // this initializes a player card
-            function playerCardInit(stage, cardObject) {
+            function playerCardInit(stage, cardObject, avatars) {
                 cardObject.cardContainer.position.x = 80 * widthOnePercent;
                 cardObject.cardContainer.position.y = 60 * heightOnePercent;
 
                 cardObject.sprite.interactive = true;
                 cardObject.sprite.on('mousedown', function () {
-                    let playerMana = Number(localStorage.getItem('playerMana'));
+                    let playerMana = avatars[0].mana;
 
                     if (playerMana - cardObject.mana >= 0) {
                         placeCard(cardObject);
-                        localStorage.setItem('playerMana', playerMana - cardObject.mana);
-                        localStorage.setItem('enemyMana', 10);
+                        avatars[0].mana -= cardObject.mana;
+                        avatars[1].mana = 10;
                     }
                 });
 
                 // calculate card in hand offset
-                let cardInHandTopOffset = 90 * heightOnePercent;
-                let cardInHandLeftOffset = numberOfPlayerCardsInHand * 10 * widthOnePercent;
+                let cardInHandTopOffset = 90 * heightOnePercent,
+                    cardInHandLeftOffset = numberOfPlayerCardsInHand * 10 * widthOnePercent;
 
                 // add card to the hand
                 cardObject.cardContainer.addChild(cardObject.sprite);
@@ -171,8 +169,8 @@
                 cardObject.cardContainer.position.y = 20 * heightOnePercent;
 
                 // calculate card in hand offset
-                let cardInHandTopOffset = -5 * heightOnePercent;
-                let cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
+                let cardInHandTopOffset = -5 * heightOnePercent,
+                    cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
 
                 // add card to the field
                 cardObject.cardContainer.addChild(cardObject.sprite);
@@ -251,11 +249,19 @@
 
             function performAttackAnimation(fromCard, toCard) {
                 if (fromCard && toCard) {
-                    let startX = fromCard.cardContainer.x;
-                    let startY = fromCard.cardContainer.y;
-                    let destinationX = toCard.cardContainer.x;
-                    let destinationY = toCard.cardContainer.y;
-                    let animation = new TimelineMax();
+                    let startX = fromCard.cardContainer.x,
+                        startY = fromCard.cardContainer.y,
+                        animation = new TimelineMax(),
+                        destinationX,
+                        destinationY;
+
+                    if (toCard.isAvatar) {
+                        destinationX = toCard.sprite.position.x;
+                        destinationY = toCard.sprite.position.y;
+                    } else {
+                        destinationX = toCard.cardContainer.x;
+                        destinationY = toCard.cardContainer.y;
+                    }
 
                     animation
                         .to(fromCard.cardContainer, 0.5, {
@@ -270,12 +276,12 @@
             }
 
             function performStealHealthFromPlayerAnimation(attacker, target, healthToSteal) {
-                let stealImage = 'images/effects/healthSteal.png';
-                let leftOffset = 0.263;
-                let textSize = 10;
-                let spriteScale = 0.03;
-                let textLeftOffset = 6.5;
-                let textTopOffset = 1.1;
+                let stealImage = 'images/effects/healthSteal.png',
+                    leftOffset = 0.263,
+                    textSize = 10,
+                    spriteScale = 0.03,
+                    textLeftOffset = 6.5,
+                    textTopOffset = 1.1;
 
                 performStealAnim(
                     attacker,
@@ -290,12 +296,12 @@
             }
 
             function performStealManaFromCardAnimation(attackerCard, targetCard, manaToSteal) {
-                let stealImage = 'images/effects/manaSteal.png';
-                let leftOffset = 0.263;
-                let textSize = 10;
-                let spriteScale = 0.03;
-                let textLeftOffset = 6.5;
-                let textTopOffset = 1.1;
+                let stealImage = 'images/effects/manaSteal.png',
+                    leftOffset = 0.263,
+                    textSize = 10,
+                    spriteScale = 0.03,
+                    textLeftOffset = 6.5,
+                    textTopOffset = 1.1;
 
                 performStealAnim(
                     attackerCard,
@@ -324,12 +330,11 @@
                                       textTopOffset) {
                 leftOffset = leftOffset || 1;
 
-                let spotContainer = new PIXI.Container();
-                let spotTexture = PIXI.Texture.fromImage(stealImage);
-                let spotSprite = new PIXI.Sprite(spotTexture);
-
-                let widthPercent = attacker.sprite.texture.baseTexture.width / 100;
-                let heightPercent = attacker.sprite.texture.baseTexture.height / 100;
+                let spotContainer = new PIXI.Container(),
+                    spotTexture = PIXI.Texture.fromImage(stealImage),
+                    spotSprite = new PIXI.Sprite(spotTexture),
+                    widthPercent = attacker.sprite.texture.baseTexture.width / 100,
+                    heightPercent = attacker.sprite.texture.baseTexture.height / 100;
 
                 spotContainer.x = target.sprite.x * widthPercent * leftOffset;
                 spotContainer.y = target.sprite.y;
@@ -363,8 +368,8 @@
 
             function hoverPlayerCard() {
                 for (let i = 0; i < playerCards.length; i += 1) {
-                    let currentCard = playerCards[i];
-                    let normalY = currentCard.cardContainer.y;
+                    let currentCard = playerCards[i],
+                        normalY = currentCard.cardContainer.y;
 
                     playerCards[i].sprite.on('mouseover', function () {
                         if (!currentCard.isPlaced && !playerCardAnim.isActive()) {

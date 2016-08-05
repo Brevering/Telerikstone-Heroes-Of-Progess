@@ -2,8 +2,8 @@
     'use strict';
 
     define(['requester', 'url', 'headers'], function (Requester, url, Headers) {
-        let requester = new Requester();
-        let headers = new Headers();
+        let requester = new Requester(),
+            headers = new Headers();
 
         function UserModel() {
         }
@@ -37,4 +37,4 @@
 
         return UserModel;
     });
-} ());
+}());
