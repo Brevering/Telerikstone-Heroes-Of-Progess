@@ -15,6 +15,7 @@
             if (attacker.isPlayerCard) {
                 enemyHealth -= healthToSteal;
                 playerHealth += healthToSteal;
+                playerAvatars[0].healthStolen += healthToSteal;
                 avatar = playerAvatars[0];
                 enemyAvatar = playerAvatars[1];
             } else {
@@ -22,11 +23,12 @@
                 playerHealth -= healthToSteal;
                 avatar = playerAvatars[1];
                 enemyAvatar = playerAvatars[0];
+                playerAvatars[1].healthStolen += healthToSteal
             }
 
             playerAvatars[0].health = playerHealth;
             playerAvatars[1].health = enemyHealth;
-            cardCreator.performStealHealthFromPlayerAnimation(avatar, enemyAvatar , healthToSteal);
+            cardCreator.performStealHealthFromPlayerAnimation(avatar, enemyAvatar, healthToSteal);
         }
 
         function stealManaFromEnemyPlayer(attacker, avatars) {
@@ -38,12 +40,14 @@
 
             if (attacker.isPlayerCard) {
                 avatars[0].mana += manaToSteal;
+                avatars[0].manaStolen += manaToSteal;
                 avatars[1].mana -= manaToSteal;
                 avatar = avatars[0];
                 enemyAvatar = avatars[1];
             } else {
                 avatars[0].mana -= manaToSteal;
                 avatars[1].mana += manaToSteal;
+                avatars[1].manaStolen += manaToSteal;
                 avatar = avatars[1];
                 enemyAvatar = avatars[0];
             }
@@ -55,14 +59,17 @@
             let attackToSteal = Math.round(target.attack / 2);
 
             if (attackToSteal > 0) {
-                let receiver;
+                let receiver,
+                    stealer;
 
                 if (attacker.isPlayerCard) {
                     let playerCardsWhichAttack = cards.filter(c => c.ability === 'normal');
                     receiver = playerCardsWhichAttack[Math.floor(Math.random() * playerCardsWhichAttack.length)];
+                    stealer = 'player';
                 } else {
                     let enemyCardsWhichAttack = cards.filter(c => c.ability === 'normal');
                     receiver = enemyCardsWhichAttack[Math.floor(Math.random() * enemyCardsWhichAttack.length)];
+                    stealer = 'enemy';
                 }
 
                 receiver.attack += attackToSteal;
@@ -70,6 +77,14 @@
 
                 receiver.damageStat.text = receiver.attack;
                 target.damageStat.text = target.attack;
+
+                if(stealer === 'player') {
+                    let previouslyStolen = Number(localStorage.getItem('playerStolenAttack'));
+                    localStorage.setItem('playerStolenAttack', previouslyStolen + attackToSteal);
+                } else {
+                    let previouslyStolen = Number(localStorage.getItem('enemyStolenAttack'));
+                    localStorage.setItem('enemyStolenAttack', previouslyStolen + attackToSteal);
+                }
             }
 
             cardCreator.performStealAttackFormCardAnimation(attacker, target, attackToSteal);

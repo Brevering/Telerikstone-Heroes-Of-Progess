@@ -59,6 +59,7 @@
                     }
 
                     endGame.checkForEndGame(playerAvatars, allCards);
+                    playerAvatars[1].damageDealt = currentPlacedCard.attack;
                 }
             } else {
                 placeCard(allCards, endTurnButton);

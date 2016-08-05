@@ -41,6 +41,7 @@
                     console.log(playerAvatars[1].health);
 
                     endGame.checkForEndGame(playerAvatars, allCards);
+                    playerAvatars[0].damageDealt += attacker.attack;
                 }
             } else {
                 cardObject.isJustPlaced = false;
