@@ -1,10 +1,10 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'cardAbilities'], function (cardCreator, cardAbilities) {
-        function attackEnemyCardEvent(event, enemyCards, playerCards, stage, playerAvatars) {
+    define(['cardCreator', 'cardAbilities', 'endGame'], function (cardCreator, cardAbilities, endGame) {
+        function attackEnemyCardEvent(event, enemyCards, playerCards, stage, playerAvatars, allCards) {
             let cardId = this.cardId,
-                cardObject = enemyCards.filter(obj => obj.cardId === cardId)[0];
+                cardObject = allCards.enemyCards.filter(obj => obj.cardId === cardId)[0];
 
             if (!cardObject.isPlayerCard && cardObject.isPlaced && !cardObject.isJustPlaced &&
                 localStorage.getItem('canAttack') === 'true') {
@@ -16,6 +16,7 @@
 
                 if (attacker.ability === 'stealEnemyHealth') {
                     cardAbilities.stealFromEnemyHealth(attacker, playerAvatars);
+                    endGame.checkForEndGame(playerAvatars, allCards);
                 } else if (attacker.ability === 'stealMana') {
                     cardAbilities.stealManaFromEnemyPlayer(attacker, playerAvatars)
                 } else if (attacker.ability === 'stealAttack') {
@@ -25,14 +26,21 @@
                     cardCreator.performAttackAnimation(attacker, cardObject);
 
                     if (cardObject.health <= 0) {
-                        let indexToRemove = enemyCards.indexOf(cardObject);
+                        let indexToRemove = allCards.enemyCards.indexOf(cardObject);
 
                         stage.removeChild(cardObject.cardContainer);
-                        enemyCards.splice(indexToRemove, 1);
+                        allCards.enemyCards.splice(indexToRemove, 1);
                         localStorage.setItem('hasToPlaceCard', 'true');
+                        console.log(allCards.enemyCards);
                     }
 
-                    cardObject.healthStat.text = cardObject.health;
+                    if (cardObject.healthStat) {
+                        cardObject.healthStat.text = cardObject.health;
+                    }
+
+                    console.log(playerAvatars[1].health);
+
+                    endGame.checkForEndGame(playerAvatars, allCards);
                 }
             } else {
                 cardObject.isJustPlaced = false;
@@ -63,7 +71,7 @@
 
             for (let i = 0; i < enemyCards.length; i += 1) {
                 enemyCards[i].sprite.on('mousedown', function (event) {
-                    attackEnemyCardEvent.call(this, event, enemyCards, playerCards, stage, playerAvatars);
+                    attackEnemyCardEvent.call(this, event, enemyCards, playerCards, stage, playerAvatars, allCards);
                 });
             }
         }

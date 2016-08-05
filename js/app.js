@@ -42,6 +42,7 @@
             'ai': './game/ai',
             'player': './game/player',
             'cardAbilities': './game/card-abilities',
+            'endGame': './game/end-game',
 
             // Cards
             'card': './cards/card',

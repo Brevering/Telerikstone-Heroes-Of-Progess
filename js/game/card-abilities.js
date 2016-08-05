@@ -11,8 +11,6 @@
                 healthToSteal = attacker.attack,
                 avatar;
 
-            console.log(`Health before: Player ${playerHealth}  enemy${enemyHealth}`);
-
             if (attacker.isPlayerCard) {
                 enemyHealth -= healthToSteal;
                 playerHealth += healthToSteal;

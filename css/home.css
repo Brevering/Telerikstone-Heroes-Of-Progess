@@ -30,3 +30,14 @@
     border-radius: 10px;
     opacity: 0.9;
 }
+
+#close-charts {
+    font-size: 20px;
+    color: white;
+    position: absolute;
+    top: 5.3%;
+    right: 7.2%;
+    width: 3%;
+    height: 6%;
+    display: none;
+}

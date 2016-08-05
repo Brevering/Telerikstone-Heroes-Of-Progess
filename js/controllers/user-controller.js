@@ -104,14 +104,15 @@
                     userModel.getUserData()
                         .then(
                             function (success) {
-                                console.log(JSON.stringify(success));
-                                success = success;
                                 statistics.showMyStats(success);
                                 $('#chartdiv').show();
                             },
                             function (error) {
                                 console.log(error);
-                            });
+                            })
+                        .then(function (success) {
+                            $('#close-charts').show();
+                        });
                 },
                 getAllUsersData() {
                     userModel.getAllUsersData()
@@ -124,7 +125,10 @@
                             },
                             function (error) {
                                 console.log(error);
-                            });
+                            })
+                        .then(function (success) {
+                            $('#close-charts').show();
+                        });
                 }
             };
 

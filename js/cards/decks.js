@@ -38,7 +38,7 @@
                 standartDeck = getStandartDeck(isPlayerCard),
                 used = [];
 
-            while (newDeck.length !== 10) {
+            while (newDeck.length !== 7) {
                 let standartCardIndex = Math.floor(Math.random() * 10);
 
                 if (used.indexOf(standartCardIndex) === -1) {

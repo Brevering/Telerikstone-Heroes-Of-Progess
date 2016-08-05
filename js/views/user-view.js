@@ -86,6 +86,17 @@
                         this.trigger('get-all-users-data');
                     });
                 });
+
+               /* $('#get-all-users-data, #get-user-data').on('click', function () {
+                    setTimeout(function () {
+                        $('#close-charts').show();
+                    }, 200);
+                }); */
+
+                $('#close-charts').on('click', function () {
+                    $('#chartdiv').hide().empty();
+                    $(this).hide();
+                });
             }
 
             function UserView() {

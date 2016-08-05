@@ -1,13 +1,13 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'cardAbilities', 'Pixi'], function (cardCreator, cardAbilities, PIXI) {
+    define(['cardCreator', 'cardAbilities', 'Pixi', 'endGame'], function (cardCreator, cardAbilities, PIXI, endGame) {
         function placeCard(allCards, endTurnButton, avatars) {
             let enemyCards = allCards.enemyCards,
                 hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
 
             if (hasPlayerPlacedCard === 'true') {
-                let placeableCards = enemyCards.filter(c => !c.isPlaced && c.cardId !== 99),
+                let placeableCards = allCards.enemyCards.filter(c => !c.isPlaced && c.cardId !== 99),
                     cardToPlace = placeableCards[[Math.floor(Math.random() * placeableCards.length)]],
                     enemyMana = avatars[1].mana,
                     playerMana = avatars[0].mana;
@@ -38,6 +38,7 @@
             if (currentPlacedCard) {
                 if (currentPlacedCard.ability === 'stealEnemyHealth') {
                     cardAbilities.stealFromEnemyHealth(currentPlacedCard, playerAvatars);
+                    endGame.checkForEndGame(playerAvatars, allCards);
                 } else if (currentPlacedCard.ability === 'stealMana') {
                     cardAbilities.stealManaFromEnemyPlayer(currentPlacedCard, playerAvatars);
                 } else if (currentPlacedCard.ability === 'stealAttack') {
@@ -47,15 +48,17 @@
                     cardToAttack.health -= currentPlacedCard.attack;
 
                     if (cardToAttack.health <= 0) {
-                        let indexToRemove = playerCards.indexOf(cardToAttack);
+                        let indexToRemove = allCards.playerCards.indexOf(cardToAttack);
 
                         stage.removeChild(cardToAttack.cardContainer);
-                        playerCards.splice(indexToRemove, 1);
+                        allCards.playerCards.splice(indexToRemove, 1);
                     }
 
                     if (cardToAttack.healthStat) {
                         cardToAttack.healthStat.text = cardToAttack.health;
                     }
+
+                    endGame.checkForEndGame(playerAvatars, allCards);
                 }
             } else {
                 placeCard(allCards, endTurnButton);
