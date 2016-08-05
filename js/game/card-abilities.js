@@ -55,45 +55,9 @@
             cardCreator.performStealManaFromCardAnimation(avatar, enemyAvatar, manaToSteal);
         }
 
-        function stealAttackFromEnemyCard(attacker, target, cards) {
-            let attackToSteal = Math.round(target.attack / 2);
-
-            if (attackToSteal > 0) {
-                let receiver,
-                    stealer;
-
-                if (attacker.isPlayerCard) {
-                    let playerCardsWhichAttack = cards.filter(c => c.ability === 'normal');
-                    receiver = playerCardsWhichAttack[Math.floor(Math.random() * playerCardsWhichAttack.length)];
-                    stealer = 'player';
-                } else {
-                    let enemyCardsWhichAttack = cards.filter(c => c.ability === 'normal');
-                    receiver = enemyCardsWhichAttack[Math.floor(Math.random() * enemyCardsWhichAttack.length)];
-                    stealer = 'enemy';
-                }
-
-                receiver.attack += attackToSteal;
-                target.attack -= attackToSteal;
-
-                receiver.damageStat.text = receiver.attack;
-                target.damageStat.text = target.attack;
-
-                if (stealer === 'player') {
-                    let previouslyStolen = Number(localStorage.getItem('playerStolenAttack'));
-                    localStorage.setItem('playerStolenAttack', previouslyStolen + attackToSteal);
-                } else {
-                    let previouslyStolen = Number(localStorage.getItem('enemyStolenAttack'));
-                    localStorage.setItem('enemyStolenAttack', previouslyStolen + attackToSteal);
-                }
-            }
-
-            cardCreator.performStealAttackFormCardAnimation(attacker, target, attackToSteal);
-        }
-
         return {
             stealFromEnemyHealth: stealFromEnemyHealth,
             stealManaFromEnemyPlayer: stealManaFromEnemyPlayer,
-            stealAttackFromEnemyCard: stealAttackFromEnemyCard
         };
     });
 }());

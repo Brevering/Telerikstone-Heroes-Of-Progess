@@ -326,26 +326,6 @@
                     textTopOffset)
             }
 
-            function performStealAttackFormCardAnimation(attackerCard, targetCard, attackToSteal) {
-                let stealImage = 'images/effects/attackSteal.png',
-                    leftOffset = 0.25,
-                    textSize = 10,
-                    spriteScale = 0.15,
-                    textLeftOffset = 17,
-                    textTopOffset = 9;
-
-                performStealAnim(
-                    attackerCard,
-                    targetCard,
-                    attackToSteal,
-                    stealImage,
-                    leftOffset,
-                    textSize,
-                    spriteScale,
-                    textLeftOffset,
-                    textTopOffset)
-            }
-
             function performStealAnim(attacker,
                                       target,
                                       valueToSteal,
@@ -432,7 +412,6 @@
                 performAttackAnimation: performAttackAnimation,
                 performStealHealthFromPlayerAnimation: performStealHealthFromPlayerAnimation,
                 performStealManaFromCardAnimation: performStealManaFromCardAnimation,
-                performStealAttackFormCardAnimation: performStealAttackFormCardAnimation,
                 hoverPlayerCard: hoverPlayerCard
             };
         });
