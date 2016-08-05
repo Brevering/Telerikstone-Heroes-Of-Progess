@@ -256,14 +256,14 @@
                         destinationY;
 
                     if (toCard.isAvatar && toCard.isPlayerCard === false) {
-                        destinationX = toCard.sprite.position.x * globalValues.widthOnePercent * 0.058;
-                        destinationY = toCard.sprite.position.y * globalValues.heightOnePercent * 0.3;
+                        destinationX = toCard.sprite.position.x * 1.1;
+                        destinationY = toCard.sprite.position.y * 2.5;
 
                         gameStage.removeChild(fromCard.cardContainer);
                         gameStage.addChildAt(fromCard.cardContainer, gameStage.children.length - 1);
                     }
                     else if (toCard.isAvatar && toCard.isPlayerCard === true){
-                        destinationX = toCard.sprite.position.x * globalValues.widthOnePercent * 0.058;
+                        destinationX = toCard.sprite.position.x * 1.1;
                         destinationY = toCard.sprite.position.y;
 
                         gameStage.removeChild(fromCard.cardContainer);
@@ -306,7 +306,7 @@
                     textTopOffset)
             }
 
-            function performStealManaFromCardAnimation(attackerCard, targetCard, manaToSteal) {
+            function performStealManaFromCardAnimation(attacker, target, manaToSteal) {
                 let stealImage = 'images/effects/manaSteal.png',
                     leftOffset = 0.25,
                     textSize = 10,
@@ -315,8 +315,8 @@
                     textTopOffset = 9;
 
                 performStealAnim(
-                    attackerCard,
-                    targetCard,
+                    attacker,
+                    target,
                     manaToSteal,
                     stealImage,
                     leftOffset,
@@ -326,8 +326,24 @@
                     textTopOffset)
             }
 
-            function performStealAttackFormCardAnimation() {
+            function performStealAttackFormCardAnimation(attackerCard, targetCard, attackToSteal) {
+                let stealImage = 'images/effects/attackSteal.png',
+                    leftOffset = 0.25,
+                    textSize = 10,
+                    spriteScale = 0.15,
+                    textLeftOffset = 17,
+                    textTopOffset = 9;
 
+                performStealAnim(
+                    attackerCard,
+                    targetCard,
+                    attackToSteal,
+                    stealImage,
+                    leftOffset,
+                    textSize,
+                    spriteScale,
+                    textLeftOffset,
+                    textTopOffset)
             }
 
             function performStealAnim(attacker,

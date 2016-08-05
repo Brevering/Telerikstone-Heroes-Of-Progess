@@ -21,7 +21,7 @@
                 enemyHealth += healthToSteal;
                 playerHealth -= healthToSteal;
                 avatar = playerAvatars[1];
-                enemyAvatar = playerAvatars[0];;
+                enemyAvatar = playerAvatars[0];
             }
 
             playerAvatars[0].health = playerHealth;
@@ -72,7 +72,7 @@
                 target.damageStat.text = target.attack;
             }
 
-            // perform animation
+            cardCreator.performStealAttackFormCardAnimation(attacker, target, attackToSteal);
         }
 
         return {
