@@ -23,7 +23,7 @@
 
             playerAvatars[0].health = playerHealth;
             playerAvatars[1].health = enemyHealth;
-            cardCreator.performStealHealthFromPlayerAnimation({sprite: playerAvatars[0]}, {sprite: avatar}, healthToSteal);
+            cardCreator.performStealHealthFromPlayerAnimation({sprite: playerAvatars[0]}, {sprite: avatar} , healthToSteal);
         }
 
         function stealManaFromEnemyPlayer(attacker, avatars) {
@@ -42,7 +42,7 @@
                 avatar = avatars[0];
             }
 
-            cardCreator.performStealManaFromCardAnimation(attacker, avatar, manaToSteal);
+            cardCreator.performStealManaFromCardAnimation(attacker, {sprite: avatar}, manaToSteal);
         }
 
         function stealAttackFromEnemyCard(attacker, target, cards) {
