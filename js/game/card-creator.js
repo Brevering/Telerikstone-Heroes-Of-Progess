@@ -194,6 +194,96 @@
                 });
             }
 
+            function arrangePlayerCardsOnField() {
+                numberOfPlayerCardsOnTable = 0;
+
+                for (let i = 0; i < playerCards.length; i += 1) {
+                    let currentCard = playerCards[i];
+
+                    if (currentCard.isPlaced && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+
+                        let leftOffset = 22 * widthOnePercent + numberOfPlayerCardsOnTable * widthOnePercent * 7;
+                        numberOfPlayerCardsOnTable += 1;
+
+                        TweenMax.to(currentCard.cardContainer, 1, {
+                            pixi: {
+                                x: leftOffset,
+                                y: 50 * heightOnePercent,
+                                scale: 0.025 * heightOnePercent
+                            },
+                            ease: Expo.easeOut
+                        });
+                    }
+                }
+            }
+
+            function arrangeEnemyCardsOnField() {
+                numberOfEnemyCardsOnTable = 0;
+
+                for (let i = 0; i < enemyCards.length; i += 1) {
+                    let currentCard = enemyCards[i];
+
+                    if (currentCard.isPlaced && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+
+                        let leftOffset = 22 * widthOnePercent + numberOfEnemyCardsOnTable * widthOnePercent * 7;
+                        numberOfEnemyCardsOnTable += 1;
+
+                        TweenMax.to(currentCard.cardContainer, 1, {
+                            pixi: {
+                                x: leftOffset,
+                                y: 34 * heightOnePercent,
+                                scale: 0.025 * heightOnePercent
+                            },
+                            ease: Expo.easeOut
+                        });
+                    }
+                }
+            }
+
+            function arrangePlayerCardsInHand() {
+                numberOfPlayerCardsInHand = 0;
+
+                for (let i = 0; i < playerCards.length; i += 1) {
+                    let currentCard = playerCards[i];
+
+                    if (currentCard.isPlaced === false &&
+                        gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+
+                        let cardInHandLeftOffset = numberOfPlayerCardsInHand * 10 * widthOnePercent;
+                        numberOfPlayerCardsInHand += 1;
+
+                        TweenMax.to(currentCard.cardContainer, 2, {
+                            pixi: {
+                                x: cardInHandLeftOffset + 13 * widthOnePercent,
+                            },
+                            ease: Expo.easeOut
+                        }, 0);
+                    }
+                }
+            }
+
+            function arrangeEnemyCardsInHand() {
+                numberOfEnemyCardsInHand = 0;
+
+                for (let i = 0; i < enemyCards.length; i += 1) {
+                    let currentCard = enemyCards[i];
+
+                    if (currentCard.isPlaced === false &&
+                        gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+
+                        let cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
+                        numberOfEnemyCardsInHand += 1;
+
+                        TweenMax.to(currentCard.cardContainer, 2, {
+                            pixi: {
+                                x: cardInHandLeftOffset + 30 * widthOnePercent
+                            },
+                            ease: Expo.easeOut,
+                        }, 0);
+                    }
+                }
+            }
+
             // this animates a card placement
             function placeCard(cardObject) {
                 if (cardObject.isPlayerCard === true && numberOfPlayerCardsOnTable < 7 && cardObject.isPlaced === false) {
@@ -202,18 +292,23 @@
                     if (localStorage.getItem('isPlayerTurn') === 'true') {
                         cardObject.isPlaced = true;
                         cardObject.isJustPlaced = true;
+
                         TweenMax.to(cardObject.cardContainer, 1, {
                             pixi: {
                                 x: leftOffset,
                                 y: 50 * heightOnePercent,
                                 scale: 0.025 * heightOnePercent
                             },
-                            ease: Expo.easeOut
+                            ease: Expo.easeOut,
                         });
+
+                        arrangePlayerCardsInHand();
 
                         localStorage.setItem('hasPlayerPlacedCard', 'true');
 
                         numberOfPlayerCardsOnTable += 1;
+                        numberOfPlayerCardsInHand -= 1;
+
                         localStorage.setItem('isPlayerTurn', 'false');
                     }
                 }
@@ -233,6 +328,8 @@
                             },
                             ease: Expo.easeOut
                         });
+
+                        arrangeEnemyCardsInHand();
 
                         cardObject.sprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
                         numberOfEnemyCardsOnTable += 1;
@@ -414,7 +511,9 @@
                 performAttackAnimation: performAttackAnimation,
                 performStealHealthFromPlayerAnimation: performStealHealthFromPlayerAnimation,
                 performStealManaFromCardAnimation: performStealManaFromCardAnimation,
-                hoverPlayerCard: hoverPlayerCard
+                hoverPlayerCard: hoverPlayerCard,
+                arrangePlayerCardsOnField: arrangePlayerCardsOnField,
+                arrangeEnemyCardsOnField: arrangeEnemyCardsOnField,
             };
         });
 }());

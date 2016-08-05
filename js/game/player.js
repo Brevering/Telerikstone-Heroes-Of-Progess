@@ -29,6 +29,8 @@
                         stage.removeChild(cardObject.cardContainer);
                         allCards.enemyCards.splice(indexToRemove, 1);
                         localStorage.setItem('hasToPlaceCard', 'true');
+
+                        cardCreator.arrangeEnemyCardsOnField();
                     }
 
                     if (cardObject.healthStat) {
