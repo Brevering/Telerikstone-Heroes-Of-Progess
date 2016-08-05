@@ -1,7 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'cardAbilities', 'Pixi', 'endGame'], function (cardCreator, cardAbilities, PIXI, endGame) {
+    define(['cardCreator', 'cardAbilities', 'Pixi', 'endGame', 'statsController'],
+        function (cardCreator, cardAbilities, PIXI, endGame, statsController) {
         function placeCard(allCards, endTurnButton, avatars) {
             let enemyCards = allCards.enemyCards,
                 hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
@@ -19,6 +20,8 @@
                     localStorage.setItem('canAttack', 'false');
                     avatars[1].mana -= cardToPlace.mana;
                     avatars[0].mana = 10;
+
+                    statsController.updateEnemyMana(avatars[1].mana);
 
                     setTimeout(function () {
                         endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');

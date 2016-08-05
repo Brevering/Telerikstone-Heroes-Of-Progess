@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks', 'sammy'],
-        function (cardCreator, globalValues, Card, MinionCard, AI, player, Decks, Sammy) {
+    define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks', 'sammy', 'statsController'],
+        function (cardCreator, globalValues, Card, MinionCard, AI, player, Decks, Sammy, statsController) {
             let stage = new PIXI.Container(),
                 widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent,
@@ -115,6 +115,14 @@
 
                 playersAvatars = loadAvatars(localStorage.trainer, allCards);
                 setUpTable();
+
+                statsController.initializePlayersStats(
+                    playersAvatars[0].mana,
+                    playersAvatars[0].health,
+                    playersAvatars[1].mana,
+                    playersAvatars[1].health,
+                    stage);
+
                 initializeCard(stage, playerDeck, true, playersAvatars);
                 initializeCard(stage, enemyDeck, false, playersAvatars);
                 stage.addChild(playersAvatars[0].sprite);
@@ -147,7 +155,8 @@
 
             return {
                 start: start,
-                avatars: playersAvatars
+                avatars: playersAvatars,
+                gameStage: stage
             };
         });
 }());

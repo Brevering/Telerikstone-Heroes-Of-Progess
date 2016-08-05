@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'cardAbilities', 'endGame'], function (cardCreator, cardAbilities, endGame) {
-        function attackEnemyCardEvent(event, enemyCards, playerCards, stage, playerAvatars, allCards) {
+    define(['cardCreator', 'cardAbilities', 'endGame', 'statsController'], function (cardCreator, cardAbilities, endGame) {
+        function attackEnemyCardEvent(event, enemyCards, playerCards, stage, playerAvatars, allCards, statsController) {
             let cardId = this.cardId,
                 cardObject = allCards.enemyCards.filter(obj => obj.cardId === cardId)[0];
 
@@ -36,6 +36,7 @@
                     }
 
                     endGame.checkForEndGame(playerAvatars, allCards);
+
                     localStorage.playerDamageDealt = Number(localStorage.playerDamageDealt) + Number(attacker.attack);
                 }
             } else {

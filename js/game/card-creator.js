@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin', 'Pixi', 'GreensockPixiPlugin', 'globalValues'],
-        function ($, TimelineMax, TweenMax, Easing, CSSPlugin, PIXI, GreensockPixiPlugin, globalValues) {
+    define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin', 'Pixi', 'GreensockPixiPlugin', 'globalValues', 'statsController'],
+        function ($, TimelineMax, TweenMax, Easing, CSSPlugin, PIXI, GreensockPixiPlugin, globalValues, statsController) {
             let numberOfPlayerCardsInHand = 0,
                 numberOfEnemyCardsInHand = 0,
                 numberOfPlayerCardsOnTable = 0,
@@ -138,6 +138,8 @@
                         placeCard(cardObject);
                         avatars[0].mana -= cardObject.mana;
                         avatars[1].mana = 10;
+
+                        statsController.updatePlayerMana(avatars[0].mana);
                     }
                 });
 

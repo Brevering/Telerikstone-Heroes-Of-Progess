@@ -43,6 +43,7 @@
             'player': './game/player',
             'cardAbilities': './game/card-abilities',
             'endGame': './game/end-game',
+            'statsController': './game/stats-controller',
 
             // Cards
             'card': './cards/card',
