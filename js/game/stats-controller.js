@@ -34,7 +34,9 @@
             let stat = new PIXI.Text(value, {
                 font: 'bold ' + 5 * globalValues.widthOnePercent + 'px Arial',
                 fill: color,
-                align: 'center'
+                align: 'center',
+                stroke: 'black',
+                strokeThickness: 3
             });
             stat.x = globalValues.widthOnePercent * leftOffset;
             stat.y = globalValues.heightOnePercent * topOffset;
