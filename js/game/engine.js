@@ -7,11 +7,24 @@
                 widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent,
                 decks = new Decks(),
-                playersAvatars;
+                playersAvatars,
+                botPlayerName;
 
             function initializeCard(stage, deck, isPlayerCard, avatars) {
                 for (let i = 0; i < deck.length; i += 1) {
                     cardCreator.initializeCard(stage, deck[i], avatars);
+                }
+            }
+
+            function getDeck(name, isPlayerCard) {
+                if (name === 'koce') {
+                    return decks.getKoceDeck(isPlayerCard);
+                } else if (name === 'cuki') {
+                    return decks.getCukiDeck(isPlayerCard);
+                } else if (name === 'doncho') {
+                    return decks.getDonchoDeck(isPlayerCard);
+                } else if (name === 'evlogi') {
+                    return decks.getEvlogiDeck(isPlayerCard);
                 }
             }
 
@@ -29,8 +42,6 @@
             }
 
             function getBotPlayerImageUrl(realPlayerName) {
-                let botPlayerName;
-
                 if (realPlayerName === 'koce') {
                     botPlayerName = ['doncho', 'cuki', 'evlogi'][Math.floor(Math.random() * 3)];
                 } else if (realPlayerName === 'cuki') {
@@ -108,9 +119,7 @@
 
             // starts the whole game
             function start() {
-                let playerDeck = decks.getCukiDeck(true),
-                    enemyDeck = decks.getCukiDeck(false),
-                    allCards = cardCreator.getPlayersCards(),
+                let allCards = cardCreator.getPlayersCards(),
                     endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
 
                 playersAvatars = loadAvatars(localStorage.trainer, allCards);
@@ -123,8 +132,11 @@
                     playersAvatars[1].health,
                     stage);
 
+                let playerDeck = getDeck(localStorage.trainer, true),
+                    botDeck = getDeck(botPlayerName, false);
+
                 initializeCard(stage, playerDeck, true, playersAvatars);
-                initializeCard(stage, enemyDeck, false, playersAvatars);
+                initializeCard(stage, botDeck, false, playersAvatars);
                 stage.addChild(playersAvatars[0].sprite);
                 stage.addChild(playersAvatars[1].sprite);
 

@@ -58,20 +58,37 @@
                 let cukiSpecialCards = [
                     new MinionCard(6, 3, 9, 'images/cuki-deck/avl-tree.png', isPlayerCard, 'stealEnemyHealth'),
                     new MinionCard(9, 3, 7, 'images/cuki-deck/CukiStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
-                    new MinionCard(3, 4, 6, 'images/cuki-deck/recursion.png', isPlayerCard, 'stealMana'),
-                    new MinionCard(1, 3, 4, 'images/cuki-deck/ninja.png', isPlayerCard, 'stealMana')
+                    new MinionCard(3, 4, 6, 'images/cuki-deck/recursion.png', isPlayerCard, 'stealMana')
                 ];
 
                 return getDeck(cukiSpecialCards, isPlayerCard);
             },
-            getDonchoDeck() {
+            getDonchoDeck(isPlayerCard) {
+                let donchoSpecialCards = [
+                    new MinionCard(4, 7, 4, 'images/doncho-deck/DonchoStealCardHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(5, 6, 7, 'images/doncho-deck/DonchoStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(5, 5, 4, 'images/doncho-deck/DonchoStealCardMana.png', isPlayerCard, 'stealMana')
+                ];
 
+                return getDeck(donchoSpecialCards, isPlayerCard);
             },
-            getEvlogiDeck() {
+            getEvlogiDeck(isPlayerCard) {
+                let koceSpecialCards = [
+                    new MinionCard(5, 3, 6, 'images/koce-deck/KocetoStealCardHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(3, 6, 3, 'images/koce-deck/KocetoStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(4, 3, 6, 'images/koce-deck/KocetoStealMana.png', isPlayerCard, 'stealMana'),
+                ];
 
+                return getDeck(koceSpecialCards, isPlayerCard);
             },
-            getKoceDeck() {
+            getKoceDeck(isPlayerCard) {
+                let koceSpecialCards = [
+                    new MinionCard(5, 3, 6, 'images/koce-deck/KocetoStealCardHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(3, 6, 3, 'images/koce-deck/KocetoStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(4, 3, 6, 'images/koce-deck/KocetoStealMana.png', isPlayerCard, 'stealMana'),
+                ];
 
+                return getDeck(koceSpecialCards, isPlayerCard);
             }
         };
 
