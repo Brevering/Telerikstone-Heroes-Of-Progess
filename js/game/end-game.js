@@ -1,104 +1,124 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'TimelineMax', 'CSSPlugin', 'sammy'], function ($, TimelineMax, CSSPlugin, Sammy) {
-        function checkForEndGame(playersAvatars, allCards) {
-            let playerAvatar = playersAvatars[0],
-                playerCards = allCards.playerCards,
-                enemyAvatar = playersAvatars[1],
-                enemyCards = allCards.enemyCards;
+    define(['jquery', 'TimelineMax', 'CSSPlugin', 'sammy', 'userModel'],
+        function ($, TimelineMax, CSSPlugin, Sammy, UserModel) {
+            function updateAccountInTheDB() {
+                let userModel = new UserModel();
+                let data = {
+                    wins: localStorage.currentWins,
+                    defeats: localStorage.currentDefeats
+                };
 
-            if (enemyAvatar.health <= 0) {
-                console.log('GAME OVER: You win!');
-
-                disableCanvas(playersAvatars, true);
-            } else if (playerAvatar.health <= 0) {
-                console.log('GAME OVER: You lose!');
-
-                disableCanvas(playersAvatars, false);
-            } else if (playerCards.length <= 1) {
-                console.log('GAME OVER: You lose!');
-
-                disableCanvas(playersAvatars, false);
-            } else if (enemyCards.length <= 1) {
-                console.log('GAME OVER: You win!');
-
-                disableCanvas(playersAvatars, true);
+                return userModel.sendUserData(data);
             }
-        }
 
-        function disableCanvas(playersAvatars, isWin) {
-            let canvas = document.getElementById('playFieldCanvas');
-            let animation = new TimelineMax({onComplete: function () {
-                createEndContainer()
+            function checkForEndGame(playersAvatars, allCards) {
+                let playerAvatar = playersAvatars[0],
+                    playerCards = allCards.playerCards,
+                    enemyAvatar = playersAvatars[1],
+                    enemyCards = allCards.enemyCards;
 
-                if (isWin) {
-                    loadWinImage();
+                if (enemyAvatar.health <= 0) {
+                    localStorage.currentWins = Number(localStorage.currentWins) + 1;
+                    updateAccountInTheDB()
+                        .then(function (success) {
+                            disableCanvas(playersAvatars, true);
+                        });
+                } else if (playerAvatar.health <= 0) {
+                    localStorage.currentWins = Number(localStorage.currentWins) - 1;
+                    updateAccountInTheDB()
+                        .then(function (success) {
+                            disableCanvas(playersAvatars, false);
+                        });
+                } else if (playerCards.length <= 1) {
+                    localStorage.currentWins = Number(localStorage.currentWins) - 1;
+                    updateAccountInTheDB()
+                        .then(function (success) {
+                            disableCanvas(playersAvatars, false);
+                        });
+                } else if (enemyCards.length <= 1) {
+                    localStorage.currentWins = Number(localStorage.currentWins) + 1;
+                    updateAccountInTheDB()
+                        .then(function (success) {
+                            disableCanvas(playersAvatars, true);
+                        });
                 }
-                else {
-                    loadDefeatImage();
-                }
+            }
 
-                enableEndGameButton();
-            }});
+            function disableCanvas(playersAvatars, isWin) {
+                let canvas = document.getElementById('playFieldCanvas');
+                let animation = new TimelineMax({
+                    onComplete: function () {
+                        createEndContainer()
 
-            animation.to(canvas, 1, {width: 0, height: 0});
-        }
+                        if (isWin) {
+                            loadWinImage();
+                        } else {
+                            loadDefeatImage();
+                        }
 
-        function createEndContainer() {
-            let $endContainer = $('<div>');
+                        enableEndGameButton();
+                    }
+                });
 
-            $endContainer.attr('id', 'endContainer');
+                animation.to(canvas, 1, {width: 0, height: 0});
+            }
 
-            $endContainer.css({
-                display: 'flex',
-                'flex-flow': 'column',
-                'align-items': 'center',
-                'justify-content': 'center'
-            });
+            function createEndContainer() {
+                let $endContainer = $('<div>');
 
-            $endContainer.appendTo($('#playField'));
-        }
+                $endContainer.attr('id', 'endContainer');
 
-        function loadWinImage() {
-            let $winImage = $('<img>');
+                $endContainer.css({
+                    display: 'flex',
+                    'flex-flow': 'column',
+                    'align-items': 'center',
+                    'justify-content': 'center'
+                });
 
-            $winImage.attr('src', 'images/end-images/victory.png');
+                $endContainer.appendTo($('#playField'));
+            }
 
-            $winImage.css('display', 'block');
+            function loadWinImage() {
+                let $winImage = $('<img>');
 
-            $winImage.appendTo($('#endContainer'));
-        }
+                $winImage.attr('src', 'images/end-images/victory.png');
 
-        function loadDefeatImage() {
-            let $defeatImage = $('<img>');
+                $winImage.css('display', 'block');
 
-            $defeatImage.attr('src', 'images/end-images/defeat.png');
+                $winImage.appendTo($('#endContainer'));
+            }
 
-            $defeatImage.css('display', 'block');
+            function loadDefeatImage() {
+                let $defeatImage = $('<img>');
 
-            $defeatImage.appendTo($('#endContainer'));
-        }
+                $defeatImage.attr('src', 'images/end-images/defeat.png');
 
-        function enableEndGameButton() {
-            console.log('enabled end button');
+                $defeatImage.css('display', 'block');
 
-            let $button = $('<a>');
+                $defeatImage.appendTo($('#endContainer'));
+            }
 
-            $button.attr('id', 'end-game');
-            $button.attr('href', '#/end-game/');
-            $button.css({
-                background: 'url(images/buttons/endGame.png)',
-                width: '256px',
-                height: '256px',
-                display: 'block',
-            });
+            function enableEndGameButton() {
+                console.log('enabled end button');
 
-            $button.appendTo($('#endContainer'));
-        }
+                let $button = $('<a>');
 
-        return {
-            checkForEndGame: checkForEndGame
-        };
-    });
+                $button.attr('id', 'end-game');
+                $button.attr('href', '#/end-game/');
+                $button.css({
+                    background: 'url(images/buttons/endGame.png)',
+                    width: '256px',
+                    height: '256px',
+                    display: 'block',
+                });
+
+                $button.appendTo($('#endContainer'));
+            }
+
+            return {
+                checkForEndGame: checkForEndGame
+            };
+        });
 }());

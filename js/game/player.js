@@ -39,7 +39,7 @@
                         }
 
                         if (cardObject.isAvatar) {
-                            statsController.updateEnemyHealth(cardObject.health);
+                            statsController.updateEnemyHealth(cardObject.health < 0 ? 0 : cardObject.health);
                         }
 
                         endGame.checkForEndGame(playerAvatars, allCards);
