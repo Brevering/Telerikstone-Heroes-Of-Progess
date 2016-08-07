@@ -67,19 +67,19 @@
                 let donchoSpecialCards = [
                     new MinionCard(4, 7, 4, 'images/doncho-deck/DonchoStealCardHealth.png', isPlayerCard, 'stealEnemyHealth'),
                     new MinionCard(5, 6, 7, 'images/doncho-deck/DonchoStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
-                    new MinionCard(5, 5, 4, 'images/doncho-deck/DonchoStealCardMana.png', isPlayerCard, 'stealMana')
+                    new MinionCard(5, 5, 4, 'images/doncho-deck/DonchoStealMana.png', isPlayerCard, 'stealMana')
                 ];
 
                 return getDeck(donchoSpecialCards, isPlayerCard);
             },
             getEvlogiDeck(isPlayerCard) {
-                let koceSpecialCards = [
-                    new MinionCard(5, 3, 6, 'images/koce-deck/KocetoStealCardHealth.png', isPlayerCard, 'stealEnemyHealth'),
-                    new MinionCard(3, 6, 3, 'images/koce-deck/KocetoStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
-                    new MinionCard(4, 3, 6, 'images/koce-deck/KocetoStealMana.png', isPlayerCard, 'stealMana'),
+                let evlogiSpecialCards = [
+                    new MinionCard(5, 3, 6, 'images/evlogi-deck/EvlogiStealHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(3, 6, 3, 'images/evlogi-deck/EvlogiStealsCardHealth.png', isPlayerCard, 'stealEnemyHealth'),
+                    new MinionCard(4, 3, 6, 'images/evlogi-deck/EvlogiStealsCardMana.png', isPlayerCard, 'stealMana'),
                 ];
 
-                return getDeck(koceSpecialCards, isPlayerCard);
+                return getDeck(evlogiSpecialCards, isPlayerCard);
             },
             getKoceDeck(isPlayerCard) {
                 let koceSpecialCards = [

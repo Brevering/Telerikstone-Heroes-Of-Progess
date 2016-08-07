@@ -31,6 +31,12 @@
                 ];
             }
 
+            function playBackgroundMusic() {
+                let sound = new Audio("backgroundMusic/Tower-Defense.mp3");
+                sound.loop = true;
+                sound.play();
+            }
+
             let userView = new UserView(),
                 userModel = new UserModel(),
                 headers = new Headers(),
@@ -67,6 +73,7 @@
                         localStorage.isReloaded = 'true';
                     }
 
+                    playBackgroundMusic();
                     return userView.showGamePage(selector);
                 },
                 loadEndGamePage(selector) {

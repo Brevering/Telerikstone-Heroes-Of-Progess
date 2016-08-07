@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['Pixi', 'globalValues'], function (Pixi, globalValues) {
+    define(['Pixi', 'globalValues'], function (PIXI, globalValues) {
         let playerManaStat,
             playerHealthStat,
             enemyManaStat,
