@@ -16,6 +16,12 @@
                 }
             }
 
+            function playBackgroundMusic() {
+                var sound = new Audio("backgroundMusic/Tower-Defense.mp3");
+                sound.loop = true;
+                sound.play();
+            }
+
             function getDeck(name, isPlayerCard) {
                 if (name === 'koce') {
                     return decks.getKoceDeck(isPlayerCard);
@@ -121,6 +127,8 @@
             function start() {
                 let allCards = cardCreator.getPlayersCards(),
                     endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
+
+                playBackgroundMusic();
 
                 playersAvatars = loadAvatars(localStorage.trainer, allCards);
                 setUpTable();
