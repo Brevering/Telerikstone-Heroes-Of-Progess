@@ -22,6 +22,7 @@
                 if (password.length < 3 || password.length > 20 || !password) {
                     return false;
                 }
+                
 
                 return true;
             },
