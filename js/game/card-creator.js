@@ -84,7 +84,6 @@
                     });
                     cardObject.damageStat.x = -(170 * containerWidthPercent);
                     cardObject.damageStat.y = 180 * containerHeightPercent;
-
                     cardObject.cardContainer.addChild(cardObject.damageStat);
                 }
 
@@ -122,15 +121,15 @@
                 // set scales and anchors
                 cardObject.sprite.anchor.x = 0.5;
                 cardObject.sprite.anchor.y = 0.5;
-                cardObject.cardContainer.scale = {x: 0.05 * heightOnePercent, y: 0.05 * heightOnePercent};
+                cardObject.cardContainer.scale = { x: 0.05 * heightOnePercent, y: 0.05 * heightOnePercent };
             }
 
             // this initializes a player card
             function playerCardInit(stage, cardObject, avatars) {
                 cardObject.cardContainer.position.x = 80 * widthOnePercent;
                 cardObject.cardContainer.position.y = 60 * heightOnePercent;
-
                 cardObject.sprite.interactive = true;
+
                 cardObject.sprite.on('mousedown', function () {
                     let playerMana = avatars[0].mana;
 
@@ -149,7 +148,6 @@
 
                 // add card to the hand
                 cardObject.cardContainer.addChild(cardObject.sprite);
-
                 gameStage = stage;
                 stage.addChild(cardObject.cardContainer);
 
@@ -201,10 +199,9 @@
                     let currentCard = playerCards[i];
 
                     if (currentCard.isPlaced && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
-
                         let leftOffset = 22 * widthOnePercent + numberOfPlayerCardsOnTable * widthOnePercent * 7;
-                        numberOfPlayerCardsOnTable += 1;
 
+                        numberOfPlayerCardsOnTable += 1;
                         TweenMax.to(currentCard.cardContainer, 1, {
                             pixi: {
                                 x: leftOffset,
@@ -224,10 +221,9 @@
                     let currentCard = enemyCards[i];
 
                     if (currentCard.isPlaced && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
-
                         let leftOffset = 22 * widthOnePercent + numberOfEnemyCardsOnTable * widthOnePercent * 7;
-                        numberOfEnemyCardsOnTable += 1;
 
+                        numberOfEnemyCardsOnTable += 1;
                         TweenMax.to(currentCard.cardContainer, 1, {
                             pixi: {
                                 x: leftOffset,
@@ -246,12 +242,10 @@
                 for (let i = 0; i < playerCards.length; i += 1) {
                     let currentCard = playerCards[i];
 
-                    if (currentCard.isPlaced === false &&
-                        gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
-
+                    if (currentCard.isPlaced === false && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
                         let cardInHandLeftOffset = numberOfPlayerCardsInHand * 10 * widthOnePercent;
-                        numberOfPlayerCardsInHand += 1;
 
+                        numberOfPlayerCardsInHand += 1;
                         TweenMax.to(currentCard.cardContainer, 2, {
                             pixi: {
                                 x: cardInHandLeftOffset + 13 * widthOnePercent,
@@ -268,12 +262,10 @@
                 for (let i = 0; i < enemyCards.length; i += 1) {
                     let currentCard = enemyCards[i];
 
-                    if (currentCard.isPlaced === false &&
-                        gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
-
+                    if (currentCard.isPlaced === false && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
                         let cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
-                        numberOfEnemyCardsInHand += 1;
 
+                        numberOfEnemyCardsInHand += 1;
                         TweenMax.to(currentCard.cardContainer, 2, {
                             pixi: {
                                 x: cardInHandLeftOffset + 30 * widthOnePercent
@@ -303,12 +295,9 @@
                         });
 
                         arrangePlayerCardsInHand();
-
                         localStorage.setItem('hasPlayerPlacedCard', 'true');
-
                         numberOfPlayerCardsOnTable += 1;
                         numberOfPlayerCardsInHand -= 1;
-
                         localStorage.setItem('isPlayerTurn', 'false');
                     }
                 }
@@ -318,7 +307,6 @@
                     if (localStorage.getItem('isPlayerTurn') === 'false') {
                         cardObject.isPlaced = true;
                         makeStatsVisible(cardObject);
-
                         cardObject.isJustPlaced = true;
                         TweenMax.to(cardObject.cardContainer, 1, {
                             pixi: {
@@ -330,10 +318,8 @@
                         });
 
                         arrangeEnemyCardsInHand();
-
                         cardObject.sprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
                         numberOfEnemyCardsOnTable += 1;
-
                         localStorage.setItem('isPlayerTurn', 'true');
                     }
                 }
@@ -357,14 +343,12 @@
                     if (toCard.isAvatar && toCard.isPlayerCard === false) {
                         destinationX = toCard.sprite.position.x * 1.1;
                         destinationY = toCard.sprite.position.y * 2.5;
-
                         gameStage.removeChild(fromCard.cardContainer);
                         gameStage.addChildAt(fromCard.cardContainer, gameStage.children.length - 1);
                     }
-                    else if (toCard.isAvatar && toCard.isPlayerCard === true){
+                    else if (toCard.isAvatar && toCard.isPlayerCard === true) {
                         destinationX = toCard.sprite.position.x * 1.1;
                         destinationY = toCard.sprite.position.y;
-
                         gameStage.removeChild(fromCard.cardContainer);
                         gameStage.addChildAt(fromCard.cardContainer, gameStage.children.length - 1);
                     }
@@ -422,18 +406,19 @@
                     textSize,
                     spriteScale,
                     textLeftOffset,
-                    textTopOffset)
+                    textTopOffset);
             }
 
-            function performStealAnim(attacker,
-                                      target,
-                                      valueToSteal,
-                                      stealImage,
-                                      leftOffset,
-                                      textSize,
-                                      spriteScale,
-                                      textLeftOffset,
-                                      textTopOffset) {
+            function performStealAnim(
+                attacker,
+                target,
+                valueToSteal,
+                stealImage,
+                leftOffset,
+                textSize,
+                spriteScale,
+                textLeftOffset,
+                textTopOffset) {
                 leftOffset = leftOffset || 1;
 
                 let spotContainer = new PIXI.Container(),
@@ -454,13 +439,13 @@
                 spotText.x = textLeftOffset * widthPercent;
                 spotText.y = textTopOffset * heightPercent;
 
-                spotSprite.scale = {x: spriteScale * heightPercent, y: spriteScale * heightPercent};
+                spotSprite.scale = { x: spriteScale * heightPercent, y: spriteScale * heightPercent };
 
                 spotContainer.addChild(spotSprite);
                 spotContainer.addChild(spotText);
                 gameStage.addChild(spotContainer);
 
-                let stealAnimation = new TimelineMax({onComplete: remove});
+                let stealAnimation = new TimelineMax({ onComplete: remove });
 
                 stealAnimation.to(spotContainer, 1, {
                     x: attacker.sprite.x * widthPercent * leftOffset,
@@ -516,4 +501,4 @@
                 arrangeEnemyCardsOnField: arrangeEnemyCardsOnField,
             };
         });
-}());
+} ());

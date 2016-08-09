@@ -55,10 +55,7 @@
                 return getPlayerImageUrl(botPlayerName);
             }
 
-            function loadAvatars(playerName, allCards) {
-                let playerAvatar = new MinionCard(0, 30, 10, getPlayerImageUrl(playerName), true, 'none'),
-                    enemyAvatar = new MinionCard(0, 30, 10, getBotPlayerImageUrl(playerName), false, 'none');
-
+            function initializePlayerAvatar(playerAvatar, playerName, allCards) {
                 playerAvatar.cardContainer = new PIXI.Container();
                 playerAvatar.cardTexture = PIXI.Texture.fromImage(getPlayerImageUrl(playerName));
                 playerAvatar.sprite = new PIXI.Sprite(playerAvatar.cardTexture);
@@ -77,7 +74,9 @@
                 playerAvatar.attackStolen = 0;
                 playerAvatar.damageDealt = 0;
                 allCards.playerCards.push(playerAvatar);
+            }
 
+            function initializeEnemyAvatar(enemyAvatar, playerName, allCards) {
                 enemyAvatar.cardContainer = new PIXI.Container();
                 enemyAvatar.cardTexture = PIXI.Texture.fromImage(getBotPlayerImageUrl(playerName));
                 enemyAvatar.sprite = new PIXI.Sprite(enemyAvatar.cardTexture);
@@ -96,6 +95,14 @@
                 enemyAvatar.attackStolen = 0;
                 enemyAvatar.damageDealt = 0;
                 allCards.enemyCards.push(enemyAvatar);
+            }
+
+            function loadAvatars(playerName, allCards) {
+                let playerAvatar = new MinionCard(0, 30, 10, getPlayerImageUrl(playerName), true, 'none'),
+                    enemyAvatar = new MinionCard(0, 30, 10, getBotPlayerImageUrl(playerName), false, 'none');
+
+                initializePlayerAvatar(playerAvatar, playerName, allCards);
+                initializeEnemyAvatar(enemyAvatar, playerName, allCards);
 
                 return [playerAvatar, enemyAvatar];
             }
@@ -107,7 +114,6 @@
 
                 background.width = globalValues.canvasWidth;
                 background.height = globalValues.canvasHeight;
-
                 stage.addChild(background);
                 initPixi();
 
@@ -115,6 +121,27 @@
                     requestAnimationFrame(initPixi);
                     renderer.render(stage);
                 }
+            }
+
+            function endTurnButtonSetup(endTurnButton, allCards, playersAvatars) {
+                endTurnButton.interactive = true;
+                endTurnButton.width = 6 * widthOnePercent;
+                endTurnButton.height = 5.9 * heightOnePercent;
+                endTurnButton.position.x = 67.3 * widthOnePercent;
+                endTurnButton.position.y = 37.7 * heightOnePercent;
+
+                endTurnButton.on('mousedown', function () {
+                    if (localStorage.getItem('hasToPlaceCard') === 'true') {
+                        AI.placeCard(allCards, endTurnButton, playersAvatars);
+                        localStorage.setItem('hasToPlaceCard', 'false');
+                    } else {
+                        AI.attackPlayerCard(allCards, stage, endTurnButton, playersAvatars);
+                    }
+
+                    setTimeout(function () {
+                        endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
+                    }, 100);
+                });
             }
 
             // starts the whole game
@@ -139,29 +166,9 @@
                 initializeCard(stage, botDeck, false, playersAvatars);
                 stage.addChild(playersAvatars[0].sprite);
                 stage.addChild(playersAvatars[1].sprite);
-
-                endTurnButton.interactive = true;
-                endTurnButton.width = 6 * widthOnePercent;
-                endTurnButton.height = 5.9 * heightOnePercent;
-                endTurnButton.position.x = 67.3 * widthOnePercent;
-                endTurnButton.position.y = 37.7 * heightOnePercent;
-
-                endTurnButton.on('mousedown', function () {
-                    if (localStorage.getItem('hasToPlaceCard') === 'true') {
-                        AI.placeCard(allCards, endTurnButton, playersAvatars);
-                        localStorage.setItem('hasToPlaceCard', 'false');
-                    } else {
-                        AI.attackPlayerCard(allCards, stage, endTurnButton, playersAvatars);
-                    }
-
-                    setTimeout(function () {
-                        endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
-                    }, 100);
-                });
-
+                endTurnButtonSetup(endTurnButton, allCards, playersAvatars);
                 player.attachAttackEnemyCardEvents(allCards, stage, playersAvatars);
                 cardCreator.hoverPlayerCard();
-
                 stage.addChild(endTurnButton);
             }
 
@@ -171,4 +178,4 @@
                 gameStage: stage
             };
         });
-}());
+} ());

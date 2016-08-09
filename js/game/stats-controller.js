@@ -40,7 +40,6 @@
             });
             stat.x = globalValues.widthOnePercent * leftOffset;
             stat.y = globalValues.heightOnePercent * topOffset;
-
             stage.addChild(stat);
 
             return stat;

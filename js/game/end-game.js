@@ -4,11 +4,11 @@
     define(['jquery', 'TimelineMax', 'CSSPlugin', 'sammy', 'userModel'],
         function ($, TimelineMax, CSSPlugin, Sammy, UserModel) {
             function updateAccountInTheDB() {
-                let userModel = new UserModel();
-                let data = {
-                    wins: localStorage.currentWins,
-                    defeats: localStorage.currentDefeats
-                };
+                let userModel = new UserModel(),
+                    data = {
+                        wins: localStorage.currentWins,
+                        defeats: localStorage.currentDefeats
+                    };
 
                 return userModel.sendUserData(data);
             }
@@ -50,7 +50,7 @@
                 let canvas = document.getElementById('playFieldCanvas');
                 let animation = new TimelineMax({
                     onComplete: function () {
-                        createEndContainer()
+                        createEndContainer();
 
                         if (isWin) {
                             loadWinImage();
@@ -62,21 +62,19 @@
                     }
                 });
 
-                animation.to(canvas, 1, {width: 0, height: 0});
+                animation.to(canvas, 1, { width: 0, height: 0 });
             }
 
             function createEndContainer() {
                 let $endContainer = $('<div>');
 
                 $endContainer.attr('id', 'endContainer');
-
                 $endContainer.css({
                     display: 'flex',
                     'flex-flow': 'column',
                     'align-items': 'center',
                     'justify-content': 'center'
                 });
-
                 $endContainer.appendTo($('#playField'));
             }
 
@@ -84,9 +82,7 @@
                 let $winImage = $('<img>');
 
                 $winImage.attr('src', 'images/end-images/victory.png');
-
                 $winImage.css('display', 'block');
-
                 $winImage.appendTo($('#endContainer'));
             }
 
@@ -94,15 +90,11 @@
                 let $defeatImage = $('<img>');
 
                 $defeatImage.attr('src', 'images/end-images/defeat.png');
-
                 $defeatImage.css('display', 'block');
-
                 $defeatImage.appendTo($('#endContainer'));
             }
 
             function enableEndGameButton() {
-                console.log('enabled end button');
-
                 let $button = $('<a>');
 
                 $button.attr('id', 'end-game');
@@ -113,7 +105,6 @@
                     height: '256px',
                     display: 'block',
                 });
-
                 $button.appendTo($('#endContainer'));
             }
 
@@ -121,4 +112,4 @@
                 checkForEndGame: checkForEndGame
             };
         });
-}());
+} ());
