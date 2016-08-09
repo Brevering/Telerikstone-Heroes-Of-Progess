@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    define(['minionCard'], function (MinionCard) {
+    define(['minionCard', 'weaponCard'], function (MinionCard, WeaponCard) {
         function getStandartDeck(isPLayerCard) {
             let standartDeck = [
                 new MinionCard(getRandomStats()[0], getRandomStats()[1], getRandomStats()[2], 'images/cards/Team-Crazy-Cat/atacata.png', isPLayerCard, 'normal'),
@@ -22,9 +22,7 @@
         }
 
         function getRandomValue() {
-            let values = [1, 2, 3, 4, 5, 6, 7, 8, 9],
-                randomStat = values[Math.floor(Math.random() * values.length)];
-            return randomStat;
+            return [1, 2, 3, 4, 5, 6, 7, 8, 9][Math.floor(Math.random() * 9)];
         }
 
         function getRandomStats() {
@@ -38,11 +36,10 @@
         function getDeck(trainerDeck, isPlayerCard) {
             let newDeck = trainerDeck.slice(0, 3),
                 standartDeck = getStandartDeck(isPlayerCard),
-                used = [],
-                maxPossibleDeckLength = 7;
+                used = [];
 
-            while (newDeck.length !== maxPossibleDeckLength) {
-                let standartCardIndex = Math.floor(Math.random() * standartDeck.length - 1);
+            while (newDeck.length !== 7) {
+                let standartCardIndex = Math.floor(Math.random() * 10);
 
                 if (used.indexOf(standartCardIndex) === -1) {
                     used.push(standartCardIndex);
@@ -97,4 +94,4 @@
 
         return Deck;
     });
-} ());
+}());

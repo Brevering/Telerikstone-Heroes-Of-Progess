@@ -16,33 +16,6 @@
                 }
             }
 
-            function appendDynamicGamepageStyles() {
-                $('body').css({
-                    'background': 'url("images/bg_fill.jpg") no-repeat center center fixed',
-                    'background-size': 'cover'
-                });
-                $('#playField').css({
-                    'overflow': 'hidden',
-                    'position': 'absolute',
-                    'width': '100%',
-                    'height': '100%',
-                    'background-size': 'contain',
-                    'display': 'flex',
-                    'align-items': 'center',
-                    'justify-content': 'center'
-                });
-                $('#canvasWrapper').css({
-                    'display': 'flex',
-                    'align-items': 'center',
-                    'justify-content': 'center',
-                    'width': 'auto',
-                    'height': '100%'
-                });
-                $('#btn-exit-game').on('click', function () {
-                    localStorage.clear();
-                });
-            }
-
             function loadAvatars(playerName) {
                 let $playerAvatar = $('#player-avatar'),
                     $enemyAvatar = $('#enemy-avatar');
@@ -91,6 +64,17 @@
 
             // To be modified, just for testing purpose. DO NOT TOUCH!!!
             function dataButtonsEvents() {
+                $('#send-user-data').on('click', function () {
+                    let data = {
+                        wins: Number(localStorage.getItem('currentWins')) + 1,
+                        defeats: Number(localStorage.getItem('currentDefeats')) + 1
+                    };
+
+                    Sammy(function () {
+                        this.trigger('send-user-data', data);
+                    });
+                });
+
                 $('#get-user-data').on('click', function () {
                     Sammy(function () {
                         this.trigger('get-user-data');
@@ -116,7 +100,6 @@
                 showGuestPage(selector) {
                     return $.get('templates/guest-home.html', function (template) {
                         showLoader();
-                        localStorage.clear();
                         $(selector).empty();
                         $(selector).append(template);
                         localStorage.setItem('isReloaded', 'false');
@@ -171,6 +154,7 @@
 
                         $(selector).append(html);
                         dataButtonsEvents();
+
                         $('#btn-logout').on('click', function () {
                             Sammy(function () {
                                 this.trigger('logout');
@@ -209,6 +193,35 @@
                         localStorage.setItem('enemyHealthStolen', 0);
                         localStorage.setItem('enemyManaStolen', 0);
 
+                        $('#btn-exit-game').on('click', function () {
+                            localStorage.clear();
+                        });
+
+                        $('body')
+                            .css({
+                                'background': 'url("images/bg_fill.jpg") no-repeat center center fixed',
+                                'background-size': 'cover'
+                            });
+                        $('#playField')
+                            .css({
+                                'overflow': 'hidden',
+                                'position': 'absolute',
+                                'width': '100%',
+                                'height': '100%',
+                                'background-size': 'contain',
+                                'display': 'flex',
+                                'align-items': 'center',
+                                'justify-content': 'center'
+                            });
+                        $('#canvasWrapper')
+                            .css({
+                                'display': 'flex',
+                                'align-items': 'center',
+                                'justify-content': 'center',
+                                'width': 'auto',
+                                'height': '100%'
+                            });
+
                         loadAvatars(localStorage.trainer);
                         engine.start();
                     });
@@ -218,13 +231,10 @@
                         showLoader();
                         $(selector).empty();
                         $(selector).append(html);
-                        $('#end-game-buttons #exit-button').on('click', function () {
-                            localStorage.clear();
-                        });
                     });
                 }
             };
 
             return UserView;
         });
-} ());
+}());

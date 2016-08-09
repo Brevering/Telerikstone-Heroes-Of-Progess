@@ -52,6 +52,7 @@
 
                             stage.removeChild(cardToAttack.cardContainer);
                             allCards.playerCards.splice(indexToRemove, 1);
+
                             cardCreator.arrangePlayerCardsOnField();
                         }
 

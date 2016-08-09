@@ -48,6 +48,8 @@
             // Cards
             'card': './cards/card',
             'minionCard': './cards/minion-card',
+            'powerCard': './cards/power-card',
+            'weaponCard': './cards/weapon-card',
             'decks': './cards/decks'
         }
     });
@@ -121,4 +123,4 @@
 
             router.run('#/');
         });
-} ());
+}());

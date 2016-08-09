@@ -30,6 +30,7 @@
                             stage.removeChild(cardObject.cardContainer);
                             allCards.enemyCards.splice(indexToRemove, 1);
                             localStorage.setItem('hasToPlaceCard', 'true');
+
                             cardCreator.arrangeEnemyCardsOnField();
                         }
 
@@ -42,6 +43,7 @@
                         }
 
                         endGame.checkForEndGame(playerAvatars, allCards);
+
                         localStorage.playerDamageDealt = Number(localStorage.playerDamageDealt) + Number(attacker.attack);
                     }
                 } else {
