@@ -27,6 +27,7 @@
                     localStorage.enemyHealthStolen = Number(localStorage.enemyHealthStolen) + Number(healthToSteal);
                 }
 
+                attacker.ability = 'normal';
                 playerAvatars[0].health = playerHealth;
                 playerAvatars[1].health = enemyHealth;
                 statsController.updatePlayerHealth(playerAvatars[0].health < 0 ? 0 : playerAvatars[0].health);
@@ -55,6 +56,7 @@
                     enemyAvatar = avatars[0];
                 }
 
+                attacker.ability = 'normal';
                 statsController.updatePlayerMana(avatars[0].mana < 0 ? 0 : avatars[0].mana);
                 statsController.updateEnemyMana(avatars[1].mana < 0 ? 0 : avatars[1].mana);
                 cardCreator.performStealManaFromCardAnimation(avatar, enemyAvatar, manaToSteal);
@@ -65,4 +67,4 @@
                 stealManaFromEnemyPlayer: stealManaFromEnemyPlayer,
             };
         });
-}());
+} ());
