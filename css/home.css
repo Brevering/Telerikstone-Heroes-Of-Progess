@@ -16,6 +16,18 @@
 
 #home-holder h2 {
     color: white;
+    text-align: center;
+}
+
+#home-holder #user-info a {
+    display: block;
+    margin-top: 10px;
+}
+
+#get-user-data, #get-all-users-data {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
 }
 
 #chartdiv {

@@ -13,15 +13,13 @@
             }
 
             function getChartData() {
-                return [
-                    {
-                        "damageDealt": localStorage.getItem('playerDamageDealt'),
-                        "healthStolen": localStorage.getItem('playerHealthStolen'),
-                        "manaStolen": localStorage.getItem('playerManaStolen'),
-                        "attackStolen": localStorage.getItem('playerStolenAttack'),
-                        "player": "You"
-                    },
-                    {
+                return [{
+                    "damageDealt": localStorage.getItem('playerDamageDealt'),
+                    "healthStolen": localStorage.getItem('playerHealthStolen'),
+                    "manaStolen": localStorage.getItem('playerManaStolen'),
+                    "attackStolen": localStorage.getItem('playerStolenAttack'),
+                    "player": "You"
+                }, {
                         "damageDealt": localStorage.getItem('enemyDamageDealt'),
                         "healthStolen": localStorage.getItem('enemyHealthStolen'),
                         "manaStolen": localStorage.getItem('enemyManaStolen'),
@@ -32,7 +30,7 @@
             }
 
             function playBackgroundMusic() {
-                let sound = new Audio("backgroundMusic/Tower-Defense.mp3");
+                let sound = new Audio("background-music/Tower-Defense.mp3");
                 sound.loop = true;
                 sound.play();
             }

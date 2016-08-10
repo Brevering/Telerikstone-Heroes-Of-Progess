@@ -142,7 +142,6 @@
                                 username: $('#username').val(),
                                 name: $('#name').val(),
                                 password: $('#password').val(),
-                                picture: $('#picture').attr('data-picture-data'),
                                 wins: '0',
                                 defeats: '0'
                             };
