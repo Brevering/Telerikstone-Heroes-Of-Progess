@@ -55,9 +55,8 @@
                 return getPlayerImageUrl(botPlayerName);
             }
 
-            function loadAvatars(playerName, allCards) {
-                let playerAvatar = new MinionCard(0, 30, 10, getPlayerImageUrl(playerName), true, 'none'),
-                    enemyAvatar = new MinionCard(0, 30, 10, getBotPlayerImageUrl(playerName), false, 'none');
+            function initializePlayerAvatar(playerName, allCards) {
+                let playerAvatar = new MinionCard(0, 30, 10, getPlayerImageUrl(playerName), true, 'none');
 
                 playerAvatar.cardContainer = new PIXI.Container();
                 playerAvatar.cardTexture = PIXI.Texture.fromImage(getPlayerImageUrl(playerName));
@@ -78,6 +77,12 @@
                 playerAvatar.damageDealt = 0;
                 allCards.playerCards.push(playerAvatar);
 
+                return playerAvatar;
+            }
+
+            function initializeEnemyAvatar(playerName, allCards) {
+                let enemyAvatar = new MinionCard(0, 30, 10, getBotPlayerImageUrl(playerName), false, 'none');
+
                 enemyAvatar.cardContainer = new PIXI.Container();
                 enemyAvatar.cardTexture = PIXI.Texture.fromImage(getBotPlayerImageUrl(playerName));
                 enemyAvatar.sprite = new PIXI.Sprite(enemyAvatar.cardTexture);
@@ -96,6 +101,13 @@
                 enemyAvatar.attackStolen = 0;
                 enemyAvatar.damageDealt = 0;
                 allCards.enemyCards.push(enemyAvatar);
+
+                return enemyAvatar;
+            }
+
+            function loadAvatars(playerName, allCards) {
+                let playerAvatar = initializePlayerAvatar(playerName, allCards),
+                    enemyAvatar = initializeEnemyAvatar(playerName, allCards);
 
                 return [playerAvatar, enemyAvatar];
             }
@@ -147,9 +159,9 @@
                 endTurnButton.position.y = 37.7 * heightOnePercent;
 
                 endTurnButton.on('mousedown', function () {
-                    if (localStorage.getItem('hasToPlaceCard') === 'true') {
+                    if (localStorage.hasToPlaceCard === 'true') {
                         AI.placeCard(allCards, endTurnButton, playersAvatars);
-                        localStorage.setItem('hasToPlaceCard', 'false');
+                        localStorage.hasToPlaceCard = 'false';
                     } else {
                         AI.attackPlayerCard(allCards, stage, endTurnButton, playersAvatars);
                     }
@@ -171,4 +183,4 @@
                 gameStage: stage
             };
         });
-}());
+} ());

@@ -62,19 +62,7 @@
                 });
             }
 
-            // To be modified, just for testing purpose. DO NOT TOUCH!!!
             function dataButtonsEvents() {
-                $('#send-user-data').on('click', function () {
-                    let data = {
-                        wins: Number(localStorage.getItem('currentWins')) + 1,
-                        defeats: Number(localStorage.getItem('currentDefeats')) + 1
-                    };
-
-                    Sammy(function () {
-                        this.trigger('send-user-data', data);
-                    });
-                });
-
                 $('#get-user-data').on('click', function () {
                     Sammy(function () {
                         this.trigger('get-user-data');
@@ -93,6 +81,33 @@
                 });
             }
 
+            function appendGamePageStyles() {
+                $('body')
+                    .css({
+                        'background': 'url("images/bg_fill.jpg") no-repeat center center fixed',
+                        'background-size': 'cover'
+                    });
+                $('#playField')
+                    .css({
+                        'overflow': 'hidden',
+                        'position': 'absolute',
+                        'width': '100%',
+                        'height': '100%',
+                        'background-size': 'contain',
+                        'display': 'flex',
+                        'align-items': 'center',
+                        'justify-content': 'center'
+                    });
+                $('#canvasWrapper')
+                    .css({
+                        'display': 'flex',
+                        'align-items': 'center',
+                        'justify-content': 'center',
+                        'width': 'auto',
+                        'height': '100%'
+                    });
+            }
+
             function UserView() {
             }
 
@@ -102,7 +117,7 @@
                         showLoader();
                         $(selector).empty();
                         $(selector).append(template);
-                        localStorage.setItem('isReloaded', 'false');
+                        localStorage.isReloaded = 'false';
 
                         $('#btn-login').on('click', function () {
                             let data = {
@@ -169,7 +184,7 @@
                         $(selector).append(html);
 
                         $('#trainers-holder').on('click', 'img', function () {
-                            localStorage.setItem('trainer', $(this).attr('trainer-name'));
+                            localStorage.trainer = $(this).attr('trainer-name');
                         });
                     });
                 },
@@ -178,50 +193,26 @@
                         showLoader();
                         $(selector).empty();
                         $(selector).append(html);
-                        localStorage.setItem('enemyCardId', '1');
-                        localStorage.setItem('playerCardId', 0);
-                        localStorage.setItem('hasAttacked', 'false');
-                        localStorage.setItem('currentCardAttack', '0');
-                        localStorage.setItem('isPlayerTurn', 'true');
-                        localStorage.setItem('hasToPlaceCard', 'true');
+                        localStorage.enemyCardId = '1';
+                        localStorage.playerCardId = 0;
+                        localStorage.hasAttacked = 'false';
+                        localStorage.currentCardAttack = '0';
+                        localStorage.isPlayerTurn = 'true';
+                        localStorage.hasToPlaceCard = 'true';
 
-                        localStorage.setItem('playerDamageDealt', 0);
-                        localStorage.setItem('playerHealthStolen', 0);
-                        localStorage.setItem('playerManaStolen', 0);
+                        localStorage.playerDamageDealt = 0;
+                        localStorage.playerHealthStolen = 0;
+                        localStorage.playerManaStolen = 0;
 
-                        localStorage.setItem('enemyDamageDealt', 0);
-                        localStorage.setItem('enemyHealthStolen', 0);
-                        localStorage.setItem('enemyManaStolen', 0);
+                        localStorage.enemyDamageDealt = 0;
+                        localStorage.enemyHealthStolen = 0;
+                        localStorage.enemyManaStolen = 0;
 
                         $('#btn-exit-game').on('click', function () {
                             localStorage.clear();
                         });
 
-                        $('body')
-                            .css({
-                                'background': 'url("images/bg_fill.jpg") no-repeat center center fixed',
-                                'background-size': 'cover'
-                            });
-                        $('#playField')
-                            .css({
-                                'overflow': 'hidden',
-                                'position': 'absolute',
-                                'width': '100%',
-                                'height': '100%',
-                                'background-size': 'contain',
-                                'display': 'flex',
-                                'align-items': 'center',
-                                'justify-content': 'center'
-                            });
-                        $('#canvasWrapper')
-                            .css({
-                                'display': 'flex',
-                                'align-items': 'center',
-                                'justify-content': 'center',
-                                'width': 'auto',
-                                'height': '100%'
-                            });
-
+                        appendGamePageStyles();
                         loadAvatars(localStorage.trainer);
                         engine.start();
                     });
@@ -237,4 +228,4 @@
 
             return UserView;
         });
-}());
+} ());

@@ -36,8 +36,8 @@
             }
 
             function stealManaFromEnemyPlayer(attacker, avatars) {
-                let playerMana = Number(localStorage.getItem('playerMana')),
-                    enemyMana = Number(localStorage.getItem('enemyMana')),
+                let playerMana = Number(localStorage.playerMana),
+                    enemyMana = Number(localStorage.enemyMana),
                     manaToSteal = Math.round(attacker.mana / 2),
                     avatar,
                     enemyAvatar;

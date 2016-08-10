@@ -8,10 +8,10 @@
                     cardObject = allCards.enemyCards.filter(obj => obj.cardId === cardId)[0];
 
                 if (!cardObject.isPlayerCard && cardObject.isPlaced && !cardObject.isJustPlaced &&
-                    localStorage.getItem('canAttack') === 'true') {
-                    localStorage.setItem('canAttack', 'false');
-                    localStorage.setItem('isPlayerTurn', 'false');
-                    localStorage.setItem('hasPlayerPlacedCard', 'true');
+                    localStorage.canAttack === 'true') {
+                    localStorage.canAttack = 'false';
+                    localStorage.isPlayerTurn = 'false';
+                    localStorage.hasPlayerPlacedCard = 'true';
 
                     let attacker = playerCards.filter(c => c.cardId === Number(localStorage.attackerId))[0];
 
@@ -59,8 +59,8 @@
                     cardObject = playerCards.filter(obj => obj.cardId === cardId)[0];
 
                 if (cardObject.isPlayerCard && cardObject.isPlaced) {
-                    localStorage.setItem('canAttack', 'true');
-                    localStorage.setItem('attackerId', cardObject.cardId);
+                    localStorage.canAttack = 'true';
+                    localStorage.attackerId = cardObject.cardId;
                 }
             }
 
@@ -85,4 +85,4 @@
                 attachAttackEnemyCardEvents: attachAttackEnemyCardEvents
             };
         });
-}());
+} ());

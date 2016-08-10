@@ -5,7 +5,7 @@
         function (cardCreator, cardAbilities, PIXI, endGame, statsController) {
             function placeCard(allCards, endTurnButton, avatars) {
                 let enemyCards = allCards.enemyCards,
-                    hasPlayerPlacedCard = localStorage.getItem('hasPlayerPlacedCard');
+                    hasPlayerPlacedCard = localStorage.hasPlayerPlacedCard;
 
                 if (hasPlayerPlacedCard === 'true') {
                     let placeableCards = allCards.enemyCards.filter(c => !c.isPlaced && c.cardId !== 99),
@@ -14,10 +14,10 @@
                         playerMana = avatars[0].mana;
 
                     if (enemyMana - cardToPlace.mana >= 0) {
-                        localStorage.setItem('hasPlayerPlacedCard', 'false');
+                        localStorage.hasPlayerPlacedCard = 'false';
                         cardCreator.placeCard(cardToPlace);
-                        localStorage.setItem('isPlayerTurn', 'true');
-                        localStorage.setItem('canAttack', 'false');
+                        localStorage.isPlayerTurn = 'true';
+                        localStorage.canAttack = 'false';
                         avatars[1].mana -= cardToPlace.mana;
                         avatars[0].mana = 10;
 
@@ -52,7 +52,6 @@
 
                             stage.removeChild(cardToAttack.cardContainer);
                             allCards.playerCards.splice(indexToRemove, 1);
-
                             cardCreator.arrangePlayerCardsOnField();
                         }
 
@@ -75,7 +74,7 @@
                     endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_bg.png');
                 }, 200);
 
-                localStorage.setItem('isPlayerTurn', 'true');
+                localStorage.isPlayerTurn = 'true';
                 playerAvatars[0].mana = 10;
             }
 
@@ -84,4 +83,4 @@
                 attackPlayerCard: attackPlayerCard
             };
         });
-}());
+} ());
