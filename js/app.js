@@ -36,7 +36,7 @@
             'userController': './controllers/user-controller',
 
             // Game
-            'cardCreator': './game/card-creator',
+            "cardController": './game/card-controller',
             'engine': './game/engine',
             'statistics': './chart-stats/statistic',
             'ai': './game/ai',
@@ -44,6 +44,7 @@
             'cardAbilities': './game/card-abilities',
             'endGame': './game/end-game',
             'statsController': './game/stats-controller',
+            'animator': './game/animator',
 
             // Cards
             'card': './cards/card',

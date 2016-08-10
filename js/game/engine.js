@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks', 'sammy', 'statsController'],
-        function (cardCreator, globalValues, Card, MinionCard, AI, player, Decks, Sammy, statsController) {
+    define(['cardController', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks', 'sammy', 'statsController'],
+        function (cardController, globalValues, Card, MinionCard, AI, player, Decks, Sammy, statsController) {
             let stage = new PIXI.Container(),
                 widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent,
@@ -12,7 +12,7 @@
 
             function initializeCard(stage, deck, isPlayerCard, avatars) {
                 for (let i = 0; i < deck.length; i += 1) {
-                    cardCreator.initializeCard(stage, deck[i], avatars);
+                    cardController.initializeCard(stage, deck[i], avatars);
                 }
             }
 
@@ -131,7 +131,7 @@
 
             // starts the whole game
             function start() {
-                let allCards = cardCreator.getPlayersCards(),
+                let allCards = cardController.getPlayersCards(),
                     endTurnButton = new PIXI.Sprite(PIXI.Texture.fromImage('images/buttons/end_turn_bg.png'));
 
                 playersAvatars = loadAvatars(localStorage.trainer, allCards);
@@ -172,7 +172,7 @@
                 });
 
                 player.attachAttackEnemyCardEvents(allCards, stage, playersAvatars);
-                cardCreator.hoverPlayerCard();
+                cardController.hoverPlayerCard();
 
                 stage.addChild(endTurnButton);
             }

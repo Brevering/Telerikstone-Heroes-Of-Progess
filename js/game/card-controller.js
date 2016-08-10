@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['jquery', 'TimelineMax', 'TweenMax', 'Easing', 'CSSPlugin', 'Pixi', 'GreensockPixiPlugin', 'globalValues', 'statsController'],
-        function ($, TimelineMax, TweenMax, Easing, CSSPlugin, PIXI, GreensockPixiPlugin, globalValues, statsController) {
+    define(['jquery', 'Pixi', 'globalValues', 'statsController', 'animator'],
+        function ($, PIXI, globalValues, statsController, animator) {
             let numberOfPlayerCardsInHand = 0,
                 numberOfEnemyCardsInHand = 0,
                 numberOfPlayerCardsOnTable = 0,
@@ -11,8 +11,6 @@
                 enemyCards = [],
                 widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent,
-                playerCardAnim = new TimelineMax(),
-                enemyCardAnim = new TimelineMax(),
                 gameStage;
 
             function initializeCard(someStage, cardObject, avatars) {
@@ -127,9 +125,6 @@
 
             // this initializes a player card
             function playerCardInit(stage, cardObject, avatars) {
-                cardObject.cardContainer.position.x = 80 * widthOnePercent;
-                cardObject.cardContainer.position.y = 60 * heightOnePercent;
-
                 cardObject.sprite.interactive = true;
                 cardObject.sprite.on('mousedown', function () {
                     let playerMana = avatars[0].mana;
@@ -143,10 +138,6 @@
                     }
                 });
 
-                // calculate card in hand offset
-                let cardInHandTopOffset = 90 * heightOnePercent,
-                    cardInHandLeftOffset = numberOfPlayerCardsInHand * 10 * widthOnePercent;
-
                 // add card to the hand
                 cardObject.cardContainer.addChild(cardObject.sprite);
 
@@ -154,39 +145,17 @@
                 stage.addChild(cardObject.cardContainer);
 
                 // play player card intro animation
-                // this animation will probably be attached to a button
-                playerCardAnim.to(cardObject.cardContainer, 2, {
-                    delay: 2,
-                    pixi: {
-                        x: cardInHandLeftOffset + 13 * widthOnePercent,
-                        y: cardInHandTopOffset
-                    },
-                    ease: Expo.easeOut
-                }, 0);
+                animator.playPlayerCardInitAnimation(cardObject.cardContainer, numberOfPlayerCardsInHand);
             }
 
             // this initializes an enemy card
             function enemyCardInit(stage, cardObject) {
-                cardObject.cardContainer.position.x = 5 * widthOnePercent;
-                cardObject.cardContainer.position.y = 20 * heightOnePercent;
-
-                // calculate card in hand offset
-                let cardInHandTopOffset = -5 * heightOnePercent,
-                    cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
-
                 // add card to the field
                 cardObject.cardContainer.addChild(cardObject.sprite);
                 stage.addChild(cardObject.cardContainer);
 
                 // enemy card intro animation
-                enemyCardAnim.to(cardObject.cardContainer, 2, {
-                    delay: 2,
-                    pixi: {
-                        x: cardInHandLeftOffset + 30 * widthOnePercent,
-                        y: cardInHandTopOffset
-                    },
-                    ease: Expo.easeOut,
-                }, 0);
+                animator.playEnemyCardInitAnimation(cardObject.cardContainer, numberOfEnemyCardsInHand);
 
                 cardObject.sprite.interactive = true;
                 cardObject.sprite.on('mousedown', function () {
@@ -201,18 +170,11 @@
                     let currentCard = playerCards[i];
 
                     if (currentCard.isPlaced && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+                        animator.playRepositioningOfPlayerCardOnTableAnimation(
+                            currentCard.cardContainer,
+                            numberOfPlayerCardsOnTable);
 
-                        let leftOffset = 22 * widthOnePercent + numberOfPlayerCardsOnTable * widthOnePercent * 7;
                         numberOfPlayerCardsOnTable += 1;
-
-                        TweenMax.to(currentCard.cardContainer, 1, {
-                            pixi: {
-                                x: leftOffset,
-                                y: 50 * heightOnePercent,
-                                scale: 0.025 * heightOnePercent
-                            },
-                            ease: Expo.easeOut
-                        });
                     }
                 }
             }
@@ -224,18 +186,12 @@
                     let currentCard = enemyCards[i];
 
                     if (currentCard.isPlaced && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+                        animator.playRepositioningOfEnemyCardOnTableAnimation(
+                            currentCard.cardContainer,
+                            numberOfEnemyCardsOnTable
+                        );
 
-                        let leftOffset = 22 * widthOnePercent + numberOfEnemyCardsOnTable * widthOnePercent * 7;
                         numberOfEnemyCardsOnTable += 1;
-
-                        TweenMax.to(currentCard.cardContainer, 1, {
-                            pixi: {
-                                x: leftOffset,
-                                y: 34 * heightOnePercent,
-                                scale: 0.025 * heightOnePercent
-                            },
-                            ease: Expo.easeOut
-                        });
                     }
                 }
             }
@@ -246,18 +202,13 @@
                 for (let i = 0; i < playerCards.length; i += 1) {
                     let currentCard = playerCards[i];
 
-                    if (currentCard.isPlaced === false &&
-                        gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+                    if (currentCard.isPlaced === false && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+                        animator.playRepositioningOfPlayerCardInHandAnimation(
+                            currentCard.cardContainer,
+                            numberOfPlayerCardsInHand
+                        );
 
-                        let cardInHandLeftOffset = numberOfPlayerCardsInHand * 10 * widthOnePercent;
-                        numberOfPlayerCardsInHand += 1;
-
-                        TweenMax.to(currentCard.cardContainer, 2, {
-                            pixi: {
-                                x: cardInHandLeftOffset + 13 * widthOnePercent,
-                            },
-                            ease: Expo.easeOut
-                        }, 0);
+                       numberOfPlayerCardsInHand += 1;
                     }
                 }
             }
@@ -268,18 +219,13 @@
                 for (let i = 0; i < enemyCards.length; i += 1) {
                     let currentCard = enemyCards[i];
 
-                    if (currentCard.isPlaced === false &&
-                        gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+                    if (currentCard.isPlaced === false && gameStage.children.indexOf(currentCard.cardContainer) >= 0) {
+                        animator.playRepositioningOfEnemyCardInHandAnimation(
+                            currentCard.cardContainer,
+                            numberOfEnemyCardsInHand
+                        );
 
-                        let cardInHandLeftOffset = numberOfEnemyCardsInHand * 3 * widthOnePercent;
                         numberOfEnemyCardsInHand += 1;
-
-                        TweenMax.to(currentCard.cardContainer, 2, {
-                            pixi: {
-                                x: cardInHandLeftOffset + 30 * widthOnePercent
-                            },
-                            ease: Expo.easeOut,
-                        }, 0);
                     }
                 }
             }
@@ -287,20 +233,11 @@
             // this animates a card placement
             function placeCard(cardObject) {
                 if (cardObject.isPlayerCard === true && numberOfPlayerCardsOnTable < 7 && cardObject.isPlaced === false) {
-                    let leftOffset = 22 * widthOnePercent + numberOfPlayerCardsOnTable * widthOnePercent * 7;
-
                     if (localStorage.getItem('isPlayerTurn') === 'true') {
                         cardObject.isPlaced = true;
                         cardObject.isJustPlaced = true;
 
-                        TweenMax.to(cardObject.cardContainer, 1, {
-                            pixi: {
-                                x: leftOffset,
-                                y: 50 * heightOnePercent,
-                                scale: 0.025 * heightOnePercent
-                            },
-                            ease: Expo.easeOut,
-                        });
+                        animator.playPlayerCardPlacementAnimation(cardObject.cardContainer, numberOfPlayerCardsOnTable);
 
                         arrangePlayerCardsInHand();
 
@@ -313,21 +250,17 @@
                     }
                 }
                 else if (cardObject.isPlayerCard === false && numberOfEnemyCardsOnTable < 7 && cardObject.isPlaced === false) {
-                    let leftOffset = 22 * widthOnePercent + numberOfEnemyCardsOnTable * widthOnePercent * 7;
-
                     if (localStorage.getItem('isPlayerTurn') === 'false') {
                         cardObject.isPlaced = true;
+
                         makeStatsVisible(cardObject);
 
+                        gameStage.removeChild(cardObject.cardContainer);
+                        gameStage.addChildAt(cardObject.cardContainer, gameStage.children.length - 1);
+
                         cardObject.isJustPlaced = true;
-                        TweenMax.to(cardObject.cardContainer, 1, {
-                            pixi: {
-                                x: leftOffset,
-                                y: 34 * heightOnePercent,
-                                scale: 0.025 * heightOnePercent
-                            },
-                            ease: Expo.easeOut
-                        });
+
+                        animator.playEnemyCardPlacementAnimation(cardObject.cardContainer, numberOfEnemyCardsOnTable);
 
                         arrangeEnemyCardsInHand();
 
@@ -350,7 +283,6 @@
                 if (fromCard && toCard) {
                     let startX = fromCard.cardContainer.x,
                         startY = fromCard.cardContainer.y,
-                        animation = new TimelineMax(),
                         destinationX,
                         destinationY;
 
@@ -373,15 +305,7 @@
                         destinationY = toCard.cardContainer.y;
                     }
 
-                    animation
-                        .to(fromCard.cardContainer, 0.5, {
-                            x: destinationX,
-                            y: destinationY
-                        })
-                        .to(fromCard.cardContainer, 0.5, {
-                            x: startX,
-                            y: startY
-                        });
+                    animator.playAttackAnimation(fromCard.cardContainer, startX, startY, destinationX, destinationY);
                 }
             }
 
@@ -434,16 +358,12 @@
                                       spriteScale,
                                       textLeftOffset,
                                       textTopOffset) {
-                leftOffset = leftOffset || 1;
 
                 let spotContainer = new PIXI.Container(),
                     spotTexture = PIXI.Texture.fromImage(stealImage),
                     spotSprite = new PIXI.Sprite(spotTexture),
                     widthPercent = attacker.sprite.texture.baseTexture.width / 100,
                     heightPercent = attacker.sprite.texture.baseTexture.height / 100;
-
-                spotContainer.x = target.sprite.x * widthPercent * leftOffset;
-                spotContainer.y = target.sprite.y;
 
                 let spotText = new PIXI.Text(valueToSteal, {
                     font: 'bold ' + textSize * heightPercent + 'px Arial',
@@ -460,12 +380,15 @@
                 spotContainer.addChild(spotText);
                 gameStage.addChild(spotContainer);
 
-                let stealAnimation = new TimelineMax({onComplete: remove});
-
-                stealAnimation.to(spotContainer, 1, {
-                    x: attacker.sprite.x * widthPercent * leftOffset,
-                    y: attacker.sprite.y
-                });
+                animator.playStealAnimation(
+                    spotContainer,
+                    target.sprite.x,
+                    target.sprite.y,
+                    attacker.sprite.x,
+                    attacker.sprite.y,
+                    leftOffset,
+                    widthPercent,
+                    remove);
 
                 function remove() {
                     gameStage.removeChild(spotContainer);
@@ -474,31 +397,21 @@
 
             function hoverPlayerCard() {
                 for (let i = 0; i < playerCards.length; i += 1) {
-                    let currentCard = playerCards[i],
-                        normalY = currentCard.cardContainer.y;
+                    let currentCard = playerCards[i];
+                    let normalY = currentCard.cardContainer.y;
 
                     playerCards[i].sprite.on('mouseover', function () {
-                        if (!currentCard.isPlaced && !playerCardAnim.isActive()) {
+                        if (!currentCard.isPlaced && !animator.isCardAnimating()) {
                             gameStage.removeChild(currentCard.cardContainer);
                             gameStage.addChildAt(currentCard.cardContainer, gameStage.children.length - 1);
 
-                            TweenMax.to(currentCard.cardContainer, 0.5, {
-                                pixi: {
-                                    y: normalY + 28,
-                                    scale: 0.1 * globalValues.heightOnePercent
-                                }
-                            });
+                            animator.playHoverOverAnimation(currentCard.cardContainer, normalY);
                         }
                     });
 
                     playerCards[i].sprite.on('mouseout', function () {
-                        if (!currentCard.isPlaced && !playerCardAnim.isActive()) {
-                            TweenMax.to(currentCard.cardContainer, 0.5, {
-                                pixi: {
-                                    y: normalY + heightOnePercent * 30,
-                                    scale: 0.05 * globalValues.heightOnePercent
-                                }
-                            });
+                        if (!currentCard.isPlaced && !animator.isCardAnimating()) {
+                            animator.playHoverOutAnimation(currentCard.cardContainer, normalY);
                         }
                     });
                 }

@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'cardAbilities', 'Pixi', 'endGame', 'statsController'],
-        function (cardCreator, cardAbilities, PIXI, endGame, statsController) {
+    define(['cardController', 'cardAbilities', 'Pixi', 'endGame', 'statsController'],
+        function (cardController, cardAbilities, PIXI, endGame, statsController) {
             function placeCard(allCards, endTurnButton, avatars) {
                 let enemyCards = allCards.enemyCards,
                     hasPlayerPlacedCard = localStorage.hasPlayerPlacedCard;
@@ -15,7 +15,7 @@
 
                     if (enemyMana - cardToPlace.mana >= 0) {
                         localStorage.hasPlayerPlacedCard = 'false';
-                        cardCreator.placeCard(cardToPlace);
+                        cardController.placeCard(cardToPlace);
                         localStorage.isPlayerTurn = 'true';
                         localStorage.canAttack = 'false';
                         avatars[1].mana -= cardToPlace.mana;
@@ -44,7 +44,7 @@
                     } else if (currentPlacedCard.ability === 'stealMana') {
                         cardAbilities.stealManaFromEnemyPlayer(currentPlacedCard, playerAvatars);
                     } else if (currentPlacedCard.ability === 'normal') {
-                        cardCreator.performAttackAnimation(currentPlacedCard, cardToAttack);
+                        cardController.performAttackAnimation(currentPlacedCard, cardToAttack);
                         cardToAttack.health -= currentPlacedCard.attack;
 
                         if (cardToAttack.health <= 0) {
@@ -52,7 +52,7 @@
 
                             stage.removeChild(cardToAttack.cardContainer);
                             allCards.playerCards.splice(indexToRemove, 1);
-                            cardCreator.arrangePlayerCardsOnField();
+                            cardController.arrangePlayerCardsOnField();
                         }
 
                         if (cardToAttack.healthStat) {

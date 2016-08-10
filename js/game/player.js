@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardCreator', 'cardAbilities', 'endGame', 'statsController'],
-        function (cardCreator, cardAbilities, endGame, statsController) {
+    define(['cardController', 'cardAbilities', 'endGame', 'statsController'],
+        function (cardController, cardAbilities, endGame, statsController) {
             function attackEnemyCardEvent(event, enemyCards, playerCards, stage, playerAvatars, allCards) {
                 let cardId = this.cardId,
                     cardObject = allCards.enemyCards.filter(obj => obj.cardId === cardId)[0];
@@ -22,7 +22,7 @@
                         cardAbilities.stealManaFromEnemyPlayer(attacker, playerAvatars)
                     } else if (attacker.ability === 'normal') {
                         cardObject.health -= attacker.attack;
-                        cardCreator.performAttackAnimation(attacker, cardObject);
+                        cardController.performAttackAnimation(attacker, cardObject);
 
                         if (cardObject.health <= 0) {
                             let indexToRemove = allCards.enemyCards.indexOf(cardObject);
@@ -31,7 +31,7 @@
                             allCards.enemyCards.splice(indexToRemove, 1);
                             localStorage.setItem('hasToPlaceCard', 'true');
 
-                            cardCreator.arrangeEnemyCardsOnField();
+                            cardController.arrangeEnemyCardsOnField();
                         }
 
                         if (cardObject.healthStat) {

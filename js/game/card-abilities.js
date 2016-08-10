@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['Pixi', 'globalValues', 'cardCreator', 'statsController'],
-        function (PIXI, globalValues, cardCreator, statsController) {
+    define(['Pixi', 'globalValues', 'cardController', 'statsController'],
+        function (PIXI, globalValues, cardController, statsController) {
             let widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent;
 
@@ -32,7 +32,7 @@
                 playerAvatars[1].health = enemyHealth;
                 statsController.updatePlayerHealth(playerAvatars[0].health < 0 ? 0 : playerAvatars[0].health);
                 statsController.updateEnemyHealth(playerAvatars[1].health < 0 ? 0 : playerAvatars[1].health);
-                cardCreator.performStealHealthFromPlayerAnimation(avatar, enemyAvatar, healthToSteal);
+                cardController.performStealHealthFromPlayerAnimation(avatar, enemyAvatar, healthToSteal);
             }
 
             function stealManaFromEnemyPlayer(attacker, avatars) {
@@ -59,7 +59,7 @@
                 attacker.ability = 'normal';
                 statsController.updatePlayerMana(avatars[0].mana < 0 ? 0 : avatars[0].mana);
                 statsController.updateEnemyMana(avatars[1].mana < 0 ? 0 : avatars[1].mana);
-                cardCreator.performStealManaFromCardAnimation(avatar, enemyAvatar, manaToSteal);
+                cardController.performStealManaFromCardAnimation(avatar, enemyAvatar, manaToSteal);
             }
 
             return {
