@@ -19,7 +19,7 @@ Teamwork in Javascript UI & DOM Course in Telerik Academy 2016-2017 Season.
 | Stanimir Stoev    |          Stanimir_Stoev            | [Brevering](https://github.com/Brevering)             |
 
 
-[The brief video in YouTube]
+[The brief video in YouTube](https://www.youtube.com/watch?v=WTKwRChPSQg)
 
 [Github repository](https://github.com/belchevgb/Telerikstone-Heroes-Of-Progess)
 
