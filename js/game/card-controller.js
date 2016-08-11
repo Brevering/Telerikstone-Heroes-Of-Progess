@@ -65,7 +65,7 @@
 
                 if (cardObject.mana) {
                     cardObject.manaStat = new PIXI.Text(cardObject.mana, {
-                        font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                        font: 'bold ' + 100 * containerWidthPercent + 'px Arial',
                         fill: 'white',
                         align: 'center'
                     });
@@ -76,7 +76,7 @@
 
                 if (cardObject.attack) {
                     cardObject.damageStat = new PIXI.Text(cardObject.attack, {
-                        font: 'bold ' + 5 * widthOnePercent + 'px Arial',
+                        font: 'bold ' + 100 * containerWidthPercent + 'px Arial',
                         fill: 'white',
                         align: 'center'
                     });
@@ -230,7 +230,6 @@
                 }
             }
 
-            // this animates a card placement
             function placeCard(cardObject) {
                 if (cardObject.isPlayerCard === true && numberOfPlayerCardsOnTable < 7 && cardObject.isPlaced === false) {
                     if (localStorage.getItem('isPlayerTurn') === 'true') {

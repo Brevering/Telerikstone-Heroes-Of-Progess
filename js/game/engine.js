@@ -1,8 +1,8 @@
 (function () {
     'use strict';
 
-    define(['cardController', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks', 'sammy', 'statsController'],
-        function (cardController, globalValues, Card, MinionCard, AI, player, Decks, Sammy, statsController) {
+    define(['cardController', 'globalValues', 'card', 'minionCard', 'ai', 'player', 'decks', 'sammy', 'statsController', 'animator'],
+        function (cardController, globalValues, Card, MinionCard, AI, player, Decks, Sammy, statsController, animator) {
             let stage = new PIXI.Container(),
                 widthOnePercent = globalValues.widthOnePercent,
                 heightOnePercent = globalValues.heightOnePercent,
@@ -10,7 +10,7 @@
                 playersAvatars,
                 botPlayerName;
 
-            function initializeCard(stage, deck, isPlayerCard, avatars) {
+            function initializeCards(stage, deck, avatars) {
                 for (let i = 0; i < deck.length; i += 1) {
                     cardController.initializeCard(stage, deck[i], avatars);
                 }
@@ -147,8 +147,8 @@
                 let playerDeck = getDeck(localStorage.trainer, true),
                     botDeck = getDeck(botPlayerName, false);
 
-                initializeCard(stage, playerDeck, true, playersAvatars);
-                initializeCard(stage, botDeck, false, playersAvatars);
+                initializeCards(stage, playerDeck, playersAvatars);
+                initializeCards(stage, botDeck, playersAvatars);
                 stage.addChild(playersAvatars[0].sprite);
                 stage.addChild(playersAvatars[1].sprite);
 
@@ -159,16 +159,18 @@
                 endTurnButton.position.y = 37.7 * heightOnePercent;
 
                 endTurnButton.on('mousedown', function () {
-                    if (localStorage.hasToPlaceCard === 'true') {
-                        AI.placeCard(allCards, endTurnButton, playersAvatars);
-                        localStorage.hasToPlaceCard = 'false';
-                    } else {
-                        AI.attackPlayerCard(allCards, stage, endTurnButton, playersAvatars);
-                    }
+                    if (!animator.isCardAnimating()) {
+                        if (localStorage.hasToPlaceCard === 'true') {
+                            AI.placeCard(allCards, endTurnButton, playersAvatars);
+                            localStorage.hasToPlaceCard = 'false';
+                        } else {
+                            AI.attackPlayerCard(allCards, stage, endTurnButton, playersAvatars);
+                        }
 
-                    setTimeout(function () {
-                        endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
-                    }, 100);
+                        setTimeout(function () {
+                            endTurnButton.texture = PIXI.Texture.fromImage('images/buttons/end_turn_pressed_bg.png');
+                        }, 100);
+                    }
                 });
 
                 player.attachAttackEnemyCardEvents(allCards, stage, playersAvatars);

@@ -1,17 +1,19 @@
 (function () {
     'use strict';
 
-    define(['cardController', 'cardAbilities', 'Pixi', 'endGame', 'statsController'],
-        function (cardController, cardAbilities, PIXI, endGame, statsController) {
+    define(['cardController', 'cardAbilities', 'Pixi', 'endGame', 'statsController', 'animator'],
+        function (cardController, cardAbilities, PIXI, endGame, statsController, animator) {
             function placeCard(allCards, endTurnButton, avatars) {
-                let enemyCards = allCards.enemyCards,
-                    hasPlayerPlacedCard = localStorage.hasPlayerPlacedCard;
+                let hasPlayerPlacedCard = localStorage.hasPlayerPlacedCard;
+
+                if (animator.isCardAnimating()) {
+                    return;
+                }
 
                 if (hasPlayerPlacedCard === 'true') {
                     let placeableCards = allCards.enemyCards.filter(c => !c.isPlaced && c.cardId !== 99),
                         cardToPlace = placeableCards[[Math.floor(Math.random() * placeableCards.length)]],
-                        enemyMana = avatars[1].mana,
-                        playerMana = avatars[0].mana;
+                        enemyMana = avatars[1].mana;
 
                     if (enemyMana - cardToPlace.mana >= 0) {
                         localStorage.hasPlayerPlacedCard = 'false';
@@ -35,7 +37,10 @@
                 let placedPlayerCards = allCards.playerCards.filter(c => c.isPlaced);
                 let cardToAttack = placedPlayerCards[Math.floor(Math.random() * placedPlayerCards.length)];
                 let currentPlacedCard = allCards.enemyCards.filter(c => c.isPlaced && !c.isAvatar)[0];
-                let playerCards = allCards.playerCards;
+
+                if (animator.isCardAnimating()) {
+                    return;
+                }
 
                 if (currentPlacedCard) {
                     if (currentPlacedCard.ability === 'stealEnemyHealth') {
