@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'anthropocene';
+    src: url('../fonts/anthropocene.otf');
+}
+
+#how-to-play-container {
+    font-size: 30px;
+}
+
+#how-to-play-container div {
+    display: inline-block;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
+
+#how-to-play-container div p {
+    font-family: anthropocene;
+}

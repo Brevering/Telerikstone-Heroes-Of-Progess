@@ -79,6 +79,15 @@
                     $('#chartdiv').hide().empty();
                     $(this).hide();
                 });
+
+                $('#how-to-play').on('click', function () {
+                    $.get('templates/how-to-play.html', function (html) {
+                        $('#chartdiv').empty().append(html).show();
+                    })
+                        .then(function (success) {
+                            $('#close-charts').show();
+                        });
+                });
             }
 
             function appendGamePageStyles() {
