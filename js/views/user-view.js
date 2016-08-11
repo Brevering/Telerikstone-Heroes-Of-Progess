@@ -215,6 +215,7 @@
                         localStorage.enemyDamageDealt = 0;
                         localStorage.enemyHealthStolen = 0;
                         localStorage.enemyManaStolen = 0;
+                        localStorage.playerAlreadyAttacked = 'false';
 
                         $('#btn-exit-game').on('click', function () {
                             localStorage.clear();

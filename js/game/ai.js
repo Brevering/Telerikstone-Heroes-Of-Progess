@@ -81,6 +81,7 @@
 
                 localStorage.isPlayerTurn = 'true';
                 playerAvatars[0].mana = 10;
+                localStorage.playerAlreadyAttacked = 'false';
             }
 
             return {
