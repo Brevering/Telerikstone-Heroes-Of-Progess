@@ -120,7 +120,7 @@
                 // set scales and anchors
                 cardObject.sprite.anchor.x = 0.5;
                 cardObject.sprite.anchor.y = 0.5;
-                cardObject.cardContainer.scale = {x: 0.05 * heightOnePercent, y: 0.05 * heightOnePercent};
+                cardObject.cardContainer.scale = { x: 0.05 * heightOnePercent, y: 0.05 * heightOnePercent };
             }
 
             // this initializes a player card
@@ -131,9 +131,12 @@
 
                     if (playerMana - cardObject.mana >= 0) {
                         placeCard(cardObject);
-                        avatars[0].mana -= cardObject.mana;
-                        avatars[1].mana = 10;
 
+                        if (!cardObject.isPlaced) {
+                            avatars[0].mana -= cardObject.mana;
+                        }
+
+                        avatars[1].mana = 10;
                         statsController.updatePlayerMana(avatars[0].mana);
                     }
                 });
@@ -208,7 +211,7 @@
                             numberOfPlayerCardsInHand
                         );
 
-                       numberOfPlayerCardsInHand += 1;
+                        numberOfPlayerCardsInHand += 1;
                     }
                 }
             }
@@ -292,7 +295,7 @@
                         gameStage.removeChild(fromCard.cardContainer);
                         gameStage.addChildAt(fromCard.cardContainer, gameStage.children.length - 1);
                     }
-                    else if (toCard.isAvatar && toCard.isPlayerCard === true){
+                    else if (toCard.isAvatar && toCard.isPlayerCard === true) {
                         destinationX = toCard.sprite.position.x * 1.1;
                         destinationY = toCard.sprite.position.y;
 
@@ -325,7 +328,7 @@
                     textSize,
                     spriteScale,
                     textLeftOffset,
-                    textTopOffset)
+                    textTopOffset);
             }
 
             function performStealManaFromCardAnimation(attacker, target, manaToSteal) {
@@ -349,14 +352,14 @@
             }
 
             function performStealAnim(attacker,
-                                      target,
-                                      valueToSteal,
-                                      stealImage,
-                                      leftOffset,
-                                      textSize,
-                                      spriteScale,
-                                      textLeftOffset,
-                                      textTopOffset) {
+                target,
+                valueToSteal,
+                stealImage,
+                leftOffset,
+                textSize,
+                spriteScale,
+                textLeftOffset,
+                textTopOffset) {
 
                 let spotContainer = new PIXI.Container(),
                     spotTexture = PIXI.Texture.fromImage(stealImage),
@@ -373,7 +376,7 @@
                 spotText.x = textLeftOffset * widthPercent;
                 spotText.y = textTopOffset * heightPercent;
 
-                spotSprite.scale = {x: spriteScale * heightPercent, y: spriteScale * heightPercent};
+                spotSprite.scale = { x: spriteScale * heightPercent, y: spriteScale * heightPercent };
 
                 spotContainer.addChild(spotSprite);
                 spotContainer.addChild(spotText);
@@ -428,4 +431,4 @@
                 arrangeEnemyCardsOnField: arrangeEnemyCardsOnField,
             };
         });
-}());
+} ());

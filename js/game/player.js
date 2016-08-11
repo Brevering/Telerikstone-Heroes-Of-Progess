@@ -31,7 +31,6 @@
                                 stage.removeChild(cardObject.cardContainer);
                                 allCards.enemyCards.splice(indexToRemove, 1);
                                 localStorage.setItem('hasToPlaceCard', 'true');
-
                                 cardController.arrangeEnemyCardsOnField();
                             }
 
