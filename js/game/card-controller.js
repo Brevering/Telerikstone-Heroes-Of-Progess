@@ -15,7 +15,7 @@
 
             function initializeCard(someStage, cardObject, avatars) {
                 cardObject.cardContainer = new PIXI.Container();
-                cardObject.placedTexture = cardObject.imgUrl.toString();
+                cardObject.placedTexture = new PIXI.Texture.fromImage(cardObject.imgUrl.toString());
                 cardObject.isPlaced = false;
 
                 // add properties to the card in accordance to the card type (pleayer or enemy card)
@@ -266,7 +266,7 @@
 
                         arrangeEnemyCardsInHand();
 
-                        cardObject.sprite.texture = new PIXI.Texture.fromImage(cardObject.placedTexture);
+                        cardObject.sprite.texture = cardObject.placedTexture;
                         numberOfEnemyCardsOnTable += 1;
 
                         localStorage.setItem('isPlayerTurn', 'true');

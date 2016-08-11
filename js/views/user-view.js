@@ -91,29 +91,10 @@
             }
 
             function appendGamePageStyles() {
-                $('body')
+                $('#container')
                     .css({
                         'background': 'url("images/bg_fill.jpg") no-repeat center center fixed',
                         'background-size': 'cover'
-                    });
-                $('#playField')
-                    .css({
-                        'overflow': 'hidden',
-                        'position': 'absolute',
-                        'width': '100%',
-                        'height': '100%',
-                        'background-size': 'contain',
-                        'display': 'flex',
-                        'align-items': 'center',
-                        'justify-content': 'center'
-                    });
-                $('#canvasWrapper')
-                    .css({
-                        'display': 'flex',
-                        'align-items': 'center',
-                        'justify-content': 'center',
-                        'width': 'auto',
-                        'height': '100%'
                     });
             }
 
@@ -237,4 +218,4 @@
 
             return UserView;
         });
-} ());
+}());
